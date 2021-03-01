@@ -29,6 +29,9 @@ class Navigation extends React.Component{
                             {!this.state.isLoggedIn ? <Nav.Link href="/login">Login</Nav.Link> : ""}
                             <Nav.Link href="/about"> About </Nav.Link>
                         </Nav>
+                        <Nav className="mr-auto">
+                            <Nav.Link href="/signup">Sign Up</Nav.Link>
+                        </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
