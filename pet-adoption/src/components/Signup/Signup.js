@@ -1,6 +1,8 @@
 import React from "react";
 import {Form, Button, Col} from "react-bootstrap";
 
+import "./Signup.css";
+
 class SignUp extends React.Component{
 
     constructor(){
@@ -26,8 +28,7 @@ class SignUp extends React.Component{
 
     render(){
         return (
-            <div className = "SignUp">
-
+            <div className = "Signup">
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group size="lg" controlId="email">
                         <Form.Label>Email</Form.Label>
@@ -46,7 +47,6 @@ class SignUp extends React.Component{
                             onChange={(e) => this.setState({password: e.target.value})}
                         />
                     </Form.Group>
-
 
                     <Form.Group controlId="formAddress">
                         <Form.Label>Address</Form.Label>
@@ -96,7 +96,6 @@ class SignUp extends React.Component{
                             />
                             </Form.Group>
                     </Form.Row>
-
                 
                     <Button block size="lg" type="submit" disabled={!this.validateForm()} onClick={this.printState}>
                         SignUp 
