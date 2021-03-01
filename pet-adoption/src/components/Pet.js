@@ -7,8 +7,8 @@ class Pet extends React.Component {
   }
   render() {
     return (
-        <Card style={{width: '18rem'}}>
-            <Card.Img variant="top" src={this.props.imgSrc} />
+        <Card bg="light" style={{width: '17rem'}}>
+            <Card.Img variant="top" src={this.props.imgSrc}/>
             <Card.Body>
                 <Card.Title>{this.props.name}</Card.Title>
                 <Card.Subtitle>Type: {this.props.type}, Breed: {this.props.breed}</Card.Subtitle>

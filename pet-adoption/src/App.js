@@ -10,7 +10,7 @@ import "./App.css";
 import "./components/Footer/Footer"
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login"; 
-import Intro from "./components/Intro";
+import Intro from "./components/Intro/Intro";
 import Navigation from "./components/Navigation";
 import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
