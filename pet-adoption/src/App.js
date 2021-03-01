@@ -20,7 +20,6 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Navigation />
-          <hr />
           <Switch>
             <Route exact path="/">
               <Intro />

@@ -8,12 +8,12 @@ class Navigation extends React.Component{
     }
     render(){
         return (
-            <div className="navbar">
+            <div className="navbarsomething">
                 {/* make the color transparent for the future */}
-                <Navbar bg="dark" expand="lg">
+                <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="/">
                         <img
-                            src="../public/logo192.png"
+                            src="/dog-icon.png"
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
@@ -24,7 +24,6 @@ class Navigation extends React.Component{
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="/login">Login</Nav.Link>
-                            <Nav.Link href="/signup">Sign Up</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
