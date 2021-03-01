@@ -12,7 +12,7 @@ import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login"; 
 import Intro from "./components/Intro";
 import Navigation from "./components/Navigation";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
 import Pet from "./components/Pet"; 
 

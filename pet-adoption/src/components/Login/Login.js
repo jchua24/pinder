@@ -1,5 +1,4 @@
 import React from "react";
-
 import {Form, Button} from "react-bootstrap";
 
 import "./Login.css";
@@ -17,6 +16,7 @@ class Login extends React.Component{
   }
   handleSubmit(event){
     event.preventDefault();
+    alert("login!");
   }
   render() {
     return (
