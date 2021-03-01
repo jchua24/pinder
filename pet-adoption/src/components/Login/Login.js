@@ -23,7 +23,7 @@ class Login extends React.Component{
         <div className = "Login">
             <Form onSubmit={this.handleSubmit}>
                 <Form.Group size="lg" controlId="formGroupEmail">
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label className="loginLabel">Email</Form.Label>
                     <Form.Control
                         autoFocus
                         type="email"
@@ -33,7 +33,7 @@ class Login extends React.Component{
                     />
                 </Form.Group>
                 <Form.Group size="lg" controlId="formGroupPassword">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label className="loginLabel">Password</Form.Label>
                     <Form.Control
                         type="password"
                         value={this.state.password}
@@ -41,6 +41,7 @@ class Login extends React.Component{
                         onChange={(e) => this.setState({password: e.target.value})}
                     />
                 </Form.Group>
+                <a href="/signup">click here to sign up</a>
                 <Button block size="lg" type="submit" disabled={!this.validateForm()}>
                     Login
                 </Button>
