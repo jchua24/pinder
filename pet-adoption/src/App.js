@@ -14,6 +14,7 @@ import Intro from "./components/Intro";
 import Navigation from "./components/Navigation";
 import SignUp from "./components/SignUp";
 import About from "./components/About";
+import Pet from "./components/Pet"; 
 
 class App extends React.Component {
   render(){
@@ -21,6 +22,7 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Navigation />
+          <Pet name="Maya" type="dog" breed="Golden Retriever" imgSrc="/dogo.jpeg"/>
           <Switch>
             <Route exact path="/">
               <Intro />
