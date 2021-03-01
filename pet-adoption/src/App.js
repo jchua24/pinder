@@ -9,10 +9,11 @@ import "./App.css";
 
 import "./components/Footer/Footer"
 import Footer from "./components/Footer/Footer";
-import Login from "./components/Login"; 
+import Login from "./components/Login/Login"; 
 import Intro from "./components/Intro";
 import Navigation from "./components/Navigation";
 import SignUp from "./components/SignUp";
+import About from "./components/About";
 
 class App extends React.Component {
   render(){
@@ -29,6 +30,9 @@ class App extends React.Component {
             </Route>
             <Route path="/signup">
               <SignUp />
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
           </Switch>
           <Footer/>
