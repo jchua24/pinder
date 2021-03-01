@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 
-import "./components/Footer"
-import Footer from "./components/Footer";
+import "./components/Footer/Footer"
+import Footer from "./components/Footer/Footer";
 import Login from "./components/Login"; 
 import Intro from "./components/Intro";
 import Navigation from "./components/Navigation";

@@ -5,6 +5,9 @@ import {Nav, Navbar} from "react-bootstrap";
 class Navigation extends React.Component{
     constructor(){
         super();
+        this.state = {
+            isLoggedIn : false
+        };
     }
     render(){
         return (
@@ -23,7 +26,8 @@ class Navigation extends React.Component{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/login">Login</Nav.Link>
+                            {!this.state.isLoggedIn ? <Nav.Link href="/login">Login</Nav.Link> : ""}
+                            <Nav.Link href="/about"> About </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
