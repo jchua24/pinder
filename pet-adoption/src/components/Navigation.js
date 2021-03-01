@@ -12,7 +12,7 @@ class Navigation extends React.Component{
     render(){
         return (
             <div className="navbarsomething">
-                {/* make the color transparent for the future */}
+                {/* make the color transparent in the future */}
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="/">
                         <img
@@ -29,9 +29,10 @@ class Navigation extends React.Component{
                             {!this.state.isLoggedIn ? <Nav.Link href="/login">Login</Nav.Link> : ""}
                             <Nav.Link href="/about"> About </Nav.Link>
                         </Nav>
-                        <Nav className="mr-auto">
+                        {/* I have removed Sign up from Navbar for now, we will discuss this later */}
+                        {/* <Nav className="mr-auto">
                             <Nav.Link href="/signup">Sign Up</Nav.Link>
-                        </Nav>
+                        </Nav> */}
                     </Navbar.Collapse>
                 </Navbar>
             </div>

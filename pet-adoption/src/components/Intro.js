@@ -5,6 +5,8 @@ import {
     Route,
     Link
   } from "react-router-dom";
+
+import Pet from "./Pet";
   
 class Intro extends React.Component {
   constructor() {
@@ -13,6 +15,7 @@ class Intro extends React.Component {
   render() {
     return (
         <div id="intro">
+            <Pet name="Maya" type="dog" breed="Golden Retriever" imgSrc="/dogo.jpeg"/>
         </div>
     );
   }

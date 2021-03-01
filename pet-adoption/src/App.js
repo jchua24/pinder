@@ -22,7 +22,6 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <Navigation />
-          <Pet name="Maya" type="dog" breed="Golden Retriever" imgSrc="/dogo.jpeg"/>
           <Switch>
             <Route exact path="/">
               <Intro />
