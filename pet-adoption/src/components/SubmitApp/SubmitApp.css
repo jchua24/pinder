@@ -1,0 +1,10 @@
+@media all and (min-width: 480px) {
+    .SubmitApp {
+      padding: 6px 0;
+    }
+  
+    .SubmitApp form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+}

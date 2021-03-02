@@ -14,7 +14,9 @@ import Intro from "./components/Intro/Intro";
 import Navigation from "./components/Navigation";
 import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
-import Pet from "./components/Pet"; 
+import Pet from "./components/Pet";
+import Applications from "./components/Applications/Applications";
+import SubmitApp from "./components/SubmitApp/SubmitApp"
 
 class App extends React.Component {
   render(){
@@ -34,6 +36,12 @@ class App extends React.Component {
             </Route>
             <Route path="/about">
               <About />
+            </Route>
+            <Route path="/applications">
+              <Applications />
+            </Route>
+            <Route path="/submitapp">
+              <SubmitApp />
             </Route>
           </Switch>
           <Footer/>
