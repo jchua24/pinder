@@ -13,6 +13,7 @@ class Pet extends React.Component {
                 <Card.Title>{this.props.name}</Card.Title>
                 <Card.Subtitle>Type: {this.props.type}, Breed: {this.props.breed}</Card.Subtitle>
                 <Card.Text>{this.props.addInfo}</Card.Text>
+                {this.props.comments !== '' ? <Card.Text>Comments: {this.props.comments}</Card.Text> : ""}
             </Card.Body>
         </Card>
     );
@@ -22,7 +23,8 @@ class Pet extends React.Component {
 Pet.defaultProps = {
     'Bread' : 'Unknown',
     'Age' : 'Uknown',
-    'addInfo' : 'No additional information available at the moment'
+    'addInfo' : 'No additional information available at the moment',
+    'comments' : ''
 }
 
 export default Pet;

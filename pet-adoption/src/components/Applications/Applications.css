@@ -2,4 +2,12 @@
   .Applications {
     padding: 6px 0;
   }
+  .list {
+    list-style-type:none;
+    float: left;
+  }
+  .item {
+    display: inline-block;
+    margin: 20px;
+  }
 }
