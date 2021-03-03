@@ -1,5 +1,6 @@
 import React from "react";
 import {Form, Button} from "react-bootstrap";
+import {Redirect, useHistory} from "react-router-dom";
 
 import "./Login.css";
 
@@ -8,8 +9,10 @@ class Login extends React.Component{
       super();
       this.state = {
           email: "",
-          password: ""
+          password: "",
+          redirect: ""
       }
+    this.handleSubmit = this.handleSubmit.bind(this); 
   }
   validateForm(){
     return this.state.email.length > 0 && this.state.password.length > 0;
@@ -17,8 +20,11 @@ class Login extends React.Component{
   handleSubmit(event){
     event.preventDefault();
     alert("login!");
+    this.setState({redirect: "/"});
   }
   render() {
+    if (this.state.redirect.length > 0)
+        return <Redirect to={this.state.redirect} />
     return (
         <div className = "Login">
             <Form onSubmit={this.handleSubmit}>
