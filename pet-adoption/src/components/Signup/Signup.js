@@ -13,7 +13,7 @@ class SignUp extends React.Component {
       city: "",
       province: "",
       postal: "",
-      isClinic: ""
+      isClinic: "",
     };
   }
 
@@ -25,7 +25,7 @@ class SignUp extends React.Component {
       this.state.city.length > 0 &&
       this.state.province !== "" &&
       this.state.postal.length > 0 &&
-      this.state.clinic.length > 0
+      this.state.isClinic.length > 0
     );
   }
 
@@ -116,7 +116,6 @@ class SignUp extends React.Component {
             </Form.Group>
           </Form.Row>
 
-
           {/* <Form.Group controlId="formGridCheckbox">
             <Form.Check type="checkbox" label="Please check this box if you are registering for a clinic" />
           </Form.Group> */}
@@ -129,7 +128,7 @@ class SignUp extends React.Component {
               onChange={(e) => this.setState({ isClinic: e.target.value })}
             >
               <option selected value="">
-                  Choose..
+                Choose..
               </option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
