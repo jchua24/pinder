@@ -3,6 +3,9 @@ import {Card, Button} from "react-bootstrap";
 import ReactCardFlip from 'react-card-flip'; 
 import SimpleReactLightBox from 'simple-react-lightbox'; 
 import {SRLWrapper} from "simple-react-lightbox"; 
+import { InfoCircleFill, ArrowCounterclockwise } from 'react-bootstrap-icons';
+
+import "./PetCard.css"
 
 class PetCard extends React.Component {
   constructor(props) {
@@ -12,11 +15,17 @@ class PetCard extends React.Component {
       }
   }
 
+  flipCard = () => {
+    this.setState({showDetails: !this.state.showDetails})
+  }
+
+  submitApplication = () => {
+      alert("submit application!");
+  }
+
   render() {
 
-    const petData = this.props.petData; 
-
-    console.log("pet images: " + JSON.stringify(petData.images));
+    const petData = this.props.petData;
 
     const lightBoxOptions = {
         settings: {
@@ -31,19 +40,19 @@ class PetCard extends React.Component {
         progressBar: {}
     }
 
-
     return (
 
         <ReactCardFlip isFlipped={this.state.showDetails} flipDirection="vertical">
 
             {/* Front Side */}
-            <Card bg="light" style={{width: '50rem'}} onClick={() => this.setState({showDetails: !this.state.showDetails})}>
-                <Card.Img variant="top" src={petData.coverImage}/>
+            <Card bg="light">
+                <Card.Img src={petData.coverImage}/>
                 <Card.Body>
-                    <Card.Title>{petData.name}</Card.Title>
-                    <Card.Subtitle>Type: {petData.type}, Breed: {petData.breed}</Card.Subtitle>
-                    <Card.Text>{petData.addInfo}</Card.Text>
+                    <Card.Title>{petData.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard}/> </Card.Title>
+                    <Card.Subtitle>Type: {petData.type} | Breed: {petData.breed}</Card.Subtitle>
+                    <Card.Text>{petData.tagline}</Card.Text>
                 </Card.Body>
+
                 <Card.Footer> 
                     <SimpleReactLightBox> 
                         <SRLWrapper options={lightBoxOptions}> 
@@ -58,22 +67,24 @@ class PetCard extends React.Component {
             </Card>
 
             {/* Back Side */}
-            <Card bg="light" style={{width: '50rem'}} onClick={() => this.setState({showDetails: !this.state.showDetails})}>
-                <Card.Img variant="top" src={petData.coverImage}/>
+            <Card bg="light">
+                <Card.Img src={petData.coverImage} className="opaque"/>
 
                 <Card.ImgOverlay>
                     <Card.Title>{petData.name}</Card.Title>
-                    <Card.Subtitle>Type: {petData.type}, Breed: {petData.breed}</Card.Subtitle>
-                    <Card.Text>This is the back of the card.</Card.Text>
-
+                    <Card.Text>Type: {petData.type} | Breed: {petData.breed}</Card.Text>
+                    <Card.Text>Age: {petData.age}</Card.Text>
+                    <Card.Text>Clinic Name: {petData.clinicName}</Card.Text>
+                    <Card.Text>Clinic Address: {petData.clinicAddress}</Card.Text>
+                    <Card.Text>Additional Info: {petData.addInfo}</Card.Text>
                 </Card.ImgOverlay> 
 
-                <Card.Body>
-                    <Card.Title>{petData.name}</Card.Title>
-                    <Button variant="primary">Apply</Button>
+                <Card.Body className="elevate">
+                    <Card.Title>{petData.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard} /></Card.Title>
+                    <Button variant="primary" onClick={this.submitApplication}>Apply</Button>
                 </Card.Body>
 
-                <Card.Footer> 
+                <Card.Footer className="elevate"> 
                     <SimpleReactLightBox> 
                         <SRLWrapper options={lightBoxOptions}> 
                             {petData.images.map((petImg) => (
@@ -84,9 +95,8 @@ class PetCard extends React.Component {
                         </SRLWrapper>
                     </SimpleReactLightBox>
                 </Card.Footer>
+
             </Card>
-
-
         </ReactCardFlip>
 
     );

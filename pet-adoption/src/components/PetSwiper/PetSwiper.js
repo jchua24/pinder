@@ -13,6 +13,8 @@ class PetSwiper extends React.Component {
           name: "Biscuit", 
           type: "dog", 
           breed: "Pomeranian", 
+          age: "17 years",
+          tagline: "This is a lit puppy", 
           coverImage: "https://wallpapercave.com/wp/wp5310691.jpg", 
           images: [
           {
@@ -26,13 +28,17 @@ class PetSwiper extends React.Component {
           {
             "src": "https://wallpapercave.com/wp/wp5722866.jpg", 
             "caption": "Awe just look at him"
-          }], 
-          addInfo: "This is a lit puppy"
+          }],
+          clinicName: "Dogs for Days",
+          clinicAddress: "123 Front Street",
+          addInfo: "Biscuit loves to walk and is a very active animal. Potential adopters should be prepared to take Biscuit on a way at least 2-3 times a day."
         },
         {
           name: "Big Brain", 
           type: "Goldfish", 
           breed: "Oranda", 
+          age: "0.5 years",
+          tagline: "Super easy to maintain!", 
           coverImage: "https://www.aquariumsource.com/wp-content/uploads/2020/08/oranda-goldfish.jpg", 
           images: [
             {
@@ -47,12 +53,16 @@ class PetSwiper extends React.Component {
               "src": "https://c4.wallpaperflare.com/wallpaper/216/262/379/goldfish-aquarium-hd-wallpaper-wallpaper-preview.jpg", 
               "caption": "When Big Brain was still a baby awe"
             }], 
-          addInfo: "Super easy to maintain!"
+          clinicName: "Fishie Friends",
+          clinicAddress: "359 Queen Street West",
+          addInfo: "Oranda Goldfish are particularly sensitive to overfeeding and their portion sizes must be monitored actively."
         },
         {
           name: "Bradley the Bunny", 
           type: "Bunny", 
           breed: "American", 
+          age: "3 years",
+          tagline: "Just a fun bundle of joy!", 
           coverImage: "https://i.pinimg.com/originals/f8/0a/5e/f80a5e8da15e19fb0dd263345296d5fc.jpg", 
           images: [
             {
@@ -67,7 +77,9 @@ class PetSwiper extends React.Component {
               "src": "https://wallpaperaccess.com/full/157385.jpg", 
               "caption": "Mesmerized by the humans"
             }], 
-          addInfo: "Just a fun bundle of joy!" 
+          clinicName: "Bob's Pet Clinic",
+          clinicAddress: "223 Westmore Crescent",
+          addInfo: "Bradley has a tendency to run off on his own, but this is a common tendency among bunnies and is not a cause of concern." 
         }
       ]
     };
