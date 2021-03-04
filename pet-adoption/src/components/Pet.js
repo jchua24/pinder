@@ -7,8 +7,8 @@ class Pet extends React.Component {
   }
   render() {
     return (
-        <Card bg="info" style={{width: '17rem', height: '24rem'}}>
-            <Card.Img variant="top" src={this.props.imgSrc} style={{height: '65%'}}/>
+        <Card bg="info" style={{width: '17rem', height: this.props.cardHeight}}>
+            <Card.Img variant="top" src={this.props.imgSrc} style={{height: this.props.imgHeight}}/>
             <Card.Body >
                 <Card.Title>{this.props.name}</Card.Title>
                 <Card.Subtitle><strong>Type</strong>: {this.props.type}, <strong>Breed:</strong> {this.props.breed}</Card.Subtitle>
@@ -24,7 +24,9 @@ Pet.defaultProps = {
     'Bread' : 'Unknown',
     'Age' : 'Uknown',
     'addInfo' : 'No additional information available at the moment',
-    'comments' : ''
+    'comments' : '',
+    'cardHeight' : '24rem',
+    'imgHeight' : '65%'
 }
 
 export default Pet;

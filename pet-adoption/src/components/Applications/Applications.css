@@ -7,7 +7,9 @@
     float: left;
   }
   .item {
+    display: flex;
     display: inline-block;
     margin: 20px;
+    flex-wrap: wrap;
   }
 }
