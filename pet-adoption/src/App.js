@@ -14,11 +14,13 @@ import Intro from "./components/Intro/Intro";
 import Navigation from "./components/Navigation";
 import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
-import Pet from "./components/Pet";
 import Applications from "./components/Applications/Applications";
 import SubmitApp from "./components/SubmitApp/SubmitApp";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
+import SubmitApp from "./components/SubmitApp/SubmitApp"
+import PetSwiper from "./components/PetSwiper/PetSwiper"
+
 
 class App extends React.Component {
   render(){
@@ -51,6 +53,9 @@ class App extends React.Component {
             <Route path="/profile">
               <Profile />
             </Route>
+            <Route path="/swiper"> 
+              <PetSwiper/> 
+            </Route> 
           </Switch>
           <Footer/>
         </Router>
