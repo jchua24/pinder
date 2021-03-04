@@ -28,9 +28,10 @@ class Login extends React.Component{
     return (
         <div className = "Login">
             <Form onSubmit={this.handleSubmit}>
-                <Form.Group size="lg" controlId="formGroupEmail">
+                <Form.Group style={{color: '#5bc0de'}}size="lg" controlId="formGroupEmail">
                     <Form.Label className="loginLabel">Email</Form.Label>
                     <Form.Control
+                        // style={{backgroundColor: '#5bc0de'}}
                         autoFocus
                         type="email"
                         placeholder="Email"
@@ -38,7 +39,7 @@ class Login extends React.Component{
                         onChange={(e) => this.setState({email: e.target.value})}
                     />
                 </Form.Group>
-                <Form.Group size="lg" controlId="formGroupPassword">
+                <Form.Group style={{color: '#5bc0de'}} size="lg" controlId="formGroupPassword">
                     <Form.Label className="loginLabel">Password</Form.Label>
                     <Form.Control
                         type="password"
@@ -48,7 +49,7 @@ class Login extends React.Component{
                     />
                 </Form.Group>
                 <a href="/signup">click here to sign up</a>
-                <Button block size="lg" type="submit" disabled={!this.validateForm()}>
+                <Button block variant="info" size="lg" type="submit" disabled={!this.validateForm()}>
                     Login
                 </Button>
             </Form>
