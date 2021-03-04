@@ -1,13 +1,19 @@
-.footerD{
-
+.Footer{
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+    margin-top: auto;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
 }
 
+
 footer{
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    height: 100px;
     width: 100%;
-    padding-top: 10px;
+    flex-direction: row;
+    justify-content: center;
     background-color: lightgoldenrodyellow;
 }

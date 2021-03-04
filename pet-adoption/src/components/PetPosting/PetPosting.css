@@ -2,10 +2,12 @@
     .petPosting {
       padding: 60px 0;
       display: flex;
+      border: 1px blue solid;
+      justify-content: center;
     }
   
     .petPosting form {
       margin: 0 auto;
-      max-width: 600px;
+      height: 100%;
     }
 }
