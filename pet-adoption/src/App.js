@@ -18,8 +18,7 @@ import Applications from "./components/Applications/Applications";
 import SubmitApp from "./components/SubmitApp/SubmitApp";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
-import SubmitApp from "./components/SubmitApp/SubmitApp"
-import PetSwiper from "./components/PetSwiper/PetSwiper"
+import PetSwiper from "./components/PetSwiper/PetSwiper";
 
 
 class App extends React.Component {
