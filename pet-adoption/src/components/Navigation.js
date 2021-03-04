@@ -29,6 +29,7 @@ class Navigation extends React.Component{
                             {!this.state.isLoggedIn ? <Nav.Link href="/login">Login</Nav.Link> : ""}
                             <Nav.Link href="/about"> About </Nav.Link>
                             {!this.state.isLoggedIn ? <Nav.Link href="/Applications"> Applications </Nav.Link> : ""}
+                            <Nav.Link href="/postapet">Pet Posting</Nav.Link>
                         </Nav>
                         {/* I have removed Sign up from Navbar for now, we will discuss this later */}
                         {/* <Nav className="mr-auto">

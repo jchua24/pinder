@@ -16,7 +16,8 @@ import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
 import Pet from "./components/Pet";
 import Applications from "./components/Applications/Applications";
-import SubmitApp from "./components/SubmitApp/SubmitApp"
+import SubmitApp from "./components/SubmitApp/SubmitApp";
+import PetPosting from "./components/PetPosting/PetPosting";
 
 class App extends React.Component {
   render(){
@@ -42,6 +43,9 @@ class App extends React.Component {
             </Route>
             <Route path="/submitapp">
               <SubmitApp />
+            </Route>
+            <Route path="/postapet">
+              <PetPosting clinic="test"/>
             </Route>
           </Switch>
           <Footer/>

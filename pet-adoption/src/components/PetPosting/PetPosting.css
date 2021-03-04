@@ -1,0 +1,10 @@
+@media all and (min-width: 520px) {
+    .petPosting {
+      padding: 60px 0;
+    }
+  
+    .petPosting form {
+      margin: 0 auto;
+      max-width: 360px;
+    }
+}
