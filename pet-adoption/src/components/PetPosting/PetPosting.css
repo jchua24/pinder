@@ -1,10 +1,11 @@
-@media all and (min-width: 520px) {
+@media all and (min-width: 700px) {
     .petPosting {
       padding: 60px 0;
+      display: flex;
     }
   
     .petPosting form {
       margin: 0 auto;
-      max-width: 360px;
+      max-width: 600px;
     }
 }

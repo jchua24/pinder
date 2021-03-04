@@ -16,7 +16,8 @@ class PetPosting extends React.Component{
     validateForm() {
         return (
           this.state.age.length > 0 &&
-          this.state.breed.length > 0
+          this.state.breed.length > 0 &&
+          !isNaN(parseInt(this.state.age))
         );
     }
 
@@ -24,6 +25,14 @@ class PetPosting extends React.Component{
         return (
             <div className="petPosting">
                 <Form>
+                    <Form.Group controlId="affClinic">
+                        <Form.Label>Affiliated Clinic</Form.Label>
+                        <Form.Control 
+                            type="text" 
+                            placeholder={this.props.clinic} 
+                            readOnly 
+                        />
+                    </Form.Group>
                     <Form.Group controlId="petType">
                         <Form.Label>Pet Type</Form.Label>
                         <Form.Control 
@@ -31,7 +40,7 @@ class PetPosting extends React.Component{
                             custom
                             onChange={(e) => this.setState({type: e.target.value})}
                         >
-                            <option value="">Chooes..</option>
+                            <option value="">Choose..</option>
                             <option value="dog">Dog</option>
                             <option value="cat">Cat</option>
                             <option value="fish">Fish</option>
@@ -39,6 +48,14 @@ class PetPosting extends React.Component{
                             <option value="reptile">Reptile</option>
                             <option value="smallpet">Small Pet (Mouse, Hamster, Rabit, and etc.)</option>
                         </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="age">
+                        <Form.Label>Age</Form.Label>
+                        <Form.Control type="text" placeholder="Please enter a valid number" />
+                    </Form.Group>
+                    <Form.Group controlId="addInfo">
+                        <Form.Label>Additional Information</Form.Label>
+                        <Form.Control as="textarea" rows={5} />
                     </Form.Group>
                 </Form>
             </div>
