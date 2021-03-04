@@ -1,8 +1,8 @@
 @media all and (min-width: 700px) {
     .petPosting {
       padding: 60px 0;
+      padding-bottom: 100px;
       display: flex;
-      border: 1px blue solid;
       justify-content: center;
     }
   

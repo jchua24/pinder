@@ -52,7 +52,9 @@ class App extends React.Component {
               </Route>
             </Switch>
           </div>
-          <Footer />
+          <div className="footerContainer">
+            <Footer />
+          </div>
         </Router>
       </div>
     );
