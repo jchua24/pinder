@@ -13,7 +13,7 @@ class Navigation extends React.Component{
         return (
             <div className="navbarsomething">
                 {/* make the color transparent in the future */}
-                <Navbar bg="light" expand="lg">
+                <Navbar bg="info" expand="lg">
                     <Navbar.Brand href="/">
                         <img
                             src="/dog-icon.png"

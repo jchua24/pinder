@@ -27,9 +27,9 @@ class Intro extends React.Component {
             </Carousel.Item>
             <Carousel.Item interval={2000}>
               <CardDeck>
-                <Pet name="Biscuit" type="Dog" breed="Golden Retriever" imgSrc="/cat1.jpg"/>
-                <Pet name="Pussy Cat" type="Cat" breed="Long Haired" imgSrc="/cat1.jpg"/>
-                <Pet name="Big Boi" type="Dog" breed="Samoyed" imgSrc="/cat1.jpg"/>
+                <Pet name="Chami" type="Reptile" breed="XYZ" imgSrc="/chami-reptile.jpeg"/>
+                <Pet name="Nosey" type="Fish" breed="YYZ" imgSrc="/nosey-fish.jpg"/>
+                <Pet name="Pari" type="Small Pet" breed="Hamster" imgSrc="/pari-hamster.jpg"/>
               </CardDeck>
             </Carousel.Item>
           </Carousel>

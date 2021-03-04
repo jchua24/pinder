@@ -7,11 +7,11 @@ class Pet extends React.Component {
   }
   render() {
     return (
-        <Card bg="light" style={{width: '17rem'}}>
-            <Card.Img variant="top" src={this.props.imgSrc}/>
-            <Card.Body>
+        <Card bg="info" style={{width: '17rem', height: '24rem'}}>
+            <Card.Img variant="top" src={this.props.imgSrc} style={{height: '65%'}}/>
+            <Card.Body >
                 <Card.Title>{this.props.name}</Card.Title>
-                <Card.Subtitle>Type: {this.props.type}, Breed: {this.props.breed}</Card.Subtitle>
+                <Card.Subtitle><strong>Type</strong>: {this.props.type}, <strong>Breed:</strong> {this.props.breed}</Card.Subtitle>
                 <Card.Text>{this.props.addInfo}</Card.Text>
                 {this.props.comments !== '' ? <Card.Text>Comments: {this.props.comments}</Card.Text> : ""}
             </Card.Body>
