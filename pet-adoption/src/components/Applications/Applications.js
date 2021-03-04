@@ -31,7 +31,7 @@ class Applications extends React.Component {
             this.state.apps.map((app) => {
               return(
               <li className = "item" key={uid(app)}>
-                <Pet name={app.name} type={app.type} breed={app.breed} imgSrc={app.imgSrc} addInfo={app.addInfo} comments={app.comments}/>
+                <Pet name={app.name} type={app.type} breed={app.breed} imgSrc={app.imgSrc} addInfo={app.addInfo} comments={app.comments} imgHeight='50%'/>
                 <button onClick={() => this.removeApp(app)}> Remove Application </button>
               </li>
               )
