@@ -1,9 +1,10 @@
 import React from "react";
-import {Card, Button} from "react-bootstrap";
+import {Form, Card, Button} from "react-bootstrap";
 import ReactCardFlip from 'react-card-flip'; 
 import SimpleReactLightBox from 'simple-react-lightbox'; 
 import {SRLWrapper} from "simple-react-lightbox"; 
 import { InfoCircleFill, ArrowCounterclockwise } from 'react-bootstrap-icons';
+import Popup from 'reactjs-popup';
 
 import "./PetCard.css"
 
@@ -11,7 +12,8 @@ class PetCard extends React.Component {
   constructor(props) {
       super();
       this.state = {
-          showDetails: false //flag to determine which side of the card to show 
+          showDetails: false, //flag to determine which side of the card to show 
+          message: ""
       }
   }
 
@@ -81,7 +83,27 @@ class PetCard extends React.Component {
 
                 <Card.Body className="elevate">
                     <Card.Title>{petData.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard} /></Card.Title>
-                    <Button variant="primary" onClick={this.submitApplication}>Apply</Button>
+                    {/*<Button variant="primary" onClick={this.submitApplication}>Apply</Button>*/}
+                    <Popup trigger={<Button variant="primary">Apply</Button>} position="center">
+                    <div className = "SubmitApp">
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group size="lg" controlId="formComments">
+                                <Form.Label className="SubmitAppDetail">Tell this pet seller a message!</Form.Label>
+                                <Form.Control
+                                    autoFocus
+                                    as="textarea"
+                                    type="text"
+                                    value={this.state.message}
+                                    onChange={(e) => this.setState({ message: e.target.value })}
+                                    rows={4}
+                                />
+                            </Form.Group>
+                            <Button block type="submit" onClick={this.submitApplication}>
+                                Submit
+                            </Button>
+                        </Form>
+                    </div> 
+                    </Popup>
                 </Card.Body>
 
                 <Card.Footer className="elevate"> 

@@ -10,7 +10,6 @@ import Navigation from "./components/Navigation";
 import SignUp from "./components/Signup/Signup";
 import About from "./components/About";
 import Applications from "./components/Applications/Applications";
-import SubmitApp from "./components/SubmitApp/SubmitApp";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
@@ -37,9 +36,6 @@ class App extends React.Component {
               </Route>
               <Route path="/applications">
                 <Applications />
-              </Route>
-              <Route path="/submitapp">
-                <SubmitApp />
               </Route>
               <Route path="/postapet">
                 <PetPosting clinic="test" />

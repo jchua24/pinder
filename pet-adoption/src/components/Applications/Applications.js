@@ -10,7 +10,8 @@ class Applications extends React.Component {
       apps: [
         {name: "Biscuit", type: "Dog", breed: "Golden Retriever", imgSrc: "/dogo.jpeg", addInfo: "This is a lit puppy", comments: "I really like this dog!"},
         {name: "Pussy Cat", type: "Cat", breed: "Long Haired", imgSrc: "/cat1.jpg", addInfo: "CAT", comments: "He reminds me of my current cat. He'll make a great friend!"},
-        {name: "Biscuit", type: "Dog", breed: "Golden Retriever", imgSrc: "/dogo.jpeg", addInfo: "This is a lit puppy", comments: "I really like this dog!"}
+        {name: "Biscuit", type: "Dog", breed: "Golden Retriever", imgSrc: "/dogo.jpeg", addInfo: "This is a lit puppy", comments: "I really like this dog!"},
+        
       ]
     }
   }
@@ -38,11 +39,6 @@ class Applications extends React.Component {
             })
           }
         </ul>
-        {
-        /*<Pet name="no u" type="test" breed="perhaps" imgSrc="/dogo.jpeg" addInfo="kk"/>
-        <Pet name="Pussy Cat" type="Cat" breed="Long Haired" imgSrc="/cat1.jpg" addInfo="PUSSY CAT"/>
-        <Pet name="Big Boi" type="Dog" breed="Samoyed" imgSrc="/bigb.jpg" addInfo="The BIGGEST BOI you can find"/>
-        */}
       </div>
     );
   }
