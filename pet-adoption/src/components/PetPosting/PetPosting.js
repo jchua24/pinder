@@ -27,7 +27,7 @@ class PetPosting extends React.Component {
       <div className="petPosting">
         <Row>
           <Col>
-            <Form>
+            <Form className="infoTextColor">
               <Form.Group controlId="affClinic">
                 <Form.Label>Affiliated Clinic</Form.Label>
                 <Form.Control
@@ -36,11 +36,6 @@ class PetPosting extends React.Component {
                   readOnly
                 />
               </Form.Group>
-              <Form.Group controlId="imgUpload">
-                <Form.Label>Images will be here</Form.Label>
-                <Form.Control as="textarea" rows={5} />
-              </Form.Group>
-
               <Form.Group controlId="petType">
                 <Form.Label>Pet Type</Form.Label>
                 <Form.Control
