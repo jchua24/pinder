@@ -11,5 +11,6 @@
     display: inline-block;
     margin: 20px;
     flex-wrap: wrap;
+    flex-basis: 33.333333%;
   }
 }
