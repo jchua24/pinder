@@ -19,8 +19,14 @@ class Login extends React.Component{
   }
   handleSubmit(event){
     event.preventDefault();
-    alert("login!");
-    this.setState({redirect: "/"});
+    // alert("login!");
+    let email = this.state.email, password = this.state.password;
+    if (email === "test@test.com" && password === "password")
+        this.setState({redirect: "/swiper"});
+    else if (email === "clinic@clinic.com" && password === "clinic")
+        this.setState({redirect: "/applications/admin"});
+    else
+        alert("The email or password entered is incorrect!");
   }
   render() {
     if (this.state.redirect.length > 0)
