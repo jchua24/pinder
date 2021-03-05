@@ -1,6 +1,6 @@
 import React from "react";
 import "./Applications.css";
-import Pet from "../Pet";
+import Pet from "../Pet/Pet";
 import { uid } from 'react-uid'
 
 class Applications extends React.Component {

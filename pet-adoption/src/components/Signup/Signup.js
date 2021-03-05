@@ -37,7 +37,7 @@ class SignUp extends React.Component {
   render() {
     return (
       <div className="Signup">
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className="infoTextColor">
           <Form.Group size="lg" controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -139,6 +139,7 @@ class SignUp extends React.Component {
             block
             size="lg"
             type="submit"
+            variant="info"
             disabled={!this.validateForm()}
             onClick={this.printState}
           >

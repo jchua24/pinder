@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./Pet.css";
+
 import {Card} from "react-bootstrap";
 class Pet extends React.Component {
   constructor(props) {
@@ -7,7 +9,7 @@ class Pet extends React.Component {
   }
   render() {
     return (
-        <Card bg="info" style={{width: '17rem', height: this.props.cardHeight}}>
+        <Card className="pet" bg="info" style={{width: '17rem', height: this.props.cardHeight}}>
             <Card.Img variant="top" src={this.props.imgSrc} style={{height: this.props.imgHeight}}/>
             <Card.Body >
                 <Card.Title>{this.props.name}</Card.Title>

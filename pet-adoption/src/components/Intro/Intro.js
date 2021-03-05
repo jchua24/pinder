@@ -7,7 +7,7 @@ import {
     Link
   } from "react-router-dom";
 
-import Pet from "../Pet";
+import Pet from "../Pet/Pet";
 import "./Intro.css";
   
 class Intro extends React.Component {
@@ -17,12 +17,33 @@ class Intro extends React.Component {
   render() {
     return (
         <div className="intro">
-          <Carousel indicators={false}>
+          <h1 className="infoTextColor">Welcome to Pinder, the best pet adoption platform!</h1>
+          <h2 style={{color: 'white'}}>Please <a style={{color: 'grey'}} href="/login">login</a> or <a style={{color: 'grey'}} href="/signup">create an account</a>!</h2>
+          <br></br>
+          <Carousel indicators={false} className="small introCarousel">
             <Carousel.Item interval={2000}>
               <CardDeck>
                 <Pet name="Biscuit" type="Dog" breed="Golden Retriever" imgSrc="/dogo.jpeg" addInfo="This is a lit puppy"/>
                 <Pet name="Pussy Cat" type="Cat" breed="Long Haired" imgSrc="/cat1.jpg" addInfo="PUSSY CAT"/>
                 <Pet name="Big Boi" type="Dog" breed="Samoyed" imgSrc="/bigb.jpg" addInfo="The BIGGEST BOI you can find"/>
+                {/* <Pet name="RR" type="Small Pet" breed="Something" imgSrc="/pari-hamster.jpg" addInfo="Interesting" /> */}
+              </CardDeck>
+            </Carousel.Item>
+            <Carousel.Item interval={2000}>
+              <CardDeck>
+                <Pet name="Chami" type="Reptile" breed="XYZ" imgSrc="/chami-reptile.jpeg"/>
+                <Pet name="Nosey" type="Fish" breed="YYZ" imgSrc="/nosey-fish.jpg"/>
+                <Pet name="Pari" type="Small Pet" breed="Hamster" imgSrc="/pari-hamster.jpg"/>
+              </CardDeck>
+            </Carousel.Item>
+          </Carousel>
+          <Carousel indicators={false} className="small">
+            <Carousel.Item interval={2000}>
+              <CardDeck>
+                <Pet name="Biscuit" type="Dog" breed="Golden Retriever" imgSrc="/dogo.jpeg" addInfo="This is a lit puppy"/>
+                <Pet name="Pussy Cat" type="Cat" breed="Long Haired" imgSrc="/cat1.jpg" addInfo="PUSSY CAT"/>
+                <Pet name="Big Boi" type="Dog" breed="Samoyed" imgSrc="/bigb.jpg" addInfo="The BIGGEST BOI you can find"/>
+                {/* <Pet name="RR" type="Small Pet" breed="Something" imgSrc="/pari-hamster.jpg" addInfo="Interesting" /> */}
               </CardDeck>
             </Carousel.Item>
             <Carousel.Item interval={2000}>
@@ -39,5 +60,3 @@ class Intro extends React.Component {
 }
 
 export default Intro;
-
-// should this page include the routing to login and sign up or App?
