@@ -3,7 +3,7 @@ import {Form, Card, Button} from "react-bootstrap";
 import ReactCardFlip from 'react-card-flip'; 
 import SimpleReactLightBox from 'simple-react-lightbox'; 
 import {SRLWrapper} from "simple-react-lightbox"; 
-import { InfoCircleFill, ArrowCounterclockwise } from 'react-bootstrap-icons';
+import {ArrowCounterclockwise } from 'react-bootstrap-icons';
 import Popup from 'reactjs-popup';
 
 import "./PetCard.css"

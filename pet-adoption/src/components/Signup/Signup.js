@@ -7,6 +7,7 @@ class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
+      name: "", 
       email: "",
       password: "",
       address: "",
@@ -19,6 +20,7 @@ class SignUp extends React.Component {
 
   validateForm() {
     return (
+      this.state.name.length > 0 && 
       this.state.email.length > 0 &&
       this.state.password.length > 0 &&
       this.state.address.length > 0 &&
@@ -38,6 +40,15 @@ class SignUp extends React.Component {
     return (
       <div className="Signup">
         <Form onSubmit={this.handleSubmit} className="infoTextColor">
+        <Form.Group size="lg" controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              autoFocus
+              type="text"
+              value={this.state.name}
+              onChange={(e) => this.setState({ name: e.target.value })}
+            />
+          </Form.Group>
           <Form.Group size="lg" controlId="email">
             <Form.Label>Email</Form.Label>
             <Form.Control

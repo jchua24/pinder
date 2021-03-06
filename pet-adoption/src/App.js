@@ -15,6 +15,7 @@ import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 
+
 class App extends React.Component {
   render() {
     return (
