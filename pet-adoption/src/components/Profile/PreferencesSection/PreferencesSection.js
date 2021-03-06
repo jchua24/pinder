@@ -10,7 +10,6 @@ import 'rc-slider/assets/index.css';
 const RcRange = RcSlider.createSliderWithTooltip(RcSlider.Range);
 
 
-
 class PreferencesSection extends React.Component {
   constructor() {
     super();
@@ -92,13 +91,14 @@ class PreferencesSection extends React.Component {
                 onChange={(value) => this.props.onPreferenceDistanceChange(value)} 
                 tipFormatter={(value) => `${value}`}
                 tipProps={{ visible: true }}
-                defaultValue={[0, 10]}
+                defaultValue={[10, 20]}
                 min={0}
                 max={100}
                 className="slider"
+                railStyle={{backgroundColor: 'red'}}
+                handleStyle={{borderColor: 'green', backgroundColor: 'black'}}
+                trackStyle={[{backgroundColor: 'blue'}]}
             />
-            
-
             <h6> Pet Selections </h6> 
             <Select 
                 autoFocus
