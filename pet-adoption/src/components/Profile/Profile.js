@@ -90,41 +90,48 @@ class Profile extends React.Component {
     return (
         <div className="userProfile">
 
-            <h1>{this.state.user.name} </h1> 
+            <div className="profileIntro"> 
+                <h1 className="name">{this.state.user.name} </h1> 
 
-            <ReactRoundedImage
-                image={this.state.user.profilePic}
-                roundedColor="#17a2b8"
-                imageWidth="150"
-                imageHeight="150"
-                roundedSize="13"
-            />
+                <div className="photo"> 
+                  <ReactRoundedImage
+                    image={this.state.user.profilePic}
+                    roundedColor="#17a2b8"
+                    imageWidth="200"
+                    imageHeight="200"
+                    roundedSize="12"
+                    margin="auto"
+                  />
+                </div> 
+                
+            </div> 
+          
+            <div className="profileSections"> 
+              <Tabs defaultActiveKey="infoSection"> 
+                  <Tab eventKey="infoSection" title="User Info" tabClassName="sectionTab"> 
+                      <InfoSection 
+                          user={this.state.user}
+                          onProfilePicChange={this.onProfilePicChange}
+                      /> 
+                  </Tab> 
 
-            <Tabs defaultActiveKey="infoSection"> 
-                <Tab eventKey="infoSection" title="User Info"> 
-                    <InfoSection 
-                        user={this.state.user}
-                        onProfilePicChange={this.onProfilePicChange}
-                    /> 
-                </Tab> 
 
+                  <Tab eventKey="preferencesSection" title="Preferences" tabClassName="sectionTab"> 
+                      <PreferenceSection 
+                          user={this.state.user} 
+                          onPreferenceAgeChange={this.onPreferenceAgeChange}
+                          onPreferenceDistanceChange={this.onPreferenceDistanceChange}
+                          onPetSelectChange={this.onPreferenceDistanceChange}
+                          onClinicSelectChange={this.onClinicSelectChange}
+                      /> 
+                  </Tab> 
 
-                <Tab eventKey="preferencesSection" title="Preferences"> 
-                    <PreferenceSection 
-                        user={this.state.user} 
-                        onPreferenceAgeChange={this.onPreferenceAgeChange}
-                        onPreferenceDistanceChange={this.onPreferenceDistanceChange}
-                        onPetSelectChange={this.onPreferenceDistanceChange}
-                        onClinicSelectChange={this.onClinicSelectChange}
-                    /> 
-                </Tab> 
-
-                <Tab eventKey="applicationSection" title="Application"> 
-                    <div className="applicationSection">  
-                        <h3>Application Section</h3>
-                    </div> 
-                </Tab> 
-            </Tabs> 
+                  <Tab eventKey="applicationSection" title="Application" tabClassName="sectionTab"> 
+                      <ApplicationSection/>
+                  </Tab> 
+              </Tabs> 
+            </div> 
+           
         
         </div> 
 

@@ -67,50 +67,49 @@ class PreferencesSection extends React.Component {
     const selectStyles = {
         option: (provided, state) => ({
             ...provided,
-            borderBottom: '2px dotted green', 
+            borderBottom: '2px dotted grey', 
             color: 'black'
         })
     }
 
     return (
         <div className="preferencesSection">
-            <h3>User Preferences</h3>
 
-            Age Preference: 
-            <div className="ageSelect">
-                <RcRange
-                    onChange={(value) => this.props.onPreferenceAgeChange(value)} 
-                    tipFormatter={(value) => `${value}`}
-                    tipProps={{ visible: true }}
-                    defaultValue={[0, 10]}
-                    min={0}
-                    max={100}
-                />
-            </div> 
+            <h6> Age Preference (years) </h6> 
+            <RcRange
+                onChange={(value) => this.props.onPreferenceAgeChange(value)} 
+                tipFormatter={(value) => `${value}`}
+                tipProps={{ visible: true }}
+                defaultValue={[0, 10]}
+                min={0}
+                max={100}
+                className="slider"
+            />
+        
 
-            Location slider (km/m)
+            <h6> Location slider (km) </h6>
+            <RcRange
+                onChange={(value) => this.props.onPreferenceDistanceChange(value)} 
+                tipFormatter={(value) => `${value}`}
+                tipProps={{ visible: true }}
+                defaultValue={[0, 10]}
+                min={0}
+                max={100}
+                className="slider"
+            />
+            
 
-            <div className="locationSelect">
-                <RcRange
-                    onChange={(value) => this.props.onPreferenceDistanceChange(value)} 
-                    tipFormatter={(value) => `${value}`}
-                    tipProps={{ visible: true }}
-                    defaultValue={[0, 10]}
-                    min={0}
-                    max={100}
-                />
-            </div> 
-
-            Pet Selections 
+            <h6> Pet Selections </h6> 
             <Select 
                 autoFocus
                 isMulti
                 options={petOptions} 
                 styles={selectStyles}
                 onChange={this.props.onPetSelectChange}
+                className="preferencesElement"
             />
 
-            Clinic Filter 
+            <h6> Clinic Filter </h6> 
             <Select
                 autoFocus
                 isMulti
@@ -118,6 +117,7 @@ class PreferencesSection extends React.Component {
                 styles={selectStyles}
                 onChange={this.props.onClinicSelectChange}
                 placeholder="Search..."
+                className="preferencesElement"
             />
         </div> 
 

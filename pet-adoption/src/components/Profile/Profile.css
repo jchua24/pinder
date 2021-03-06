@@ -1,17 +1,34 @@
 @media all and (min-width: 700px) {
     .userProfile {
-      padding: 60px;
+      padding: 3em;
       
       display: flex;
       flex-direction: column; 
       align-items: center; 
         
       color: white; 
+      height: 100%;
     }
 
-    .ageSelect {
-        display: flex;
-        flex-direction: row; 
+    .name{
+      margin: 1em; 
     }
+
+    .photo {
+      padding-left: 3em;
+    }
+
+    .sectionTab {
+      color: #17a2b8; 
+    }
+
+    .nav-tabs .nav-item.nav-link:hover {
+      color: #17a2b8 !important; 
+    } 
+    
+    .profileSections {
+      margin-top: 2em; 
+    }
+
 
 }

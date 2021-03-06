@@ -10,23 +10,22 @@ class InfoSection extends React.Component {
     super();
   }  
 
- 
   render() {
 
     return (
         <div className="infoSection">
-            <h3>User Info</h3>
             
-            <h6>Email: {this.props.user.email} </h6> 
-            <h6>Address: {this.props.user.address}</h6>
-            <h6>City: {this.props.user.city}</h6>
-            <h6>Province: {this.props.user.province}</h6>
+            <h6 className="infoElement">Email: {this.props.user.email} </h6> 
+            <h6 className="infoElement">Address: {this.props.user.address}</h6>
+            <h6 className="infoElement">City: {this.props.user.city}</h6>
+            <h6 className="infoElement">Province: {this.props.user.province}</h6>
 
             <ImageUploading
                 value={this.props.profilePic}
                 onChange={this.props.onProfilePicChange}
                 maxNumber={1}
                 dataURLKey="data_url"
+                className="infoElement"
             >
                 {({
                 onImageUpload,
