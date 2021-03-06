@@ -13,6 +13,7 @@ import Applications from "./components/Applications/Applications";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
+import AdminApplications from "./components/AdminApplications/AdminApplications";
 
 class App extends React.Component {
   render() {
@@ -45,6 +46,9 @@ class App extends React.Component {
               </Route>
               <Route path="/swiper">
                 <PetSwiper />
+              </Route>
+              <Route path="/adminapps">
+                <AdminApplications />
               </Route>
             </Switch>
           </div>
