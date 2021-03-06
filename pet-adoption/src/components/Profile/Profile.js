@@ -1,10 +1,13 @@
 import React from "react";
 import { Tabs, Tab} from "react-bootstrap";
-import ImageUploading from 'react-images-uploading';
 import ReactRoundedImage from "react-rounded-image";
 
-import "./Profile.css";
 
+import InfoSection from "./InfoSection/InfoSection";
+import PreferenceSection from "./PreferencesSection/PreferencesSection";
+import ApplicationSection from "./ApplicationSection/ApplicationSection";
+
+import "./Profile.css";
 
 class Profile extends React.Component {
   constructor() {
@@ -19,7 +22,12 @@ class Profile extends React.Component {
             province: "ON",
             postal: "L4T 6HJ",
             isClinic: "",
-            preferences: {},
+            preferences: {
+                age: [0, 10], 
+                distance: [0, 50], 
+                petTypes: [],
+                clinic: []
+            },
             applicationResponses: {}, 
             profilePic: "/user-profile-placeholder.png"
         },
@@ -31,7 +39,7 @@ class Profile extends React.Component {
     event.preventDefault();
   }
 
-  onChange = (imageList, addUpdateIndex) => {
+  onProfilePicChange = (imageList, addUpdateIndex) => {
 
     if(imageList.length > 0) { // adding image
         this.state.user.profilePic = imageList[0]['data_url']; 
@@ -42,12 +50,46 @@ class Profile extends React.Component {
     this.forceUpdate();
   };
 
+  onPreferenceAgeChange = (value) => {
+    this.state.user.preferences.age = value; 
+    this.forceUpdate(); 
+  }
+
+  onPreferenceDistanceChange = (value) => {
+    this.state.user.preferences.distance = value; 
+    this.forceUpdate(); 
+  }
+
+  onPetSelectChange = (selectedPets) => {
+
+    let petTypes = []; 
+
+    selectedPets.forEach((pet) => {
+        petTypes.push(pet.value); 
+    })
+
+    this.state.user.preferences.petTypes = petTypes; 
+    this.forceUpdate();
+  }
+
+  onClinicSelectChange = (selectedClinics) => {
+
+    let clinics = []; 
+
+    selectedClinics.forEach((clinic) => {
+        clinics.push(clinic.value); 
+    })
+
+    this.state.user.preferences.clinics = clinics; 
+    this.forceUpdate();
+  }
+
 
   render() {
 
-
     return (
         <div className="userProfile">
+
             <h1>{this.state.user.name} </h1> 
 
             <ReactRoundedImage
@@ -60,47 +102,21 @@ class Profile extends React.Component {
 
             <Tabs defaultActiveKey="infoSection"> 
                 <Tab eventKey="infoSection" title="User Info"> 
-                    <div className="infoSection">
-                        <h3>User Info</h3>
-                        
-                        <h6>Email: {this.state.user.email} </h6> 
-                        <h6>Address: {this.state.user.address}</h6>
-                        <h6>City: {this.state.user.city}</h6>
-                        <h6>Province: {this.state.user.province}</h6>
-
-                        <ImageUploading
-                            value={this.state.profilePic}
-                            onChange={this.onChange}
-                            maxNumber={1}
-                            dataURLKey="data_url"
-                        >
-                            {({
-                            onImageUpload,
-                            onImageRemoveAll,
-                            isDragging,
-                            dragProps,
-                            }) => (
-                            // write your building UI
-                            <div className="upload__image-wrapper">
-                                <button
-                                    style={isDragging ? { color: 'red' } : undefined}
-                                    onClick={onImageUpload}
-                                    {...dragProps}
-                                    >
-                                    Add/Change Profile Pic 
-                                </button>
-                            
-                                <button onClick={onImageRemoveAll}>Remove Profile Pic</button>
-                            </div>
-                            )}
-                        </ImageUploading>
-                    </div> 
+                    <InfoSection 
+                        user={this.state.user}
+                        onProfilePicChange={this.onProfilePicChange}
+                    /> 
                 </Tab> 
 
+
                 <Tab eventKey="preferencesSection" title="Preferences"> 
-                    <div className="preferencesSection">
-                        <h3>User Preferences</h3>
-                    </div> 
+                    <PreferenceSection 
+                        user={this.state.user} 
+                        onPreferenceAgeChange={this.onPreferenceAgeChange}
+                        onPreferenceDistanceChange={this.onPreferenceDistanceChange}
+                        onPetSelectChange={this.onPreferenceDistanceChange}
+                        onClinicSelectChange={this.onClinicSelectChange}
+                    /> 
                 </Tab> 
 
                 <Tab eventKey="applicationSection" title="Application"> 

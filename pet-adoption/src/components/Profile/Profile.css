@@ -9,4 +9,9 @@
       color: white; 
     }
 
+    .ageSelect {
+        display: flex;
+        flex-direction: row; 
+    }
+
 }
