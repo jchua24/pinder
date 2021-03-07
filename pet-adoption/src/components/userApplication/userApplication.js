@@ -1,9 +1,10 @@
 import React from "react";
 import {Row, Col, Image, Button} from "react-bootstrap";
 
-class userApplication extends React.Component{
+class UserApplication extends React.Component{
     constructor(){
         super();
+        console.log('the user app constructor was called');
     }
 
     rejectApplication = (e) => {
@@ -17,6 +18,7 @@ class userApplication extends React.Component{
     }
 
     render(){
+        console.log(this.props);
         return (
             <Row>
                 <Col>
@@ -42,4 +44,4 @@ class userApplication extends React.Component{
     }
 }
 
-export default userApplication;
+export default UserApplication;
