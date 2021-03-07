@@ -83,6 +83,8 @@ class PreferencesSection extends React.Component {
                 min={0}
                 max={100}
                 className="slider"
+                handleStyle={{borderColor: '#17a2b8', backgroundColor: 'white'}}
+                trackStyle={[{backgroundColor: "#17a2b8"}]}
             />
         
 
@@ -95,9 +97,8 @@ class PreferencesSection extends React.Component {
                 min={0}
                 max={100}
                 className="slider"
-                railStyle={{backgroundColor: 'red'}}
-                handleStyle={{borderColor: 'green', backgroundColor: 'black'}}
-                trackStyle={[{backgroundColor: 'blue'}]}
+                handleStyle={{borderColor: '#17a2b8', backgroundColor: 'white'}}
+                trackStyle={[{backgroundColor: "#17a2b8"}]}
             />
             <h6> Pet Selections </h6> 
             <Select 
