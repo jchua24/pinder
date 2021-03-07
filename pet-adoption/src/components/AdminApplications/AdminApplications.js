@@ -13,6 +13,11 @@ class AdminApplication extends React.Component {
 
   getAvailPets = () => {
     // get the current pets of the current clinic from the database
+    let availPets = [
+        {name: 'jack'},
+        {},
+        {},
+    ]
   };
 
   getUserApps = () => {
