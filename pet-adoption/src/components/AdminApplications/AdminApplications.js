@@ -42,32 +42,35 @@ class AdminApplications extends React.Component {
     return (
       <div>
         {availPets.length !== 0
-          ? availPets.map((pet) => (
-              <Accordion key={availPets.indexOf(pet)}>
-                <Card>
+          ? <div>
+            <Accordion defaultActiveKey="0" key="0">          
+            {availPets.map((pet) => (
+                <Card key={availPets.indexOf(pet)}>
                   <Card.Header>
                     <Accordion.Toggle as={Button} variant="info" eventKey={availPets.indexOf(pet)}>
                       {pet.name}
                     </Accordion.Toggle>
                   </Card.Header>
                   <Accordion.Collapse event={availPets.indexOf(pet)}>
-                    <ul className="list-group list-group-flush">
-                      {/* in the future we will use pet id instead of name */}
+                    {/* <ul className="list-group list-group-flush">
                       {userApps.filter(app => app.appliedPet === pet.name).map(app => (
-                        <li className="list-group-item" key={userApps.indexOf(app)}>
-                            <UserApplication 
-                              imgSrc="/user-profile-placeholder.png"
-                              userName={app.userName} 
-                              appliedPet={app.appliedPet} 
-                              summary="cool shit" 
-                            />
-                        </li>
+                        // <li className="list-group-item" key={userApps.indexOf(app)}>
+                        //     <UserApplication 
+                        //       imgSrc="/user-profile-placeholder.png"
+                        //       userName={app.userName} 
+                        //       appliedPet={app.appliedPet} 
+                        //       summary="cool shit" 
+                        //     />
+                        // </li>
+                        <h1 key={userApps.indexOf(app)}>hi</h1>
                       ))}
-                    </ul>
+                    </ul> */}
+                    <Card.Body>hi</Card.Body>
                   </Accordion.Collapse>
                 </Card>
-              </Accordion>
-            ))
+            ))}
+            </Accordion>
+            </div>
           : <h3 style={{color: "white"}}>There are no available pets at the moment</h3>}
       </div>
     );
