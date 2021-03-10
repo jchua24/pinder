@@ -7,5 +7,20 @@
 }
 
 .introCarousel{
-    
+}
+
+.introText{
+    text-align: left;
+}
+
+.introText h1{
+    font-size: 64pt;
+}
+
+.introText h2{
+    font-size: 32pt;
+}
+
+.introText h3{
+    font-size: 24pt;
 }

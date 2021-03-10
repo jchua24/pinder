@@ -13,7 +13,7 @@ class Navigation extends React.Component{
         return (
             <div className="navbarsomething">
                 {/* make the color transparent in the future */}
-                <Navbar bg="info" expand="lg">
+                <Navbar expand="lg" style={{backgroundColor: '#C3BEF7'}}>
                     <Navbar.Brand href="/">
                         <img
                             src="/dog-icon.png"
@@ -31,10 +31,6 @@ class Navigation extends React.Component{
                             {!this.state.isLoggedIn ? <Nav.Link href="/Applications"> Applications </Nav.Link> : ""}
                             <Nav.Link href="/postapet">Pet Posting</Nav.Link>
                         </Nav>
-                        {/* I have removed Sign up from Navbar for now, we will discuss this later */}
-                        {/* <Nav className="mr-auto">
-                            <Nav.Link href="/signup">Sign Up</Nav.Link>
-                        </Nav> */}
                     </Navbar.Collapse>
                 </Navbar>
             </div>

@@ -9,7 +9,7 @@ class Pet extends React.Component {
   }
   render() {
     return (
-        <Card className="pet" bg="info" style={{width: '17rem', height: this.props.cardHeight}}>
+        <Card className="pet" style={{width: '17rem', height: this.props.cardHeight}}>
             <Card.Img variant="top" src={this.props.imgSrc} style={{height: this.props.imgHeight}}/>
             <Card.Body >
                 <Card.Title>{this.props.name}</Card.Title>
