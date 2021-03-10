@@ -1,6 +1,9 @@
 @media all and (min-width: 480px) {
     .Login {
+      width: 70%;
+      margin: 10% auto;
       padding: 60px 0;
+      /* background-color: #F6F680; */
     }
   
     .Login form {
@@ -9,7 +12,7 @@
     }
 
     .Login a {
-      color: #5bc0de;
+      color: #429EA6;
     }
 }
 

@@ -34,3 +34,20 @@ code {
   -o-transform: scale(0.9, 0.9); /* Opera */
   -moz-transform: scale(0.9, 0.9); /* Firefox */
 }
+
+.about{
+  margin: 5% auto;
+  width: 70% ;
+  background-color: #E5ECF4;
+  border-radius: 3mm;
+  padding: 10px;
+}
+
+.aboutImages {
+  padding: 10px;
+}
+
+.aboutCaption figcaption{
+  font-size: medium;
+  color: red;
+}

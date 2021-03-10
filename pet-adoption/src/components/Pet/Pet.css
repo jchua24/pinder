@@ -1,3 +1,7 @@
 .pet{
     background-color: #E5ECF4;
+    border-radius: 5mm;
+}
+.pet img{
+    border-radius: 5mm 5mm 0 0 ;
 }
