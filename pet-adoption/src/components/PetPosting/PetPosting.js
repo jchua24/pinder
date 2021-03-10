@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row, Col, Button, Card } from "react-bootstrap";
+import { Form, Row, Col, Button, Card, Container } from "react-bootstrap";
 import bsCustomFileInput from "bs-custom-file-input";
 
 import "./PetPosting.css";
@@ -17,17 +17,21 @@ class PetPosting extends React.Component {
   validateForm() {
     return (
       this.state.age.length > 0 &&
-      this.state.breed.length > 0 &&
-      !isNaN(parseInt(this.state.age))
+      this.state.type.length > 0     
     );
+  }
+
+  handleSubmit(event){
+    event.preventDefault();
+    alert('The pet application was submitted!'); 
   }
 
   render() {
     return (
-      <div className="petPosting">
-        <Row>
-          <Col>
-            <Form className="infoTextColor">
+      <Container className="petPosting">
+        <Row className="justify-content-md-center">
+          <Col xs={6}>
+            <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId="affClinic">
                 <Form.Label>Affiliated Clinic</Form.Label>
                 <Form.Control
@@ -54,30 +58,59 @@ class PetPosting extends React.Component {
                   </option>
                 </Form.Control>
               </Form.Group>
-
+              <Form.Group controlId="breed">
+                <Form.Label>Breed</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Golden Retriever, Husky, etc.."
+                  value={this.state.breed}
+                  onChange={(e) => this.setState({breed : e.target.value})}
+                />
+              </Form.Group>
               <Form.Group controlId="age">
                 <Form.Label>Age</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Please enter a valid number"
+                  placeholder="Please enter a valid number.."
+                  value={this.state.age}
+                  onChange={(e) => this.setState({age: e.target.value})}
                 />
               </Form.Group>
               <Form.Group controlId="addInfo">
                 <Form.Label>Additional Information</Form.Label>
-                <Form.Control as="textarea" rows={5} />
+                <Form.Control 
+                  as="textarea" 
+                  rows={5} 
+                  placeholder="Please enter more information about the pet, let the Hoomans know who they are adopting!"
+                  value={this.state.addInfo}
+                  onChange={(e) => this.setState({addInfo: e.target.value})}
+                />
               </Form.Group>
-              <Form.File
-                id="custom-file"
-                label="Attach Pet Images"
-                custom
-              />
+              <Form.Group>
+                <Form.File
+                  id="custom-file"
+                  label="Attach Pet Images"
+                  custom
+                />
+              </Form.Group>
+              <Button
+                block
+                size="lg"
+                type="submit"
+                style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
+                disabled={!this.validateForm()}
+              >
+                Submit
+              </Button>
             </Form>
           </Col>
-          <Col>
-            <Card bg="dark" style={{ width: "17rem", height: "100%" }}></Card>
+          <Col xs={3}>
+            <Card style={{ width: "17rem", height: "100%", backgroundColor: '#F6F680' }}>
+              <Card.Title style={{paddingTop: '10px'}}>Uploded Images</Card.Title>
+            </Card>
           </Col>
         </Row>
-      </div>
+      </Container>
     );
   }
 }

@@ -148,7 +148,7 @@ class SignUp extends React.Component {
               <option selected value="">
                 Choose..
               </option>
-              <option value="Yes">Yes</option>
+              {/* <option value="Yes">Yes</option> */}
               <option value="No">No</option>
             </Form.Control>
           </Form.Group>
