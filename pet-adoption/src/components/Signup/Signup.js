@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import "./Signup.css";
 
@@ -7,7 +8,7 @@ class SignUp extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: "", 
+      name: "",
       email: "",
       password: "",
       address: "",
@@ -15,12 +16,13 @@ class SignUp extends React.Component {
       province: "",
       postal: "",
       isClinic: "",
+      redirect: "",
     };
   }
 
   validateForm() {
     return (
-      this.state.name.length > 0 && 
+      this.state.name.length > 0 &&
       this.state.email.length > 0 &&
       this.state.password.length > 0 &&
       this.state.address.length > 0 &&
@@ -33,14 +35,19 @@ class SignUp extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    alert("signup!");
+    if (this.state.isClinic === "No")
+      this.setState({redirect: '/profile'}, () => console.log('Moving on to the initialize user profile'));
+    else
+      this.setState({redirect: '/adminapps'}, () => console.log('No need to initialize admin for now, move to its applications'));
   }
 
   render() {
+    if (this.state.redirect.length > 0)
+      return <Redirect to={this.state.redirect} />;
     return (
       <div className="Signup">
-        <Form onSubmit={this.handleSubmit} className="infoTextColor">
-        <Form.Group size="lg" controlId="name">
+        <Form onSubmit={this.handleSubmit} className="">
+          <Form.Group size="lg" controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               autoFocus
@@ -150,7 +157,7 @@ class SignUp extends React.Component {
             block
             size="lg"
             type="submit"
-            variant="info"
+            style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
             disabled={!this.validateForm()}
             onClick={this.printState}
           >

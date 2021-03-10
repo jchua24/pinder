@@ -5,3 +5,7 @@
 .pet img{
     border-radius: 5mm 5mm 0 0 ;
 }
+
+:hover{
+    /* border-color: #F6F680; */
+}
