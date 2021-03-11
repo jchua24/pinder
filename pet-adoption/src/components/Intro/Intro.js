@@ -30,7 +30,7 @@ class Intro extends React.Component {
           </h3>
         </div>
         <br></br>
-        <Carousel indicators={false} className="introCarousel">
+        <Carousel indicators={false} className="introCarousel small">
           <Carousel.Item interval={2000}>
             <CardDeck>
               <Pet
