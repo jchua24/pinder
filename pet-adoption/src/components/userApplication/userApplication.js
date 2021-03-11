@@ -22,7 +22,7 @@ class UserApplication extends React.Component{
         return (
             <Row>
                 <Col>
-                    <Image src={this.props.imgSrc} rounded/>
+                    <Image width="50" height="50" src={this.props.imgSrc} rounded/>
                 </Col>
                 <Col xs={6}>
                     <div>

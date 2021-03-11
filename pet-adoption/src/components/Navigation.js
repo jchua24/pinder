@@ -38,7 +38,7 @@ class Navigation extends React.Component {
                 ""
               )}
             </Nav>
-            <Nav className="justify-content-end">
+            <Nav>
               <NavDropdown
                 title={
                   <Image
@@ -51,7 +51,10 @@ class Navigation extends React.Component {
                 }
                 id="profile-dropdown"
                 img="/profile-icon.png"
-              ></NavDropdown>
+                drop="left"
+              >
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+              </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

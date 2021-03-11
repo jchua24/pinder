@@ -1,0 +1,20 @@
+.appsContainer{
+    margin: 5%;
+    width: 50%;
+    float: left;
+
+}
+
+.appsCard{
+    background-color: #E5ECF4;
+}
+
+.appsSearch{
+    border-radius: 3mm;
+    border-color:transparent;
+    background-color: #F6F680;
+    padding: 20px 20px 10px 20px;
+    float: left;
+    width: 30%;
+    margin: 5%;
+}
