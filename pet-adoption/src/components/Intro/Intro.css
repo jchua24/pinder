@@ -7,10 +7,11 @@
 }
 
 .introCarousel{
+    padding-top: 50px;
 }
 
 .introText{
-    text-align: left;
+    text-align: center;
 }
 
 .introText h1{

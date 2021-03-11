@@ -30,57 +30,7 @@ class Intro extends React.Component {
           </h3>
         </div>
         <br></br>
-        <Carousel indicators={false} className="introCarousel small">
-          <Carousel.Item interval={2000}>
-            <CardDeck>
-              <Pet
-                name="Biscuit"
-                type="Dog"
-                breed="Golden Retriever"
-                imgSrc="/dogo.jpeg"
-                addInfo="This is a lit puppy"
-              />
-              <Pet
-                name="Pussy Cat"
-                type="Cat"
-                breed="Long Haired"
-                imgSrc="/cat1.jpg"
-                addInfo="PUSSY CAT"
-              />
-              <Pet
-                name="Big Boi"
-                type="Dog"
-                breed="Samoyed"
-                imgSrc="/bigb.jpg"
-                addInfo="The BIGGEST BOI you can find"
-              />
-              {/* <Pet name="RR" type="Small Pet" breed="Something" imgSrc="/pari-hamster.jpg" addInfo="Interesting" /> */}
-            </CardDeck>
-          </Carousel.Item>
-          <Carousel.Item interval={2000}>
-            <CardDeck>
-              <Pet
-                name="Chami"
-                type="Reptile"
-                breed="XYZ"
-                imgSrc="/chami-reptile.jpeg"
-              />
-              <Pet
-                name="Nosey"
-                type="Fish"
-                breed="YYZ"
-                imgSrc="/nosey-fish.jpg"
-              />
-              <Pet
-                name="Pari"
-                type="Small Pet"
-                breed="Hamster"
-                imgSrc="/pari-hamster.jpg"
-              />
-            </CardDeck>
-          </Carousel.Item>
-        </Carousel>
-        <Carousel indicators={false} className="small">
+        <Carousel indicators={false} className="introCarousel">
           <Carousel.Item interval={2000}>
             <CardDeck>
               <Pet
