@@ -91,8 +91,8 @@ class PetSwiper extends React.Component {
 
   render() {
     return (
-      <div className="swiper">
-        <Carousel indicators={false}>
+      <div className="swiperContainer">
+        <Carousel className="swiper" indicators={false}>
 
           {this.state.pets.map((pet) => (
             <Carousel.Item interval={5000}>

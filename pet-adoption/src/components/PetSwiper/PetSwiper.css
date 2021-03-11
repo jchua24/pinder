@@ -1,11 +1,9 @@
-.swiper{
+.swiperContainer{
     margin-left: 30%; 
     margin-right: 30%;
-
     margin-top: 0;  
     margin-bottom: 0;  
     position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    top: 15%;
+   
 }
