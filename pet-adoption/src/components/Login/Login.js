@@ -21,8 +21,10 @@ class Login extends React.Component {
     event.preventDefault();
     let email = this.state.email,
       password = this.state.password;
-    if (email === "test@test.com" && password === "test")
+    if (email === "test@test.com" && password === "test"){
       this.setState({ redirect: "/swiper" });
+      global.isLoggedIn = 'true';
+    }
     else if (email === "clinic@clinic.com" && password === "clinic")
       this.setState({ redirect: "/adminapps" });
     else alert("The email or password entered is incorrect!");

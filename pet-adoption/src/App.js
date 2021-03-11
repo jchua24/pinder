@@ -17,6 +17,7 @@ import AdminApplications from "./components/AdminApplications/AdminApplications"
 
 
 class App extends React.Component {
+
   render() {
     return (
       <div className="App">
