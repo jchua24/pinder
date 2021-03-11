@@ -2,7 +2,7 @@
 List of Third-Party Libraries Used: material-ui, bootstrap, rc-slider, react-bootstrap, react-bootstrap-icons, react-card-flip, react-images-uploading, react-rounded-image, reactjs-popup, simple-react-lightbox. 
 
 
-Basic Functionalities (in sequential order): 
+Basic Functionalities for Regular Users (in sequential order): 
 
 The first page you see is an introductory page, showing you the various pets that is for adoption.
 
@@ -19,6 +19,14 @@ The landing page is the main view for regular users, which consists of a swiper 
 5. Changing Profile Pic - click on 'Add/Change Profile Pic' button in the 'User Info' tab, then upload an image. Profile pictures can be removed by clicking on the 'Remove Profile Pic' button. 
 
 6. Changing User Preferences - in the user preferences tab on the profile page, users can select their preferred pet age by using the top slider, as well as their distance preferences using the second slider. They can also choose their pet type preferences using the top dropdown, and search for specific pet clinics in the lower dropdown. 
+
+
+Basic Functionalities for Admin Users (in sequential order): 
+
+1. Posting a pet (http://localhost:3000/postapet): this is the page that admin users would use to post a pet. Filling out the form with the applicable info, would add this new pet to the list of pet postings that the clinic has made available for regular users. 
+
+2. Viewing Applications (http://localhost:3000/adminapps): allows users to view applications they have previously posted. 
+
 
 
 
