@@ -94,14 +94,8 @@ const userSchema = mongoose.Schema({
         type: Boolean, 
         required: true
     }, 
-    petApplications: {
-        type: Array[ApplicationSchema],
-        required: false
-    }, 
-    petPostings: {
-        type: Array[PostingSchema],
-        required: false
-    }
+    petApplications: [ApplicationSchema], 
+    petPostings: [PostingSchema]
 });
 
 userSchema.set('toJSON', {

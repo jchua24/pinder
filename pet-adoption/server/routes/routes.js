@@ -8,6 +8,6 @@ router.get('/', function(req, res) {
 
 //router.use('/user', require('./user'));
 //router.use('/restaurant', require('./restaurant'));
-//router.use('/auth', require('./auth'));
+router.use('/auth', require('./auth'));
 
 module.exports = router;

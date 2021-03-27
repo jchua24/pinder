@@ -36,7 +36,7 @@ module.exports = {
             throw err;
         }
     }, 
-    
+
     verifyPassword: (input_str, hash) => {
 
         const passwordMatches = bcrypt.compareSync(input_str, hash); 
@@ -48,7 +48,7 @@ module.exports = {
     }, 
 
     generateAccessToken: (email, name) => {
-        // expires after half and hour (1800s seconds = 30 minutes)
+        // expires after half an hour (1800s seconds = 30 minutes)
         return jwt.sign({to_sign: email + name}, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
     }
 }
