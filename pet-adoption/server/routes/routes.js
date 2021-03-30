@@ -6,8 +6,9 @@ router.get('/', function(req, res) {
   res.send('Pet Adoption App Backend!');
 });
 
-//router.use('/user', require('./user'));
-//router.use('/restaurant', require('./restaurant'));
 router.use('/auth', require('./auth'));
+router.use('/user', require('./user'));
+//router.use('/pet', require('./pet'));
+
 
 module.exports = router;

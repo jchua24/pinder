@@ -110,8 +110,11 @@ router.post("/add", async (req, res) => {
         console.log("user already exists");
         return res.sendStatus(409); //user already exists, send error         
     }
-
 });
+
+
+
+
 
 
 module.exports = router; 
