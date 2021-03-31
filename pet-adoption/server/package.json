@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.2"
+    "express-session": "^1.17.1",
+    "mongoose": "^5.12.2",
+    "react-session": "0.0.1"
   }
 }

@@ -40,6 +40,30 @@ const ApplicationSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true
+    }, 
+    comment: {
+        type: String, 
+        required: false
+    }
+})
+
+//schema for user preferences object
+const PreferencesSchema = new mongoose.Schema({
+    age: {
+        type: [String],
+        required: true
+    }, 
+    distance: {
+        type: [Number],
+        required: true
+    },
+    petTypes: {
+        type: [String],
+        required: true
+    }, 
+    clinic: {
+        type: [String],
+        required: true
     }
 })
 
@@ -94,13 +118,20 @@ const userSchema = mongoose.Schema({
         type: Boolean, 
         required: true
     }, 
+    profilePic: {
+        type: String, 
+        required: false
+    },
+    preferences: PreferencesSchema, 
     petApplications: [ApplicationSchema], 
-    petPostings: [PostingSchema]
+    petPostings: [PostingSchema], 
+    
 });
 
 userSchema.set('toJSON', {
     virtuals: true
 });
+
 
 // create an user model using the schema
 const User = mongoose.model('user', userSchema);

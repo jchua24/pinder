@@ -12,47 +12,54 @@ const { User } = require("../db/models/userModel");
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-const {hashPassword, verifyPassword, generateAccessToken} = require("../helpers/auth"); 
+const {hashPassword, sessionChecker, login} = require("../helpers/auth"); 
+const {mongoChecker, isMongoError} = require('../helpers/mongo');
 
-
-//auth endpoint - authenticate existing user 
-router.post("/", async (req, res) => {
+//authenticate existing user 
+router.post("/", mongoChecker, async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
         return res.sendStatus(400); // bad request 
     }   
 
-    //attempt to attrieve existing user based on email
-    const email = req.body.email.trim().toLowerCase(); 
-    const existingUser = await User.findOne({ email: email }).exec();
+    try {
+        //attempt to attrieve existing user based on email
+        const email = req.body.email.trim().toLowerCase(); 
+        const existingUser = await login(email, req.body.password);
 
-    if(existingUser != null) {
-
-        //check if password matches, and return access token + id it does
-        const match = verifyPassword(req.body.password, existingUser.password); 
-
-        if(match) {
-            const accessToken = generateAccessToken(email, existingUser.name); 
-
-            //required by frontend to make future api calls
-            const response = {
-                id: existingUser._id, 
-                access_token: accessToken
-            }
-            
-            return res.send(response);
+        if(existingUser != null) {
+            req.session.user = user._id;
+            req.session.email = user.email
+            return res.sendStatus(200);
+        } else {
+            return res.sendStatus(401);
         }
-         
-        return res.sendStatus(401); // password doesn't match, unauthorized
-    } else {
-        console.log("user does not exist");
-        return res.sendStatus(404); //user not found, send error         
+
+    } catch(error) {
+        console.log(error); 
+        
+    	if (isMongoError(error)) { 
+            return res.sendStatus(401);
+		} else {
+            return res.sendStatus(401);
+		} 
     }
- 
 });
 
+//user logout
+router.get('/logout', (req, res) => {
+	// Remove the session
+	req.session.destroy((error) => {
+		if (error) {
+			res.status(500).send(error)
+		} else {
+			res.redirect('/')
+		}
+	})
+})
 
-//auth endpoint - adding new user to platform 
+
+//adding new user to platform 
 router.post("/add", async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') ) {

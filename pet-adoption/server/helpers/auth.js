@@ -2,32 +2,40 @@
 Helper functions to facilitate JWT authentication. 
 */ 
 
-const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const { User } = require("../db/models/userModel");
 
 module.exports = {
 
-    authenticateToken: (req, res, next) => {
-    
-        // Gather the jwt access token from the request header
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
-    
-        if (token == null) {
-            return res.sendStatus(401) // unauthorized
-        }
-      
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, hashed_details) => {
-          if (err) {
-            return res.sendStatus(401) // unauthorized
-          }
-          req.hashed_details = hashed_details
-          next() // pass the execution off to whatever request the client intended
-        })
+    authenticate: (req, res, next) => {
+        if (req.session.user) {
+
+            const user = User.findById(req.session.user).exec(); 
+
+            if(!user) {
+                req.user = user
+                next()
+            } else {
+                return res.sendStatus(401); //unauthorized; 
+            }
+		} else {
+			return res.sendStatus(401); //unauthorized; 
+		}
     }, 
 
-    hashPassword: (input_str) =>  {
+    //finds user and verifies password
+    login: (email, password) => {
 
+        const user = User.findOne({ email: email }).exec(); 
+
+        if (!user || !bcrypt.compareSync(password, user.password)) {
+            throw "User not found with specified email/password";
+        }
+
+        return user; 
+    }, 
+    
+    hashPassword: (input_str) =>  {
         const hash = bcrypt.hashSync(input_str, 10);
         
         if (hash) {
@@ -35,21 +43,6 @@ module.exports = {
         } else {
             throw err;
         }
-    }, 
-
-    verifyPassword: (input_str, hash) => {
-
-        const passwordMatches = bcrypt.compareSync(input_str, hash); 
-    
-        if(passwordMatches) { //input string matches hash
-            return true; 
-        } 
-        return false; 
-    }, 
-
-    generateAccessToken: (email, name) => {
-        // expires after half an hour (1800s seconds = 30 minutes)
-        return jwt.sign({to_sign: email + name}, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
     }
 }
 

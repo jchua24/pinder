@@ -33,7 +33,7 @@ const petSchema = mongoose.Schema({
         required: false
     }, 
     images: {
-        type: Array[string], 
+        type: [String], 
         required: false
     }
 });
@@ -43,6 +43,6 @@ petSchema.set('toJSON', {
 });
 
 // create an user model using the schema
-const Pet = mongoose.model('user', petSchema);
+const Pet = mongoose.model('Pet', petSchema);
 
 module.exports = { Pet };
