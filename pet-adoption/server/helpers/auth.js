@@ -34,7 +34,7 @@ module.exports = {
 
         return user; 
     }, 
-    
+        
     hashPassword: (input_str) =>  {
         const hash = bcrypt.hashSync(input_str, 10);
         

@@ -12,11 +12,11 @@ const { User } = require("../db/models/userModel");
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-const {hashPassword, sessionChecker, login} = require("../helpers/auth"); 
+const {hashPassword, , login} = require("../helpers/auth"); 
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
 
 //authenticate existing user 
-router.post("/", mongoChecker, async (req, res) => {
+router.post("/", mongoChecker, extendSession, async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
         return res.sendStatus(400); // bad request 
@@ -29,7 +29,7 @@ router.post("/", mongoChecker, async (req, res) => {
 
         if(existingUser != null) {
             req.session.user = user._id;
-            req.session.email = user.email
+            req.session.email = user.email;
             return res.sendStatus(200);
         } else {
             return res.sendStatus(401);
@@ -51,9 +51,9 @@ router.get('/logout', (req, res) => {
 	// Remove the session
 	req.session.destroy((error) => {
 		if (error) {
-			res.status(500).send(error)
+			res.status(500).send(error);
 		} else {
-			res.redirect('/')
+			return res.sendStatus(200);
 		}
 	})
 })
