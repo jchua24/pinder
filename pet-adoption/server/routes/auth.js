@@ -12,14 +12,14 @@ const { User } = require("../db/models/userModel");
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-const {hashPassword, , login} = require("../helpers/auth"); 
+const {login} = require("../helpers/auth"); 
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
 
 //authenticate existing user 
-router.post("/", mongoChecker, extendSession, async (req, res) => {
+router.post("/login", mongoChecker, async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
-        return res.sendStatus(400); // bad request 
+        return res.status(400).send('Invalid request - email or password is missing.');
     }   
 
     try {
@@ -32,16 +32,16 @@ router.post("/", mongoChecker, extendSession, async (req, res) => {
             req.session.email = user.email;
             return res.sendStatus(200);
         } else {
-            return res.sendStatus(401);
+            return res.status(404).send("User not found with specified email/password.");
         }
 
     } catch(error) {
         console.log(error); 
         
     	if (isMongoError(error)) { 
-            return res.sendStatus(401);
+            return res.sendStatus(500);
 		} else {
-            return res.sendStatus(401);
+            return res.sendStatus(400);
 		} 
     }
 });
@@ -63,7 +63,7 @@ router.get('/logout', (req, res) => {
 router.post("/add", async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') ) {
-        return res.sendStatus(400); // bad request  
+        return res.status(400).send('Invalid request - email, password or name is missing.');
     }   
 
     const email = req.body.email.trim().toLowerCase(); 
@@ -98,30 +98,22 @@ router.post("/add", async (req, res) => {
 
             //persist user and generate access token
             const userAdded = await newUser.save();
-            const accessToken = generateAccessToken(userAdded.email, userAdded.name); 
     
             //required by frontend to make future api calls
             const response = {
                 id: userAdded._id, 
-                access_token: accessToken
+                user: userAdded
             }
     
             return res.send(response);
         }
         catch (err) {
-            console.log("failed to persist new user: " + err);
             return res.sendStatus(400);
         }
 
     } else {
-        console.log("user already exists");
-        return res.sendStatus(409); //user already exists, send error         
+        return res.status(409).send('User already exists.');
     }
 });
-
-
-
-
-
 
 module.exports = router; 

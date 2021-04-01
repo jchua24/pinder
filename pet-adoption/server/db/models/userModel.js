@@ -2,41 +2,26 @@
 User mongoose model
 */
 const mongoose = require('mongoose');
-
-//prevent mongoose from automatically pluralizing collection name
 mongoose.pluralize(null);
 
+// import the pet model
+const { PostSchema } = require("./postModel");
 
-//pet posting schema 
-const PostingSchema = new mongoose.Schema({
-    petID: {
-        type: String,
-        required: true
-    },
-    petName: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-        required: false
-    }, 
-    status: {
-        type: String,
-        required: true
-    }
-});
 
 //pet application schema 
 const ApplicationSchema = new mongoose.Schema({
-    petID: {
-        type: String,
+    userID: {
+        type: String, 
         required: true
-    },
-    petName: {
-        type: String,
+    }, 
+    clinicID: {
+        type: String, 
         required: true
-    },
+    }, 
+    postingID: {
+        type:String, 
+        required: true
+    }, 
     status: {
         type: String,
         required: true
@@ -124,7 +109,7 @@ const userSchema = mongoose.Schema({
     },
     preferences: PreferencesSchema, 
     petApplications: [ApplicationSchema], 
-    petPostings: [PostingSchema], 
+    petPostings: [PostSchema], //Note: regular users will never have any petPostings
     
 });
 

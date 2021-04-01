@@ -5,7 +5,7 @@ Handles endpoints for user interactions with the pet carousel
 const express = require('express');
 const router = express.Router() 
 
-const { Pet } = require("../db/models/petModel");
+const { Pet } = require("../db/models/postModel");
 const { ObjectID } = require('mongodb')
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues

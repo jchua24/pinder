@@ -1,9 +1,7 @@
 /*
-Pet mongoose model
+Post mongoose model (containing Pet model and other details)
 */
 const mongoose = require('mongoose');
-
-//prevent mongoose from automatically pluralizing collection name
 mongoose.pluralize(null);
 
 // create a pet schema
@@ -38,11 +36,29 @@ const petSchema = mongoose.Schema({
     }
 });
 
-petSchema.set('toJSON', {
+//pet posting schema 
+const PostSchema = new mongoose.Schema({
+    pet: {
+        type: petSchema,
+        required: true
+    },
+    petName: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: false
+    }, 
+    status: {
+        type: String,
+        required: true
+    }
+});
+
+PostSchema.set('toJSON', {
     virtuals: true
 });
 
-// create an user model using the schema
-const Pet = mongoose.model('Pet', petSchema);
 
-module.exports = { Pet };
+module.exports = { PostSchema };

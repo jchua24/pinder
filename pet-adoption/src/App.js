@@ -54,9 +54,6 @@ class App extends React.Component {
               </Route>
             </Switch>
           </div>
-          {/* <div className="footerContainer">
-            <Footer />
-          </div> */}
         </Router>
       </div>
     );
