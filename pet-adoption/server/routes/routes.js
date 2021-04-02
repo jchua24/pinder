@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.use('/api/auth', require('./auth'));
 router.use('/api/user', require('./user'));
-router.use('/api/pet', require('./post'));
+router.use('/api/post', require('./post'));
 
 
 module.exports = router;

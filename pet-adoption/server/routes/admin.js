@@ -46,7 +46,7 @@ router.get("/postings/:id", authenticate, mongoChecker, async (req, res) => {
     const posting = req.user.petPostings.id(req.params.id);
 
     if(!posting) {
-        return res.status(404).send('Reservation not found');
+        return res.status(404).send('Posting not found');
     }
         
     return res.send(posting); //send all postings by default
@@ -82,15 +82,6 @@ router.post("/postings", authenticate, mongoChecker, async (req, res) => {
 			res.status(400).send('Bad Request'); // 400 for bad request gets sent to client.
 		}
     }
-
-    //find posting subdocument  
-    const posting = req.user.petPostings.id(req.params.id);
-
-    if(!posting) {
-        return res.status(404).send('Reservation not found');
-    }
-        
-    return res.send(posting); //send all postings by default
 });
 
 //modify existing posting 
@@ -109,7 +100,7 @@ router.patch("/postings/:id", authenticate, mongoChecker, async (req, res) => {
         //find all matching applications
         const posting = req.user.petPostings.id(req.params.id); 
         if(!posting) {
-            return res.status(401).send('Posting not found.'); 
+            return res.status(404).send('Posting not found.'); 
         }
 
         posting.set({pet: req.body.pet || posting.pet, description: req.body.description || posting.description}); 
@@ -204,8 +195,8 @@ router.get("/applications/:postingID", authenticate, mongoChecker, async (req, r
     return res.send(applications); 
 });
 
-//TO-DO: update application (approve)
-router.post("/applications/approve/:id", authenticate, mongoChecker, async (req, res) => {
+//update application (approve)
+router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, res) => {
 
     if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Invalid Application ID.');
@@ -231,7 +222,7 @@ router.post("/applications/approve/:id", authenticate, mongoChecker, async (req,
             return res.status(404).send('Corresponding posting to approved application not found.'); 
         }
         posting.status = "approved"; 
-        posting.owner = application.userID;
+        posting.petOwnerID = application.userID;
         req.user.save(); 
         
         //mark user application as approved 
@@ -278,7 +269,7 @@ router.post("/applications/approve/:id", authenticate, mongoChecker, async (req,
 
 
 //update application (reject)
-router.post("/applications/reject/:id", authenticate, mongoChecker, async (req, res) => {
+router.get("/applications/reject/:id", authenticate, mongoChecker, async (req, res) => {
 
     if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Invalid Application ID.');

@@ -30,7 +30,7 @@ router.post("/login", mongoChecker, async (req, res) => {
         if(existingUser != null) {
             req.session.user = user._id;
             req.session.email = user.email;
-            return res.sendStatus(200);
+            return res.sendStatus({id: req.session.user, user: existingUser});
         } else {
             return res.status(404).send("User not found with specified email/password.");
         }
@@ -62,7 +62,9 @@ router.get('/logout', (req, res) => {
 //adding new user to platform 
 router.post("/add", async (req, res) => {
 
-    if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') ) {
+    if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') ||  !req.body.hasOwnProperty('address')
+    || !req.body.hasOwnProperty('address') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('province') ||  !req.body.hasOwnProperty('postal') || 
+    !req.body.hasOwnProperty('phone') || !req.body.hasOwnProperty('admin')) {
         return res.status(400).send('Invalid request - email, password or name is missing.');
     }   
 

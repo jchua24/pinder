@@ -43,7 +43,12 @@ router.get("/:id", authenticate, mongoChecker, async (req, res) => {
 });
 
 //update profile picture 
-router.patch("/pic/", authenticate, mongoChecker, async (req, res) => {   
+router.patch("/pic", authenticate, mongoChecker, async (req, res) => {   
+
+
+    if(!req.body.hasOwnProperty("profilePic")) {
+        return res.status(400).send('Invalid request - missing profilePic field.');
+    }
 
     try {
         const user = req.user; 
@@ -95,10 +100,10 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
 
     if(req.body.hasOwnProperty("status")) { 
         //filters by status (e.g pending, completed, etc)
-        return req.user.petApplications.filter((posting) => posting.status == req.body.status);
+        return req.user.petApplications.filter((application) => application.status == req.body.status);
     } 
         
-    return res.send(req.user.petApplications); //send all postings by default
+    return res.send(req.user.petApplications); //send all applications by default
 });
 
 //get specific application
@@ -110,7 +115,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
     } 
 
-    //find posting subdocument  
+    //find application subdocument  
     const application = req.user.petApplications.id(req.params.id);
 
     if(!application) {
@@ -121,7 +126,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
 });
 
 //add application
-router.post("/applications/", authenticate, mongoChecker, async (req, res) => {
+router.post("/applications", authenticate, mongoChecker, async (req, res) => {
 
     if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID"))) {
         return res.status(400).send('One of the required fields (postingID, clinicID) was not included in the request.');

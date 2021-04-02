@@ -14,7 +14,7 @@ const {authenticate} = require('../helpers/auth');
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
 
 
-//retrieve all pets (TO-DO: factor in user preferences)
+//TO-DO: retrieve all relevant postings (TO-DO: factor in user preferences)
 router.post("/", authenticate, mongoChecker, async (req, res) => {
     try {
         const pets = await Pet.find().exec();
@@ -32,28 +32,6 @@ router.post("/", authenticate, mongoChecker, async (req, res) => {
             return res.sendStatus(400); 
         }
 
-    }
-});
-
-//get details for specific pet 
-router.get("/:id", authenticate, mongoChecker, async (req, res) => {
-
-    //Validate id immediately.
-	if (!ObjectID.isValid(id)) {
-		return res.sendStatus(404);
-	}
-    
-    try {
-        const pet = await Pet.findOne({ _id: req.params.id }).exec();
-
-        if(pet == null) {
-            return res.sendStatus(404); //pet not found 
-        } 
-    
-        return res.send(pet);
-    } catch (err) {
-        console.log(err);
-        return res.sendStatus(400); 
     }
 });
 

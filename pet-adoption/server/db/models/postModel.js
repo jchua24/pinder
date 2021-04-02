@@ -50,7 +50,7 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     }, 
-    ownerID: {
+    petOwnerID: {
         type: String, 
         required: false
     }
