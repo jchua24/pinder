@@ -35,11 +35,11 @@ const ApplicationSchema = new mongoose.Schema({
 //schema for user preferences object
 const PreferencesSchema = new mongoose.Schema({
     age: {
-        type: [String],
+        type: [Number],
         required: true
     }, 
-    distance: {
-        type: [Number],
+    radius: {
+        type: Number,
         required: true
     },
     petTypes: {
