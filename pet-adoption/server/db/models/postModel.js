@@ -42,10 +42,6 @@ const PostSchema = new mongoose.Schema({
         type: petSchema,
         required: true
     },
-    petName: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: false
@@ -53,6 +49,10 @@ const PostSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true
+    }, 
+    ownerID: {
+        type: String, 
+        required: false
     }
 });
 

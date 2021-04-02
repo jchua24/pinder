@@ -1,5 +1,5 @@
 /* 
-Handles endpoints for user interactions with the pet carousel
+Handles endpoints for the pet carousel (get all postings, get individual posting)
 */ 
 
 const express = require('express');

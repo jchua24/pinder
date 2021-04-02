@@ -19,7 +19,7 @@ const {mongoChecker, isMongoError} = require('../helpers/mongo');
 //get individual user data 
 router.get("/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) || !ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Invalid ID.');
     }
 
@@ -64,7 +64,7 @@ router.patch("/pic/", authenticate, mongoChecker, async (req, res) => {
 //update user preferences
 router.put("/preferences/", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("preferences" in req.body)) {
+    if(!req.body.hasOwnProperty("preferences")) {
         return res.status(400).send('Preferences object missing in request.');
     }
 
@@ -93,7 +93,7 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
     } 
 
-    if("status" in req.body) { 
+    if(req.body.hasOwnProperty("status")) { 
         //filters by status (e.g pending, completed, etc)
         return req.user.petApplications.filter((posting) => posting.status == req.body.status);
     } 
@@ -104,7 +104,7 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
 //get specific application
 router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) || !ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Invalid ID.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -123,7 +123,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
 //add application
 router.post("/applications/", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("postingID" in req.body && "clinicID")) {
+    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID"))) {
         return res.status(400).send('One of the required fields (postingID, clinicID) was not included in the request.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -167,7 +167,7 @@ router.post("/applications/", authenticate, mongoChecker, async (req, res) => {
 //delete specific application
 router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) || !Object.isValid(req.params.id)) {
+    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
         return res.status(400).send('Invalid ID.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
