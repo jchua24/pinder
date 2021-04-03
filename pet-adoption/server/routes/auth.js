@@ -12,8 +12,9 @@ const { User } = require("../db/models/userModel");
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-const {login} = require("../helpers/auth"); 
+const {verifyPassword, hashPassword} = require("../helpers/auth"); 
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
+const {calculateLatLong} = require("../helpers/misc");
 
 //authenticate existing user 
 router.post("/login", mongoChecker, async (req, res) => {
@@ -25,16 +26,19 @@ router.post("/login", mongoChecker, async (req, res) => {
     try {
         //attempt to attrieve existing user based on email
         const email = req.body.email.trim().toLowerCase(); 
-        const existingUser = await login(email, req.body.password);
+        const existingUser = await User.findOne({email: email}).exec(); 
 
         if(existingUser != null) {
-            req.session.user = user._id;
-            req.session.email = user.email;
-            return res.sendStatus({id: req.session.user, user: existingUser});
-        } else {
-            return res.status(404).send("User not found with specified email/password.");
+            const match = verifyPassword(req.body.password, existingUser.password); 
+
+            if(match) {
+                req.session.user = existingUser._id;
+                req.session.email = existingUser.email;
+                return res.send({id: req.session.user, user: existingUser});
+            } 
         }
 
+        return res.status(404).send("User not found with specified email/password.");
     } catch(error) {
         console.log(error); 
         
@@ -46,6 +50,16 @@ router.post("/login", mongoChecker, async (req, res) => {
     }
 });
 
+
+router.post("/coordinates", mongoChecker, async(req, res) => {
+
+    const coordinates = await calculateLatLong(req.body.address);
+
+    console.log("coordinates: " + coordinates); 
+
+    res.send(coordinates);
+}) 
+
 //user logout
 router.get('/logout', (req, res) => {
 	// Remove the session
@@ -53,7 +67,7 @@ router.get('/logout', (req, res) => {
 		if (error) {
 			res.status(500).send(error);
 		} else {
-			return res.sendStatus(200);
+            return res.status(200).send("User successfully logged out.");
 		}
 	})
 })
@@ -76,24 +90,33 @@ router.post("/add", async (req, res) => {
     if (existingUser == null) { //create new user 
     
         try {
+            const hash = await hashPassword(req.body.password); 
 
-            const hash = hashPassword(req.body.password); 
+            //get latlng coordinates 
+            const fullAddress = req.body.address + " " + req.body.city + " " + req.body.province + " " + req.body.postal; 
+            const coordinates = await calculateLatLong(fullAddress);
 
             const userDetails = {
                 name: req.body.name, 
                 email: email, 
                 password: hash, 
-                latitude: 0, //to do
-                longitude: 0, //to do
+                latitude: coordinates["latitude"], 
+                longitude: coordinates["longitude"], 
                 address: req.body.address, 
                 city: req.body.city, 
                 province: req.body.province,
                 postal: req.body.postal, 
                 phone: req.body.phone, 
-                url: req.body.url, 
+                url: req.body.admin ? req.body.url : "", 
                 admin: req.body.admin, 
                 petApplications: [], 
-                petPostings: []
+                petPostings: [],
+                preferences: {
+                    age: [0, 100], 
+                    radius: 100, 
+                    petTypes: [],
+                    clinic: []
+                }, 
             }
 
             const newUser = new User(userDetails);  
@@ -106,10 +129,14 @@ router.post("/add", async (req, res) => {
                 id: userAdded._id, 
                 user: userAdded
             }
+
+            req.session.user = userAdded._id;
+            req.session.email = userAdded.email;
     
             return res.send(response);
         }
         catch (err) {
+            console.log(err);
             return res.sendStatus(400);
         }
 

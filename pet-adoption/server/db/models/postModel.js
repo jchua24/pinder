@@ -12,6 +12,7 @@ const petSchema = mongoose.Schema({
     },
     type: {
         type: String,
+        enum: ['Dog', 'Cat', 'Fish', 'Bird', 'Mouse', 'Hamster', 'Rabbit'], 
         required: true
     },
     breed: {
@@ -20,10 +21,6 @@ const petSchema = mongoose.Schema({
     },
     age: {
         type: Number,
-        required: true
-    },
-    clinicID: {
-        type: String,
         required: true
     },
     additionalInfo: {
@@ -38,6 +35,10 @@ const petSchema = mongoose.Schema({
 
 //pet posting schema 
 const PostSchema = new mongoose.Schema({
+    clinicID: {
+        type: String,
+        required: true
+    },
     pet: {
         type: petSchema,
         required: true

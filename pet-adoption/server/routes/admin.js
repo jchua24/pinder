@@ -36,7 +36,7 @@ router.get("/postings", authenticate, mongoChecker, async (req, res) => {
 //get specific pet posting from this user
 router.get("/postings/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid Posting ID.');
     } else if (!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
@@ -55,14 +55,22 @@ router.get("/postings/:id", authenticate, mongoChecker, async (req, res) => {
 //add post
 router.post("/postings", authenticate, mongoChecker, async (req, res) => {
 
-    if(!req.body.hasOwnProperty("pet")) {
-        return res.status(400).send('Invalid request - pet data not provided.');
+    if(!req.body.hasOwnProperty("pet") || !req.body.hasOwnProperty("clinicID")) {
+        return res.status(400).send('Invalid request - pet data or clinicID not provided.');
     } else if (!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
     }
 
     try {
+
+        //check if the clinicID belongs to a valid admin user 
+        const adminUser = await User.findById(req.body.clinicID).exec(); 
+        if(!adminUser || !adminUser.admin) {
+            return res.status(400).send('Invalid request - clinic does not exist.');
+        }
+
         const posting = req.user.petPostings.create({
+            clinicID: req.body.clinicID,
             pet: req.body.pet, 
             description: req.body.description || "", 
             status: "pending"
@@ -87,7 +95,7 @@ router.post("/postings", authenticate, mongoChecker, async (req, res) => {
 //modify existing posting 
 router.patch("/postings/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid Posting ID.');
     } else if (!(req.body.hasOwnProperty("pet") || req.body.hasOwnProperty("description"))){
         return res.status(400).send('Invalid request - update fields missing.');
@@ -121,22 +129,30 @@ router.patch("/postings/:id", authenticate, mongoChecker, async (req, res) => {
 //delete specific posting
 router.delete('/postings/:id', authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid ID.');
-    } else if(req.user.admin) {
+    } else if(!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
     } 
 
     try {
+
+        //const posting = req.user.petPostings.id(req.params.id);
+        if(!posting) {
+            return res.status(404).send('Posting not found.');
+        }
+
         //remove posting from user's postings lists
         req.user.petPostings.remove(req.params.id); 
     
         //all applications to this posting 
         const applications = req.user.petApplications.filter((application) => application.postingID == req.params.id); 
 
+        console.log("people that have applied: " + applications);
+
         //find all users who applied to this posting and mark their application as expired
-        applications.forEach((application) => {
-            const user = User.findById(application.userID).exec(); 
+        applications.forEach(async (application) => {
+            const user = await User.findById(application.userID).exec(); 
 
             if(user) {
                 const userApplication = user.petApplications.id(application._id); 
@@ -149,7 +165,13 @@ router.delete('/postings/:id', authenticate, mongoChecker, async (req, res) => {
         })
     
         //remove all applications received for this posting from admin's application list
-        req.user.petApplications.pull({postingID: req.params.id}); 
+        for(let i = req.user.petApplications.length - 1; i >= 0; i--) {
+            let application = req.user.petApplications[i]; 
+
+            if(application.postingID == req.params.id) {
+                req.user.petApplications.remove(application); 
+            }
+        }
         req.user.save(); 
 
         return res.sendStatus(200);
@@ -184,7 +206,7 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
 //get all applications recieved by this clinic for a specific posting
 router.get("/applications/:postingID", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("postingID" in req.params) && ObjectID.isValid(req.params.postingID)) {
+    if(!("postingID" in req.params && ObjectID.isValid(req.params.postingID))) {
         return res.status(400).send('Invalid Posting ID.');
     } else if (!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
@@ -198,7 +220,7 @@ router.get("/applications/:postingID", authenticate, mongoChecker, async (req, r
 //update application (approve)
 router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid Application ID.');
     } else if (!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
@@ -214,7 +236,6 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
 
         //remove accepted application from admin user application list 
         req.user.petApplications.remove(req.params.id);
-        req.user.save();
  
         //update posting status and owner 
         const posting = req.user.petPostings.id(application.postingID); 
@@ -223,10 +244,9 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
         }
         posting.status = "approved"; 
         posting.petOwnerID = application.userID;
-        req.user.save(); 
         
         //mark user application as approved 
-        const regUser = User.findById(application.userID).exec(); 
+        const regUser = await User.findById(application.userID).exec(); 
         if(!regUser) {
             return res.status(404).send('Corresponding applicant user not found.'); 
         }
@@ -238,8 +258,8 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
         const rejectedApplications = req.user.petApplications.filter((application) => application.postingID == posting._id && application._id != req.params.id); 
 
         //find all users who applied to this posting and mark their application as rejected
-        rejectedApplications.forEach((application) => {
-            const rejectedUser = User.findById(application.userID).exec(); 
+        rejectedApplications.forEach(async (application) => {
+            const rejectedUser = await User.findById(application.userID).exec(); 
 
             if(rejectedUser) {
                 const userApplication = rejectedUser.petApplications.id(application._id); 
@@ -250,12 +270,19 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
                 }
             }
         })
-    
-        //remove all rejected applications from admin's application list
-        req.user.petApplications.pull({postingID: posting._id}); 
+
+        //remove all applications received for this posting from admin's application list
+        for(let i = req.user.petApplications.length - 1; i >= 0; i--) {
+            let application = req.user.petApplications[i]; 
+
+            if(application.postingID == posting._id) {
+                req.user.petApplications.remove(application); 
+            }
+        }
+        
         req.user.save(); 
 
-        return res.sendStatus(200);
+        return res.send({"application": "yeet"});
     } catch(error) {
         console.log(error); 
 
@@ -271,7 +298,7 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
 //update application (reject)
 router.get("/applications/reject/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid Application ID.');
     } else if (!req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for non-admin users.'); 
@@ -290,7 +317,7 @@ router.get("/applications/reject/:id", authenticate, mongoChecker, async (req, r
         req.user.save();
 
         //mark regular user application as rejected 
-        const regUser = User.findById(application.userID).exec(); 
+        const regUser = await User.findById(application.userID).exec(); 
         if(!regUser) {
             return res.status(404).send('Corresponding applicant user not found.'); 
         }
@@ -298,7 +325,7 @@ router.get("/applications/reject/:id", authenticate, mongoChecker, async (req, r
         userApplication.status = "rejected"; 
         regUser.save(); 
 
-        return res.sendStatus(200);
+        return res.send({"application": userApplication});
     } catch(error) {
         console.log(error); 
 
@@ -310,4 +337,4 @@ router.get("/applications/reject/:id", authenticate, mongoChecker, async (req, r
     }
 });
 
-
+module.exports = router; 

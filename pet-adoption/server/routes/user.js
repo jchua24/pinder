@@ -15,32 +15,8 @@ mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 const {authenticate} = require('../helpers/auth');
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
+const {getRadiusValues, isMatch} = require('../helpers/misc');
 
-//get individual user data 
-router.get("/:id", authenticate, mongoChecker, async (req, res) => {
-
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
-        return res.status(400).send('Invalid ID.');
-    }
-
-    try {
-        const user = await User.findOne({ _id: req.params.id }).exec();
-
-        if(user != null) {
-            return res.send(user); 
-        } else {
-            return res.status(404).send('User not found with specified email/password.');
-        }
-
-    } catch(error) {
-        console.log(error);
-
-        if(isMongoError(error)) {
-            return res.sendStatus(500); //internal server error
-        } 
-        return res.sendStatus(400); //bad request 
-    }
-});
 
 //update profile picture 
 router.patch("/pic", authenticate, mongoChecker, async (req, res) => {   
@@ -75,7 +51,7 @@ router.put("/preferences/", authenticate, mongoChecker, async (req, res) => {
 
     try {
         const user = req.user; 
-        user.preferences = user.preferences.create(req.body.preferences); 
+        user.preferences = req.body.preferences; 
         await user.save(); 
 
         return res.sendStatus(200);
@@ -109,7 +85,7 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
 //get specific application
 router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid ID.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -128,7 +104,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
 //add application
 router.post("/applications", authenticate, mongoChecker, async (req, res) => {
 
-    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID"))) {
+    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID") && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
         return res.status(400).send('One of the required fields (postingID, clinicID) was not included in the request.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -143,20 +119,33 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
             comment: req.body.comment || ""
         }); 
 
-        const adminUser =  User.findById(clinicID).exec(); 
+        const adminUser = await User.findById(req.body.clinicID).exec(); 
 
         if(!adminUser || !adminUser.admin) { 
-            return res.status(400).send('Clinic specified in request is not a valid clinic user.');
+            return res.status(400).send('Clinic specified in request does not exist.');
         } 
            
-        //add (alert?) new application to clinic 
+        //check if posting exists and is valid 
+        const posting = adminUser.petPostings.id(req.body.postingID); 
+        if(!posting) {
+            return res.status(400).send('Posting specified in request does not exist.');
+        } else if (posting.status != "pending") {
+            return res.status(400).send('Posting is no longer available for applications.');
+        }
+
+        //check if user has already applied to this posting
+        if(!req.user.petApplications.every((application) => application.postingID != req.body.postingID)) {
+            return res.status(400).send('User has already applied to this posting.');
+        }
+
+        //add new application to clinic 
         adminUser.petApplications.push(application); 
         adminUser.save(); 
           
         req.user.petApplications.push(application);
         req.user.save(); 
 
-        return res.sendStatus(200);
+        return res.send({"application": application, "user" : req.user});
     } catch(error) {
         console.log(error); 
 
@@ -172,7 +161,7 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
 //delete specific application
 router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) => {
 
-    if(!("id" in req.params) && ObjectID.isValid(req.params.id)) {
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
         return res.status(400).send('Invalid ID.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -186,10 +175,10 @@ router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) 
         }
 
         //remove application from user's list 
-        user.petApplications.remove(req.params.id); 
-        user.save(); 
+        req.user.petApplications.remove(req.params.id); 
+        req.user.save(); 
 
-        const adminUser =  User.findById(application.clinicID).exec(); 
+        const adminUser = await User.findById(application.clinicID).exec(); 
         if(!adminUser || !adminUser.admin) { 
             return res.status(400).send('Application deleted on user side, but corresponding clinic not found.');
         } 
@@ -209,6 +198,95 @@ router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) 
 		}
     }
 }) 
+
+
+//get all relevant postings by searching with user preferences
+router.get("/posts", authenticate, mongoChecker, async (req, res) => {
+
+    if(req.user.admin) {
+        return res.status(401).send('Endpoint unauthorized for admin users.'); 
+    }
+
+    let userLat = req.user.latitude;
+    let userLong = req.user.longitude; 
+
+    try {
+        const criteria = {}; 
+
+        if("radius" in req.user.preferences) {   //latitude-longitude filters
+            const radius = getRadiusValues(userLat, userLong, req.user.preferences.radius); 
+            criteria["latitude"] = {"$gte" : radius["lowlat"], "$lte": radius["upperlat"]};
+            criteria["longitude"] = {"$gte" : radius["lowlng"], "$lte": radius["upperlng"]}; 
+        }
+
+        if("clinic" in req.user.preferences && req.user.preferences.clinic.length > 0) {
+           criteria["name"] =  {"$in" : req.user.preferences.clinic};
+        }
+
+        //specify admin
+        criteria["admin"] = {"$eq" : true};
+
+        //get up to 100 randomly sampled admin users that meet the query criteria
+        const users = await User.find(criteria).exec(); 
+
+        if(users == null || users.length == 0) {
+            return res.send([]);
+        } 
+
+        const postings = []; 
+        const alreadyApplied = []; 
+        
+        //get list of postings user has already applied to 
+        req.user.petApplications.forEach((posting) => {
+            alreadyApplied.push(posting.postingID); 
+        })
+
+        users.forEach((user) => {
+            //find matching pet types and age
+            const matchPostings = user.petPostings.filter((posting) => isMatch(posting, req.user.preferences) && !(posting._id in alreadyApplied)); 
+            postings.push(...matchPostings); 
+        })
+
+        return res.send(postings); 
+    } catch (error) {
+        console.log(error); 
+        
+    	if (isMongoError(error)) { 
+            return res.sendStatus(500);
+		} else {
+            return res.sendStatus(400);
+		} 
+    }
+});
+
+
+//get individual user data 
+router.get("/:id", authenticate, mongoChecker, async (req, res) => {
+
+    if(!("id" in req.params && ObjectID.isValid(req.params.id))) {
+        return res.status(400).send('Invalid ID.');
+    }
+
+    console.log(req.params.id);
+
+    try {
+        const user = await User.findOne({ _id: req.params.id }).exec();
+
+        if(user != null) {
+            return res.send(user); 
+        } else {
+            return res.status(404).send('User not found with specified email/password.');
+        }
+
+    } catch(error) {
+        console.log(error);
+
+        if(isMongoError(error)) {
+            return res.sendStatus(500); //internal server error
+        } 
+        return res.sendStatus(400); //bad request 
+    }
+});
 
 module.exports = router; 
 
