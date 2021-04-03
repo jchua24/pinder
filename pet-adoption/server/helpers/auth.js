@@ -26,6 +26,18 @@ module.exports = {
 			return res.sendStatus(401); //unauthorized; 
 		}
     },
+
+    sessionChecker: (req, res, next) => {		
+	    if (req.session.user) {
+            const user = await User.findById(req.session.user).exec(); 
+
+            if(user != null) {
+                return res.send(user); 
+            } 
+	    }   
+        next(); //proceed to auth routes
+	}, 
+
     verifyPassword: (input_str, hash) => {
         const passwordMatches = bcrypt.compareSync(input_str, hash); 
 
