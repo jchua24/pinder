@@ -1,16 +1,22 @@
 @media all and (min-width: 480px) {
-  .Applications {
-    padding: 6px 0;
-  }
-  .list {
-    list-style-type:none;
+  .appsContainer{
+    margin: 5%;
+    width: 50%;
     float: left;
-  }
-  .item {
-    display: flex;
-    display: inline-block;
-    margin: 20px;
-    flex-wrap: wrap;
-    flex-basis: 33.333333%;
-  }
+
+}
+
+.appsCard{
+    background-color: #E5ECF4;
+}
+
+.appsSearch{
+    border-radius: 3mm;
+    border-color:transparent;
+    background-color: #F6F680;
+    padding: 20px 20px 10px 20px;
+    float: left;
+    width: 30%;
+    margin: 5%;
+}
 }
