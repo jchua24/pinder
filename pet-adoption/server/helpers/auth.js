@@ -7,12 +7,16 @@ const { User } = require("../db/models/userModel");
 
 module.exports = {
 
-    authenticate: (req, res, next) => {
+    authenticate: async (req, res, next) => {
+
+        console.log('session: ' + JSON.stringify(req.session));
+
+
         if (req.session.user) {
 
-            const user = User.findById(req.session.user).exec(); 
+            const user = await User.findById(req.session.user).exec(); 
 
-            if(!user) {
+            if(user != null) {
                 req.user = user
                 next()
             } else {
@@ -21,18 +25,14 @@ module.exports = {
 		} else {
 			return res.sendStatus(401); //unauthorized; 
 		}
-    }, 
+    },
+    verifyPassword: (input_str, hash) => {
+        const passwordMatches = bcrypt.compareSync(input_str, hash); 
 
-    //finds user and verifies password
-    login: (email, password) => {
-
-        const user = User.findOne({ email: email }).exec(); 
-
-        if (!user || !bcrypt.compareSync(password, user.password)) {
-            throw "User not found with specified email/password";
-        }
-
-        return user; 
+        if(passwordMatches) { //input string matches hash
+            return true; 
+        } 
+        return false; 
     }, 
         
     hashPassword: (input_str) =>  {
