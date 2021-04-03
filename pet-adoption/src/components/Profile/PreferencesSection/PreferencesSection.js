@@ -5,10 +5,10 @@ import ReactRoundedImage from "react-rounded-image";
 
 import "./PreferencesSection.css";
 import Select from 'react-select';
-import RcSlider from 'rc-slider';
+import RcSlider, {createSliderWithTooltip} from 'rc-slider';
 import 'rc-slider/assets/index.css';
 const RcRange = RcSlider.createSliderWithTooltip(RcSlider.Range);
-
+const ToolTipSlider = createSliderWithTooltip(RcSlider);
 
 class PreferencesSection extends React.Component {
   constructor() {
@@ -88,12 +88,13 @@ class PreferencesSection extends React.Component {
             />
         
 
-            <h6> Location slider (km) </h6>
-            <RcRange
+            <h6> Radius (km) </h6>
+            <ToolTipSlider
                 onChange={(value) => this.props.onPreferenceDistanceChange(value)} 
                 tipFormatter={(value) => `${value}`}
+                tip
                 tipProps={{ visible: true }}
-                defaultValue={[10, 20]}
+                defaultValue={30}
                 min={0}
                 max={100}
                 className="slider"
