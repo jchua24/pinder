@@ -27,6 +27,13 @@ router.get("/postings", authenticate, mongoChecker, async (req, res) => {
     } 
 
     if(req.body.hasOwnProperty("status")) { //send all pending postings
+
+        const statuses = ["pending", "approved", "expired", "rejected"]; 
+
+        if(!(req.body.status in statuses)) {
+            return res.status(400).send('Invalid status provided'); 
+        }
+
         return req.user.petPostings.filter((posting) => posting.status == req.body.status);
     } 
         
@@ -197,6 +204,13 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
     } 
 
     if("status" in req.body) { //send all pending applications
+
+        const statuses = ["pending", "approved", "expired", "rejected"]; 
+
+        if(!(req.body.status in statuses)) {
+            return res.status(400).send('Invalid status provided'); 
+        }
+
         return req.user.petApplications.filter((application) => application.status == req.body.status);
     } 
         
@@ -282,7 +296,7 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
         
         req.user.save(); 
 
-        return res.send({"application": "yeet"});
+        return res.send({"application": userApplication});
     } catch(error) {
         console.log(error); 
 

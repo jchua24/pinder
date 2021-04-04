@@ -75,6 +75,12 @@ router.get("/applications", authenticate, mongoChecker, async (req, res) => {
     } 
 
     if(req.body.hasOwnProperty("status")) { 
+
+        const statuses = ["pending", "approved", "expired", "rejected"]; 
+
+        if(!(req.body.status in statuses)) {
+            return res.status(400).send('Invalid status provided'); 
+        }
         //filters by status (e.g pending, completed, etc)
         return req.user.petApplications.filter((application) => application.status == req.body.status);
     } 
