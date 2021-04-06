@@ -67,7 +67,14 @@ router.get('/sessionchecker', (req, res) => {
         const user = await User.findById(req.session.user).exec(); 
 
         if(user != null) {
-            return res.send(user); 
+            
+            //required by frontend to make future api calls
+            const response = {
+                id: user._id, 
+                user: user
+            }
+    
+            return res.send(response);
         } 
     }   
 
