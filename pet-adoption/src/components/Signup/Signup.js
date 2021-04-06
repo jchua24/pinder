@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
+import { signUp } from "../../actions/users";
 
 import "./Signup.css";
 
@@ -16,7 +17,6 @@ class SignUp extends React.Component {
       province: "",
       postal: "",
       isClinic: "",
-      redirect: "",
     };
   }
 
@@ -35,15 +35,10 @@ class SignUp extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    if (this.state.isClinic === "No")
-      this.setState({redirect: '/profile'}, () => console.log('Moving on to the initialize user profile'));
-    else
-      this.setState({redirect: '/adminapps'}, () => console.log('No need to initialize admin for now, move to its applications'));
+    signUp(this, this.props.app);
   }
 
   render() {
-    if (this.state.redirect.length > 0)
-      return <Redirect to={this.state.redirect} />;
     return (
       <div className="Signup">
         <Form onSubmit={this.handleSubmit} className="">

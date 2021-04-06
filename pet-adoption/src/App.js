@@ -50,9 +50,14 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/signup">
-                <SignUp />
-              </Route>
+              <Route 
+                path="/signup" 
+                render={(props) => (
+                  <div>
+                    <SignUp {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route path="/about">
                 <About />
               </Route>
