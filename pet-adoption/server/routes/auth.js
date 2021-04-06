@@ -62,19 +62,23 @@ router.get('/logout', (req, res) => {
 	})
 })
 
-router.get('/sessionchecker', (req, res) => {
+router.get('/sessionchecker', async (req, res) => {
     if (req.session.user) {
         const user = await User.findById(req.session.user).exec(); 
 
         if(user != null) {
-            
-            //required by frontend to make future api calls
-            const response = {
-                id: user._id, 
-                user: user
+            try{
+                //required by frontend to make future api calls
+                const response = {
+                    id: user._id, 
+                    user: user
+                }
+                return res.send(response);
             }
-    
-            return res.send(response);
+            catch(err){
+                console.log(err);
+                return res.sendStatus(400);
+            }
         } 
     }   
 
