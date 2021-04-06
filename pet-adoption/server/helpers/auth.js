@@ -27,7 +27,7 @@ module.exports = {
 		}
     },
 
-    sessionChecker: (req, res, next) => {		
+    sessionChecker: async (req, res, next) => {		
 	    if (req.session.user) {
             const user = await User.findById(req.session.user).exec(); 
 

@@ -62,6 +62,19 @@ router.get('/logout', (req, res) => {
 	})
 })
 
+router.get('/sessionchecker', (req, res) => {
+    if (req.session.user) {
+        const user = await User.findById(req.session.user).exec(); 
+
+        if(user != null) {
+            return res.send(user); 
+        } 
+    }   
+
+    return res.send(401); 
+
+})
+
 //adding new user to platform 
 router.post("/add", sessionChecker, async (req, res) => {
 
