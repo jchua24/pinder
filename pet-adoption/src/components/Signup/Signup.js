@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 import { signUp } from "../../actions/users";
 
 import "./Signup.css";

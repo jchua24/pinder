@@ -15,6 +15,7 @@ import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
+import Logout from "./components/Logout";
 import { checkSession } from "./actions/users";
 
 class App extends React.Component {
@@ -76,9 +77,15 @@ class App extends React.Component {
               <Route path="/adminapps">
                 <AdminApplications />
               </Route>
-              <Route path="/Questionnaire">
+              <Route path="/questionnaire">
                 <Questionnaire />
               </Route>
+              <Route 
+                path="/logout"
+                render={(props) => (
+                  <div><Logout {...props} app={this}/></div>
+                )}
+              />
             </Switch>
           </div>
         </Router>

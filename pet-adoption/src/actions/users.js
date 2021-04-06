@@ -44,12 +44,23 @@ export const signUp = (cmp, app) => {
     },
   });
   fetch(req)
-    .then(res => {
-        if (res.status === 200) return res.json();
+    .then((res) => {
+      if (res.status === 200) return res.json();
     })
     .then((json) => {
-        if (json.id !== undefined && json.user !== undefined)
+      if (json.id !== undefined && json.user !== undefined)
         app.setState({ currUser: json.user });
     })
     .catch((err) => console.log(err));
+};
+
+export const logout = (app) => {
+  fetch(`${API_HOST}/auth/logout`)
+    .then(res => {
+        app.setState({
+            currUser: null,
+            message: {type: "", body: ""}
+        })
+    })
+    .catch(err => console.log(err));
 };

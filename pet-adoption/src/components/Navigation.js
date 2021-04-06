@@ -52,6 +52,7 @@ class Navigation extends React.Component {
                 drop="left"
               >
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
+                <NavDropdown.Item href="/logout">Logout</NavDropdown.Item> 
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
