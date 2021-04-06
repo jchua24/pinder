@@ -34,6 +34,7 @@ class Navigation extends React.Component {
               <Nav.Link href="/about"> About </Nav.Link>
               <Nav.Link href="/adminapps"> Admin Apps </Nav.Link>
               <Nav.Link href="/Applications"> User Apps</Nav.Link>
+              <Nav.Link href="/Questionnaire"> Questionnaire</Nav.Link>
             </Nav>
             <Nav>
               <NavDropdown

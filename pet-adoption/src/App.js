@@ -14,21 +14,13 @@ import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
-
-import ENV from "config.js";
-const API_HOST = ENV.api_host;
+import Questionnaire from "./components/Questionnaire/Questionnaire";
+import { checkSession } from "./actions/users";
 
 class App extends React.Component {
   // check to see if the user has logged in
   componentDidMount() {
-    fetch(`${API_HOST}/check-session`)
-      .then((res) => {
-        if (res.status === 200) return res.json();
-      })
-      .then((json) => {
-        if (json && json.currUser) this.setState({ currUser: json.currUser });
-      })
-      .catch((err) => console.log(err));
+    checkSession(this);
   }
 
   // global state that is going to be passed down
@@ -78,6 +70,9 @@ class App extends React.Component {
               </Route>
               <Route path="/adminapps">
                 <AdminApplications />
+              </Route>
+              <Route path="/Questionnaire">
+                <Questionnaire />
               </Route>
             </Switch>
           </div>

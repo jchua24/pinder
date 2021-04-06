@@ -12,12 +12,12 @@ const { User } = require("../db/models/userModel");
 const { mongoose } = require("../db/mongoose");
 mongoose.set('useFindAndModify', false); // for some deprecation issues
 
-const {verifyPassword, hashPassword} = require("../helpers/auth"); 
+const {verifyPassword, hashPassword, sessionChecker} = require("../helpers/auth"); 
 const {mongoChecker, isMongoError} = require('../helpers/mongo');
 const {calculateLatLong} = require("../helpers/misc");
 
 //authenticate existing user 
-router.post("/login", mongoChecker, async (req, res) => {
+router.post("/login", mongoChecker, sessionChecker,  async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password')) {
         return res.status(400).send('Invalid request - email or password is missing.');
@@ -50,16 +50,6 @@ router.post("/login", mongoChecker, async (req, res) => {
     }
 });
 
-
-router.post("/coordinates", mongoChecker, async(req, res) => {
-
-    const coordinates = await calculateLatLong(req.body.address);
-
-    console.log("coordinates: " + coordinates); 
-
-    res.send(coordinates);
-}) 
-
 //user logout
 router.get('/logout', (req, res) => {
 	// Remove the session
@@ -72,9 +62,8 @@ router.get('/logout', (req, res) => {
 	})
 })
 
-
 //adding new user to platform 
-router.post("/add", async (req, res) => {
+router.post("/add", sessionChecker, async (req, res) => {
 
     if(!req.body.hasOwnProperty('email') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') ||  !req.body.hasOwnProperty('address')
     || !req.body.hasOwnProperty('address') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('province') ||  !req.body.hasOwnProperty('postal') || 

@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
-import ENV from "../config.js";
+import { login } from "../../actions/users";
+import ENV from "../../config";
 
 import "./Login.css";
 
@@ -22,26 +23,7 @@ class Login extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    const req = new Request(`${API_HOST}/auth/login`, {
-      method: 'post',
-      body: JSON.stringify(this.state),
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      }
-    });
-    // fetch the request
-    fetch(req)
-      .then(res => {
-        if (res.status === 200)
-          return res.json();
-      })
-      .then(json => {
-        // check if the returned values are not null
-        if (json.id !== undefined && json.user !== undefined)
-          this.props.app.setState({ currUser : json.user });
-      })
-      .catch(err => console.log(err))
+    login(this, this.props.app);
   }
   render() {
     return (
