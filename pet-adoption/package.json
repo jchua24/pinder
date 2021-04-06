@@ -26,6 +26,7 @@
     "react-uid": "^2.3.1",
     "reactjs-popup": "^2.0.4",
     "simple-react-lightbox": "^3.6.3",
+    "survey-react": "^1.8.41",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
