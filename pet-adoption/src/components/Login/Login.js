@@ -1,37 +1,49 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
+import ENV from "../config.js";
 
 import "./Login.css";
 
+
+const API_HOST = ENV.api_host;
 class Login extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       email: "",
       password: "",
-      redirect: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.history.push('/login');
   }
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
   handleSubmit(event) {
     event.preventDefault();
-    let email = this.state.email,
-      password = this.state.password;
-    if (email === "test@test.com" && password === "test"){
-      this.setState({ redirect: "/swiper" });
-      global.isLoggedIn = 'true';
-    }
-    else if (email === "clinic@clinic.com" && password === "clinic")
-      this.setState({ redirect: "/adminapps" });
-    else alert("The email or password entered is incorrect!");
+    const req = new Request(`${API_HOST}/auth/login`, {
+      method: 'post',
+      body: JSON.stringify(this.state),
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    });
+    // fetch the request
+    fetch(req)
+      .then(res => {
+        if (res.status === 200)
+          return res.json();
+      })
+      .then(json => {
+        // check if the returned values are not null
+        if (json.id !== undefined && json.user !== undefined)
+          this.props.app.setState({ currUser : json.user });
+      })
+      .catch(err => console.log(err))
   }
   render() {
-    if (this.state.redirect.length > 0)
-      return <Redirect to={this.state.redirect} />;
     return (
       <div className="Login">
         <Form onSubmit={this.handleSubmit}>

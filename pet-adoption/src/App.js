@@ -15,8 +15,26 @@ import Profile from "./components/Profile/Profile";
 import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 
+import ENV from "config.js";
+const API_HOST = ENV.api_host;
 
 class App extends React.Component {
+  // check to see if the user has logged in
+  componentDidMount() {
+    fetch(`${API_HOST}/check-session`)
+      .then((res) => {
+        if (res.status === 200) return res.json();
+      })
+      .then((json) => {
+        if (json && json.currUser) this.setState({ currUser: json.currUser });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // global state that is going to be passed down
+  state = {
+    currUser: null,
+  };
 
   render() {
     return (
@@ -28,9 +46,18 @@ class App extends React.Component {
               <Route exact path="/">
                 <Intro />
               </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
+              <Route
+                path="/login"
+                render={(props) => (
+                  <div>
+                    {!this.state.currUser ? (
+                      <Login {...props} app={this} />
+                    ) : (
+                      <Intro {...props} app={this} />
+                    )}
+                  </div>
+                )}
+              />
               <Route path="/signup">
                 <SignUp />
               </Route>
