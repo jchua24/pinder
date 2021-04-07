@@ -4,10 +4,11 @@ const API_HOST = ENV.api_host;
 export const checkSession = (app) => {
   fetch(`${API_HOST}/auth/sessionchecker`)
     .then((res) => {
-      if (res.status === 200) return res.json();
+        if (res.status !== 401)
+            return res.json(); 
     })
     .then((json) => {
-      if (json && json.currUser) app.setState({ currUser: json.currUser });
+      if (json && json.user) app.setState({ currUser: json.user });
     })
     .catch((err) => console.log(err));
 };
@@ -45,6 +46,7 @@ export const signUp = (cmp, app) => {
   });
   fetch(req)
     .then((res) => {
+      cmp.setState({ status: res.status}, () => (alert('This email already exists!')));
       if (res.status === 200) return res.json();
     })
     .then((json) => {

@@ -31,8 +31,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Router>
+      <Router>
+        <div className="App">
           <Navigation />
           <div className="appContent">
             <Switch>
@@ -51,8 +51,8 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route 
-                path="/signup" 
+              <Route
+                path="/signup"
                 render={(props) => (
                   <div>
                     <SignUp {...props} app={this} />
@@ -80,16 +80,18 @@ class App extends React.Component {
               <Route path="/questionnaire">
                 <Questionnaire />
               </Route>
-              <Route 
+              <Route
                 path="/logout"
                 render={(props) => (
-                  <div><Logout {...props} app={this}/></div>
+                  <div>
+                    <Logout {...props} app={this} />
+                  </div>
                 )}
               />
             </Switch>
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     );
   }
 }
