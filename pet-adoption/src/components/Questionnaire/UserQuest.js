@@ -1,4 +1,5 @@
-var userjson = {
+var userjson = 
+{
   pages: [
    {
     name: "page1",
@@ -44,8 +45,7 @@ var userjson = {
           value: "No",
           text: "No"
          }
-        ],
-        otherText: "No"
+        ]
        },
        {
         type: "radiogroup",
@@ -61,7 +61,7 @@ var userjson = {
        {
         type: "text",
         name: "OwnPetNumber",
-        visibleIf: "{OwnPet} = 'Yes'",
+        visibleIf: "{OwnPet} = 'Yes' and {PetBefore} = 'Yes'",
         title: "How many pets do you currently own?",
         description: "(Applies to pets that are required to receive vaccines)",
         requiredIf: "{OwnPet} = 'Yes'",
@@ -72,7 +72,7 @@ var userjson = {
        {
         type: "radiogroup",
         name: "OwnPetVaccine",
-        visibleIf: "{OwnPet} = 'Yes'",
+        visibleIf: "{OwnPet} = 'Yes' and {PetBefore} = 'Yes'",
         title: "Are your pets up to date with vaccines?",
         requiredIf: "{OwnPet} = 'Yes'",
         choices: [
