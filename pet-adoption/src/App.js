@@ -33,7 +33,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Navigation />
+          <Navigation app={this}/>
           <div className="appContent">
             <Switch>
               <Route

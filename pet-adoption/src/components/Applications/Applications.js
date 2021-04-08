@@ -14,7 +14,6 @@ class Applications extends React.Component {
       searchType: "",
       serachBreed: "",
     };
-    this.props.history.push('/applications')
   }
 
   getAvailPets = () => {
