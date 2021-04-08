@@ -20,6 +20,7 @@ class AdminApplications extends React.Component {
       searchType: "",
       searchBreed: "",
     };
+    this.props.history.push('/adminapps');
   }
 
   getAvailPets = () => {

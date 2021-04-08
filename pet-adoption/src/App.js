@@ -40,6 +40,9 @@ class App extends React.Component {
   }
 
   render() {
+    let { currUser } = this.state;
+    console.log('Rendering');
+    console.log(currUser);
     return (
       <Router>
         <div className="App">
@@ -51,8 +54,8 @@ class App extends React.Component {
                 path="/"
                 render={(props) => (
                   <div>
-                    {this.state.currUser ? (
-                      this.state.currUser.admin ? (
+                    {currUser ? (
+                      currUser.admin ? (
                         <AdminApplications {...props} app={this} />
                       ) : (
                         <PetSwiper {...props} app={this} />
@@ -78,7 +81,7 @@ class App extends React.Component {
                 path="/login"
                 render={(props) => (
                   <div>
-                    {!this.state.currUser ? (
+                    {!currUser ? (
                       <Login {...props} app={this} />
                     ) : (
                       <Intro {...props} app={this} />
@@ -114,7 +117,7 @@ class App extends React.Component {
                 exact
                 path="/profile"
                 render={(props) =>
-                  this.state.currUser ? (
+                  currUser ? (
                     <div><Profile {...props} app={this} /></div>
                   ) : (
                     <div><Login {...props} app={this} /></div>
@@ -133,8 +136,8 @@ class App extends React.Component {
                 exact
                 path="/adminapps"
                 render={(props) =>
-                  this.state.currUser ? (
-                    this.state.currUser.admin ? (
+                  currUser ? (
+                    currUser.admin ? (
                       <div>
                         {" "}
                         <AdminApplications {...props} app={this} />{" "}

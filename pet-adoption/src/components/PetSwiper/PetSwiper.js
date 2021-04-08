@@ -83,6 +83,7 @@ class PetSwiper extends React.Component {
         }
       ]
     };
+    this.props.history.push('/swiper');
   }
 
   handleSubmit(event) {
