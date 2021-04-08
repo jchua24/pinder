@@ -43,6 +43,7 @@ router.post("/login", mongoChecker, sessionChecker, async (req, res) => {
       if (match) {
         req.session.user = existingUser._id;
         req.session.email = existingUser.email;
+        console.log(req.session);
         return res
           .status(200)
           .send({ id: req.session.user, user: existingUser });
@@ -76,7 +77,10 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/sessionchecker", async (req, res) => {
+  console.log('Checking if a user is in session');
+  console.log(req.session.user); 
   if (req.session.user) {
+    console.log('User is in session');
     const user = await User.findById(req.session.user).exec();
 
     if (user != null) {
