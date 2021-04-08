@@ -5,8 +5,8 @@ import { signUp } from "../../actions/users";
 import "./Signup.css";
 
 class SignUp extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       email: "",
@@ -18,6 +18,8 @@ class SignUp extends React.Component {
       isClinic: "",
       status: ""
     };
+    this.props.history.push('/signup');
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -96,9 +98,10 @@ class SignUp extends React.Component {
               <Form.Control
                 as="select"
                 custom
+                defaultValue=""
                 onChange={(e) => this.setState({ province: e.target.value })}
               >
-                <option selected value="">
+                <option value="">
                   Choose..
                 </option>
                 <option value="Alberta">Alberta</option>
@@ -138,9 +141,10 @@ class SignUp extends React.Component {
             <Form.Control
               as="select"
               custom
+              defaultValue=""
               onChange={(e) => this.setState({ isClinic: e.target.value })}
             >
-              <option selected value="">
+              <option value="">
                 Choose..
               </option>
               {/* <option value="Yes">Yes</option> */}

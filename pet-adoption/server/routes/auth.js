@@ -81,7 +81,6 @@ router.get('/sessionchecker', async (req, res) => {
             }
         } 
     }   
-    console.log('we got here');
     return res.status(401).send(); 
 
 })
