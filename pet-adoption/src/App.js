@@ -18,36 +18,32 @@ import Logout from "./components/Logout";
 import { apiCheckSession } from "./api/auth";
 
 class App extends React.Component {
-
   constructor(props) {
-    super(); 
+    super();
 
     //state object, to be accessible by children elements
     this.state = {
-      currUser: null
-    }
+      currUser: null,
+    };
   }
 
   // check to see if the user has logged in
   async componentDidMount() {
-
     try {
       const data = await apiCheckSession();
-      if(data) {
-        this.setState({currUser: data.user}); 
+      if (data) {
+        this.setState({ currUser: data.user });
       }
     } catch (error) {
-      console.log(error); 
-    } 
-    
+      console.log(error);
+    }
   }
-
 
   render() {
     return (
       <Router>
         <div className="App">
-          <Navigation app={this}/>
+          <Navigation app={this} />
           <div className="appContent">
             <Switch>
               <Route
@@ -69,6 +65,7 @@ class App extends React.Component {
               />
               {/* add a path that will always take user to the intro page */}
               <Route
+                exact
                 path="/intro"
                 render={(props) => (
                   <div>
@@ -77,6 +74,7 @@ class App extends React.Component {
                 )}
               />
               <Route
+                exact
                 path="/login"
                 render={(props) => (
                   <div>
@@ -89,6 +87,7 @@ class App extends React.Component {
                 )}
               />
               <Route
+                exact
                 path="/signup"
                 render={(props) => (
                   <div>
@@ -96,10 +95,11 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/about">
+              <Route exact path="/about">
                 <About />
               </Route>
               <Route
+                exact
                 path="/applications"
                 render={(props) => (
                   <div>
@@ -107,20 +107,21 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/postapet">
+              <Route exact path="/postapet">
                 <PetPosting clinic="test" />
               </Route>
-              <Route 
+              <Route
+                exact
                 path="/profile"
-                render={(props) => (
+                render={(props) =>
                   this.state.currUser ? (
-                    <Profile {...props} app={this} />
+                    <div><Profile {...props} app={this} /></div>
                   ) : (
-                    <Login {...props} app={this} />
+                    <div><Login {...props} app={this} /></div>
                   )
-                )}
+                }
               />
-              <Route 
+              <Route
                 path="/swiper"
                 render={(props) => (
                   <div>
@@ -128,15 +129,26 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route 
+              <Route
+                exact
                 path="/adminapps"
-                render={(props) => (
-                  <div>
-                    <AdminApplications {...props} app={this} />
-                  </div>
-                )}
+                render={(props) =>
+                  this.state.currUser ? (
+                    this.state.currUser.admin ? (
+                      <div>
+                        {" "}
+                        <AdminApplications {...props} app={this} />{" "}
+                      </div>
+                    ) : (
+                      <div>You are not an admin user!</div>
+                    )
+                  ) : (
+                    <div>You need to login first.</div>
+                  )
+                }
               />
-              <Route 
+              <Route
+                exact
                 path="/questionnaire"
                 render={(props) => (
                   <div>
@@ -145,6 +157,7 @@ class App extends React.Component {
                 )}
               />
               <Route
+                exact
                 path="/logout"
                 render={(props) => (
                   <div>
@@ -152,6 +165,8 @@ class App extends React.Component {
                   </div>
                 )}
               />
+              {/* 404 if the URL cannot be found */}
+              <Route render={() => <div>404 URL Not Found.</div>} />
             </Switch>
           </div>
         </div>
