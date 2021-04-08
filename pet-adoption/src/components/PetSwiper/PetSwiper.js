@@ -5,8 +5,8 @@ import PetCard from "./PetCard";
 import "./PetSwiper.css";
 
 class PetSwiper extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       pets: [
         {
@@ -83,7 +83,6 @@ class PetSwiper extends React.Component {
         }
       ]
     };
-    this.props.history.push('/swiper');
   }
 
   handleSubmit(event) {

@@ -12,7 +12,6 @@ class Login extends React.Component {
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.props.history.push('/login');
   }
 
   validateForm() {

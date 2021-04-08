@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { Alert } from "react-bootstrap";
 import "./App.css";
 
 import "./components/Footer/Footer";
@@ -41,7 +47,7 @@ class App extends React.Component {
 
   render() {
     let { currUser } = this.state;
-    console.log('Rendering');
+    console.log("Rendering");
     console.log(currUser);
     return (
       <Router>
@@ -51,28 +57,20 @@ class App extends React.Component {
             <Switch>
               <Route
                 exact
-                path="/"
+                path={["/", "/intro"]}
                 render={(props) => (
                   <div>
                     {currUser ? (
                       currUser.admin ? (
-                        <AdminApplications {...props} app={this} />
+                        <Redirect to={{ pathname: "/adminapps" }} />
                       ) : (
-                        <PetSwiper {...props} app={this} />
+                        // <AdminApplications {...props} app={this} />
+                        <Redirect to={{ pathname: "/swiper" }} />
+                        // <PetSwiper {...props} app={this} />
                       )
                     ) : (
                       <Intro {...props} app={this} />
                     )}
-                  </div>
-                )}
-              />
-              {/* add a path that will always take user to the intro page */}
-              <Route
-                exact
-                path="/intro"
-                render={(props) => (
-                  <div>
-                    <Intro {...props} app={this} />
                   </div>
                 )}
               />
@@ -84,7 +82,18 @@ class App extends React.Component {
                     {!currUser ? (
                       <Login {...props} app={this} />
                     ) : (
-                      <Intro {...props} app={this} />
+                      <div>
+                        <Alert variant="primary" dismissible transition>
+                          You have already logged in.
+                        </Alert>
+                        {currUser.admin ? (
+                          <Redirect to={{ pathname: "/swiper" }} />
+                        ) : (
+                          // <PetSwiper {...props} app={this} />
+                          <Redirect to={{ pathname: "/adminapps" }} />
+                          // <AdminApplications {...props} app={this} />
+                        )}
+                      </div>
                     )}
                   </div>
                 )}
@@ -94,7 +103,22 @@ class App extends React.Component {
                 path="/signup"
                 render={(props) => (
                   <div>
-                    <SignUp {...props} app={this} />
+                    {!currUser ? (
+                      <SignUp {...props} app={this} />
+                    ) : (
+                      <div>
+                        <Alert variant="primary" dismissible transition>
+                          You have already logged in.
+                        </Alert>
+                        {currUser.admin ? (
+                          <Redirect to={{ pathname: "/swiper" }} />
+                        ) : (
+                          // <PetSwiper {...props} app={this} />
+                          <Redirect to={{ pathname: "/adminapps" }} />
+                          // <AdminApplications {...props} app={this} />
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               />
@@ -106,7 +130,20 @@ class App extends React.Component {
                 path="/applications"
                 render={(props) => (
                   <div>
-                    <Applications {...props} app={this} />
+                    {this.currUser ? (
+                      this.currUser.admin ? (
+                        <Redirect to={{ pathname: "/adminapps" }} />
+                      ) : (
+                        <Applications {...props} app={this} />
+                      )
+                    ) : (
+                      <div>
+                        <Alert variant="primary" dismissible transition>
+                          You need to login to access this page.
+                        </Alert>
+                        <Redirect to={{ pathname: "/login" }} />
+                      </div>
+                    )}
                   </div>
                 )}
               />
@@ -118,9 +155,13 @@ class App extends React.Component {
                 path="/profile"
                 render={(props) =>
                   currUser ? (
-                    <div><Profile {...props} app={this} /></div>
+                    <div>
+                      <Profile {...props} app={this} />
+                    </div>
                   ) : (
-                    <div><Login {...props} app={this} /></div>
+                    <div>
+                      <Login {...props} app={this} />
+                    </div>
                   )
                 }
               />
@@ -167,6 +208,23 @@ class App extends React.Component {
                     <Logout {...props} app={this} />
                   </div>
                 )}
+              />
+
+              {/* These routes are added to speed up front end style change tests */}
+              <Route 
+                exact
+                path="/testadminapps"
+                render={(props) => <div><AdminApplications {...props} app={this} /></div>}
+              />
+              <Route 
+                exact
+                path="/testapplications"
+                render={(props) => <div><Applications {...props} app={this} /></div>}
+              />
+              <Route 
+                exact
+                path="/testswiper"
+                render={(props) => <div><PetSwiper {...props} app={this} /></div>}
               />
               {/* 404 if the URL cannot be found */}
               <Route render={() => <div>404 URL Not Found.</div>} />

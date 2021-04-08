@@ -20,7 +20,6 @@ class SignUp extends React.Component {
       status: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.props.history.push('/signup');
   }
 
   validateForm() {
