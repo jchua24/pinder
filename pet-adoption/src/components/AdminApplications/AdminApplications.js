@@ -5,8 +5,8 @@ import UserApplication from "../userApplication/userApplication";
 
 import "./AdminApplications.css";
 class AdminApplications extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       availPets: [],
       userApps: [],
@@ -14,14 +14,15 @@ class AdminApplications extends React.Component {
       searchType: "",
       serachBreed: "",
     };
+    this.props.history.push('/adminapps');
   }
 
   getAvailPets = () => {
     // get the current pets of the current clinic from the database
     let availPets = [
-      { name: "Biscuit", type: "Dog", breed: "Golden Retriever" },
-      { name: "Nosey", type: "Fish", breed: "YYZ" },
-      { name: "Pussy Cat", type: "Cat", breed: "Long Haired" },
+      { name: "Biscuit", type: "Dog", breed: "Golden Retriever", id: 1 },
+      { name: "Nosey", type: "Fish", breed: "YYZ", id: 2 },
+      { name: "Pussy Cat", type: "Cat", breed: "Long Haired", id: 3 },
     ];
     this.setState({ availPets: availPets }, () =>
       console.log("available pets were acquired")
@@ -57,7 +58,7 @@ class AdminApplications extends React.Component {
         {availPets.length !== 0 ? (
           <div className="appsContainer">
             {availPets.map((pet) => (
-              <Card className="appsCard">
+              <Card key={pet.id} className="appsCard">
                 <Card.Header>
                   <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
                 </Card.Header>
@@ -96,11 +97,12 @@ class AdminApplications extends React.Component {
                 <Form.Control
                   as="select"
                   custom
+                  defaultValue=""
                   onChange={(e) => {
                     this.setState({ searchName: e.target.value });
                   }}
                 >
-                <option selected value="">
+                <option value="">
                   Choose..
                 </option>
                 {availPets.map(pet => (
@@ -117,11 +119,12 @@ class AdminApplications extends React.Component {
                 <Form.Control
                   as="select"
                   custom
+                  defaultValue=""
                   onChange={(e) => {
                     this.setState({ searchName: e.target.value });
                   }}
                 >
-                <option selected value="">
+                <option value="">
                   Choose..
                 </option>
                 {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
@@ -138,11 +141,12 @@ class AdminApplications extends React.Component {
                 <Form.Control
                   as="select"
                   custom
+                  defaultValue=""
                   onChange={(e) => {
                     this.setState({ searchName: e.target.value });
                   }}
                 >
-                <option selected value="">
+                <option value="">
                   Choose..
                 </option>
                 {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (

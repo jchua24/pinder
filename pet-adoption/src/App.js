@@ -31,14 +31,37 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Router>
+      <Router>
+        <div className="App">
           <Navigation />
           <div className="appContent">
             <Switch>
-              <Route exact path="/">
-                <Intro />
-              </Route>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <div>
+                    {this.state.currUser ? (
+                      this.state.currUser.admin ? (
+                        <AdminApplications {...props} app={this} />
+                      ) : (
+                        <Applications {...props} app={this} />
+                      )
+                    ) : (
+                      <Intro {...props} app={this} />
+                    )}
+                  </div>
+                )}
+              />
+              {/* add a path that will always take user to the intro page */}
+              <Route
+                path="/intro"
+                render={(props) => (
+                  <div>
+                    <Intro {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route
                 path="/login"
                 render={(props) => (
@@ -51,8 +74,8 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route 
-                path="/signup" 
+              <Route
+                path="/signup"
                 render={(props) => (
                   <div>
                     <SignUp {...props} app={this} />
@@ -62,9 +85,14 @@ class App extends React.Component {
               <Route path="/about">
                 <About />
               </Route>
-              <Route path="/applications">
-                <Applications />
-              </Route>
+              <Route
+                path="/applications"
+                render={(props) => (
+                  <div>
+                    <Applications {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route path="/postapet">
                 <PetPosting clinic="test" />
               </Route>
@@ -74,22 +102,29 @@ class App extends React.Component {
               <Route path="/swiper">
                 <PetSwiper />
               </Route>
-              <Route path="/adminapps">
-                <AdminApplications />
-              </Route>
+              <Route 
+                path="/adminapps"
+                render={(props) => (
+                  <div>
+                    <AdminApplications {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route path="/questionnaire">
                 <Questionnaire />
               </Route>
-              <Route 
+              <Route
                 path="/logout"
                 render={(props) => (
-                  <div><Logout {...props} app={this}/></div>
+                  <div>
+                    <Logout {...props} app={this} />
+                  </div>
                 )}
               />
             </Switch>
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     );
   }
 }

@@ -6,8 +6,9 @@ import Pet from "../Pet/Pet";
 import "./Intro.css";
 
 class Intro extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.props.history.push('/intro');
   }
   render() {
     return (

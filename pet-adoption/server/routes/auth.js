@@ -77,12 +77,11 @@ router.get('/sessionchecker', async (req, res) => {
             }
             catch(err){
                 console.log(err);
-                return res.sendStatus(400);
+                return res.status(400).send();
             }
         } 
     }   
-
-    return res.send(401); 
+    return res.status(401).send(); 
 
 })
 
@@ -146,7 +145,7 @@ router.post("/add", sessionChecker, async (req, res) => {
             req.session.user = userAdded._id;
             req.session.email = userAdded.email;
     
-            return res.send(response);
+            return res.status(200).send(response);
         }
         catch (err) {
             console.log(err);

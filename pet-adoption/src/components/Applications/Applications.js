@@ -5,8 +5,8 @@ import UserApplication from "../userApplication/userApplication";
 import { uid } from 'react-uid'
 
 class Applications extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       availPets: [],
       userApps: [],
@@ -14,6 +14,7 @@ class Applications extends React.Component {
       searchType: "",
       serachBreed: "",
     };
+    this.props.history.push('/applications')
   }
 
   getAvailPets = () => {

@@ -2,12 +2,8 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
 import { login } from "../../actions/users";
-import ENV from "../../config";
 
 import "./Login.css";
-
-
-const API_HOST = ENV.api_host;
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +19,8 @@ class Login extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    login(this, this.props.app);
+    // login(this, this.props.app);
+    this.props.history.push('/Applications'); 
   }
   render() {
     return (

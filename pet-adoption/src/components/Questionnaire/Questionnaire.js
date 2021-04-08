@@ -18,7 +18,7 @@ class Questionnaire extends React.Component {
     Survey.StylesManager.ThemeColors["default"]["$main-color"] = "#1A8FE6";
     Survey.StylesManager.applyTheme();
     return (
-        <div>
+        <div className="Questionnaire">
         <Survey.Survey
           json={this.json}
           showCompletedPage={false}
