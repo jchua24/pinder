@@ -13,6 +13,9 @@ class Login extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  updateUser() {
+    alert('The email or password that you have entered is incorrect!');
+  }
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
@@ -20,7 +23,7 @@ class Login extends React.Component {
     event.preventDefault();
     login(this, this.props.app);
     let user = this.props.app.state.currUser;
-    if (user.admin)
+    if (user && user.admin)
       this.props.history.push('/adminapps');
     else
       this.props.history.push('/applications'); 

@@ -4,9 +4,7 @@ const API_HOST = ENV.api_host;
 export const checkSession = (app) => {
   fetch(`${API_HOST}/api/auth/sessionchecker`)
     .then((res) => {
-        console.log(res);
-        if (res.status !== 401)
-            return res.json(); 
+      if (res.status !== 401) return res.json();
     })
     .then((json) => {
       if (json && json.user) app.setState({ currUser: json.user });
@@ -26,12 +24,15 @@ export const login = (cmp, app) => {
   // fetch the request
   fetch(req)
     .then((res) => {
+      if (res.status === 404) cmp.updateUser();
       if (res.status === 200) return res.json();
     })
     .then((json) => {
       // check if the returned values are not null
-      if (json.id !== undefined && json.user !== undefined)
+      if (json.id !== undefined && json.user !== undefined){
+        console.log('updating current user');
         app.setState({ currUser: json.user });
+      }
     })
     .catch((err) => console.log(err));
 };
@@ -47,7 +48,9 @@ export const signUp = (cmp, app) => {
   });
   fetch(req)
     .then((res) => {
-      cmp.setState({ status: res.status}, () => (alert('This email already exists!')));
+      cmp.setState({ status: res.status }, () =>
+        alert("This email already exists!")
+      );
       if (res.status === 200) return res.json();
     })
     .then((json) => {
@@ -59,13 +62,11 @@ export const signUp = (cmp, app) => {
 
 export const logout = (app) => {
   fetch(`${API_HOST}/api/auth/logout`)
-    .then(res => {
-        app.setState({
-            currUser: null,
-            message: {type: "", body: ""}
-        })
+    .then((res) => {
+      app.setState({
+        currUser: null,
+        message: { type: "", body: "" },
+      });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
-
-
