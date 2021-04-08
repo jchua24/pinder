@@ -8,7 +8,12 @@ import "./Intro.css";
 class Intro extends React.Component {
   constructor(props) {
     super(props);
-    this.props.history.push('/intro');
+  }
+  loadLogin(){
+    this.props.history.push('/login');    
+  }
+  loadSignUp(){
+    this.props.history.push('/signup');
   }
   render() {
     return (
@@ -17,8 +22,20 @@ class Intro extends React.Component {
           <div className="hero-text">
             <h1>Welcome to Pinder!</h1>
             <p>The Best Adoption Platform on the internet.</p>
-            <button type="button" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-success">Signup</button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => this.loadLogin()}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => this.loadSignUp()}
+            >
+              Signup
+            </button>
           </div>
         </div>
         {/* <div className="introText">

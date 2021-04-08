@@ -96,12 +96,24 @@ class App extends React.Component {
               <Route path="/postapet">
                 <PetPosting clinic="test" />
               </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/swiper">
-                <PetSwiper />
-              </Route>
+              <Route 
+                path="/profile"
+                render={(props) => (
+                  this.state.currUser ? (
+                    <Profile {...props} app={this} />
+                  ) : (
+                    <Login {...props} app={this} />
+                  )
+                )}
+              />
+              <Route 
+                path="/swiper"
+                render={(props) => (
+                  <div>
+                    <PetSwiper {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route 
                 path="/adminapps"
                 render={(props) => (
@@ -110,9 +122,14 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/questionnaire">
-                <Questionnaire />
-              </Route>
+              <Route 
+                path="/questionnaire"
+                render={(props) => (
+                  <div>
+                    <Questionnaire {...props} app={this} />
+                  </div>
+                )}
+              />
               <Route
                 path="/logout"
                 render={(props) => (

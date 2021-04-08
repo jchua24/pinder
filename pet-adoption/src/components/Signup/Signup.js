@@ -18,7 +18,6 @@ class SignUp extends React.Component {
       isClinic: "",
       status: ""
     };
-    this.props.history.push('/signup');
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -37,7 +36,8 @@ class SignUp extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    signUp(this, this.props.app);
+    // signUp(this, this.props.app);
+    this.props.history.push('/questionnaire');
   }
 
   render() {

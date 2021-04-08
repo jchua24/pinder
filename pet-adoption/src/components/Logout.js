@@ -5,7 +5,6 @@ import { logout } from "../actions/users";
 class Logout extends React.Component {
   constructor(props) {
     super(props);
-    this.props.history.push("/logout");
   }
   logout() {
     logout(this.props.app);
@@ -13,7 +12,7 @@ class Logout extends React.Component {
     this.props.history.push('/');
   }
   stay() {
-    this.props.history.goBack('/');
+    this.props.history.goBack();
   }
   render() {
     return (
