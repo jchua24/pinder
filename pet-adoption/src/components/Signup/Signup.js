@@ -15,8 +15,9 @@ class SignUp extends React.Component {
       city: "",
       province: "",
       postal: "",
-      isClinic: "",
-      status: ""
+      admin: "",
+      phone: "",
+      status: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,14 +31,21 @@ class SignUp extends React.Component {
       this.state.city.length > 0 &&
       this.state.province !== "" &&
       this.state.postal.length > 0 &&
-      this.state.isClinic.length > 0
+      this.state.phone.length > 0 && 
+      this.state.admin !== ""
     );
+  }
+
+  updateAdmin(event) {
+    let val = event.target.value;
+    if (val === "No") this.setState({ admin: false });
+    else if (val === "Yes") this.setState({ admin: true });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    // signUp(this, this.props.app);
-    this.props.history.push('/questionnaire');
+    signUp(this, this.props.app);
+    this.props.history.push("/questionnaire");
   }
 
   render() {
@@ -70,7 +78,14 @@ class SignUp extends React.Component {
               onChange={(e) => this.setState({ password: e.target.value })}
             />
           </Form.Group>
-
+          <Form.Group size="lg" controlId="phoneNumber">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="tel"
+              value={this.state.phone}
+              onChange={(e) => this.setState({ phone: e.target.value })}
+            />
+          </Form.Group>
           <Form.Group controlId="formAddress">
             <Form.Label>Address</Form.Label>
             <Form.Control
@@ -101,9 +116,7 @@ class SignUp extends React.Component {
                 defaultValue=""
                 onChange={(e) => this.setState({ province: e.target.value })}
               >
-                <option value="">
-                  Choose..
-                </option>
+                <option value="">Choose..</option>
                 <option value="Alberta">Alberta</option>
                 <option value="British Columbia">British Columbia</option>
                 <option value="Manitoba">Manitoba</option>
@@ -142,11 +155,9 @@ class SignUp extends React.Component {
               as="select"
               custom
               defaultValue=""
-              onChange={(e) => this.setState({ isClinic: e.target.value })}
+              onChange={(e) => this.updateAdmin(e)}
             >
-              <option value="">
-                Choose..
-              </option>
+              <option value="">Choose..</option>
               {/* <option value="Yes">Yes</option> */}
               <option value="No">No</option>
             </Form.Control>

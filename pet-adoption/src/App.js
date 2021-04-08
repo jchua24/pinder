@@ -21,6 +21,7 @@ import { checkSession } from "./actions/users";
 class App extends React.Component {
   // check to see if the user has logged in
   componentDidMount() {
+    console.log('checking session');
     checkSession(this);
   }
 
