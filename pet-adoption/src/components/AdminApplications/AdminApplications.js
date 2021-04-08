@@ -150,7 +150,7 @@ class AdminApplications extends React.Component {
           </Form>
         </div>
         {availPets.length !== 0 ? (
-          <div class="center">
+        <div class="center">
           <div class="card">
             <div class="additional">
               <div class="user-card">
@@ -243,6 +243,53 @@ class AdminApplications extends React.Component {
               <span class="more">Mouse over the card for more info</span>
             </div>
           </div>
+          
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="coords">
+                  <span>Job</span>
+                  <span>City, Address</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+        
         
         </div>
           // <div className="appsContainer2">
