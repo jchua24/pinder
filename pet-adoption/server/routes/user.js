@@ -266,6 +266,43 @@ router.get("/posts", authenticate, mongoChecker, async (req, res) => {
 });
 
 
+//get user application data 
+router.get("/application", authenticate, mongoChecker, async (req, res) => {
+
+    if(req.user.admin) {
+        return res.status(401).send('Endpoint unauthorized for admin users.'); 
+    }
+
+    if("application" in req.user && req.user.application != {}) {
+        return res.send(req.user.application); 
+    } else {
+        return res.send(401).status("No application data found for this user."); 
+    }
+});
+
+//set user application data 
+router.put("/application", authenticate, mongoChecker, async (req, res) => {
+
+    if(req.user.admin) {
+        return res.status(401).send('Endpoint unauthorized for admin users.'); 
+    } else if (!("application" in req.body)) {
+        return res.status(401).send('Invalid request - application data not provided.'); 
+    }
+
+    try {
+        req.user.application = req.body.application; 
+        req.user.save(); 
+        return res.sendStatus(200);
+    } catch(error) {
+        console.log(error);
+
+        if(isMongoError(error)) {
+            return res.sendStatus(500); //internal server error
+        } 
+        return res.sendStatus(400); //bad request 
+    }  
+});
+
 //get individual user data 
 router.get("/:id", authenticate, mongoChecker, async (req, res) => {
 
