@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, CardDeck } from "react-bootstrap";
+import { Button, Carousel, CardDeck } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Pet from "../Pet/Pet";
@@ -12,7 +12,15 @@ class Intro extends React.Component {
   render() {
     return (
       <div className="intro">
-        <div className="introText">
+        <div className="hero-image">
+          <div className="hero-text">
+            <h1>Welcome to Pinder!</h1>
+            <p>The Best Adoption Platform on the internet.</p>
+            <button type="button" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-success">Signup</button>
+          </div>
+        </div>
+        {/* <div className="introText">
           <h1>Welcome to Pinder!</h1>
           <h2>
             The best pet adoption platform on the internet.
@@ -28,7 +36,7 @@ class Intro extends React.Component {
             </a>
             !
           </h3>
-        </div>
+        </div> */}
         <br></br>
         <Carousel indicators={false} className="introCarousel small">
           <Carousel.Item interval={2000}>
