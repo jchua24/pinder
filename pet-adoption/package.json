@@ -28,13 +28,15 @@
     "reactjs-popup": "^2.0.4",
     "simple-react-lightbox": "^3.6.3",
     "survey-react": "^1.8.41",
+    "watch": "^1.0.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "watch 'npm run build' ./src"
   },
   "eslintConfig": {
     "extends": [

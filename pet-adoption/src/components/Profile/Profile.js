@@ -35,26 +35,33 @@ class Profile extends React.Component {
     } 
   }  
 
+  //check if the user has a profile picture 
+  async componentDidMount() {
+    if(this.state.user && this.state.profilePic == "") {
+      this.state.user.profilePic = "/user-profile-placeholder.png"; //default pic 
+    }
+    
+  }  
+
   handleSubmit(event) {
     event.preventDefault();
-  }
+  } 
 
-  async onProfilePicChange(imageList, addUpdateIndex){
+  onProfilePicChange = async (imageList, addUpdateIndex) => {
 
     if(imageList.length > 0) { // adding image
         this.state.user.profilePic = imageList[0]['data_url']; 
 
+        try{
+          await apiUpdateProfilePicture(this.state.user.profilePic); 
+        } catch(error) {
+          console.log(error); 
+          alert('Profile picture could not be saved. Please try again!');
+        }
+
     } else { //removing image
         this.state.user.profilePic = "/user-profile-placeholder.png"; 
     }
-
-    try{
-      await apiUpdateProfilePicture(this.state.user.profilePic); 
-    } catch(error) {
-      console.log(error); 
-      alert('Profile picture could not be saved. Please try again!');
-    }
-
     this.forceUpdate();
   }
 
