@@ -17,27 +17,10 @@ class Intro extends React.Component {
           <div className="hero-text">
             <h1>Welcome to Pinder!</h1>
             <p>The Best Adoption Platform on the internet.</p>
-            <button type="button" class="btn btn-primary">Login</button>
-            <button type="button" class="btn btn-success">Signup</button>
+            <button type="button" className="btn btn-primary">Login</button>
+            <button type="button" className="btn btn-success">Signup</button>
           </div>
         </div>
-        {/* <div className="introText">
-          <h1>Welcome to Pinder!</h1>
-          <h2>
-            The best pet adoption platform on the internet.
-          </h2>
-          <h3>
-            Please{" "}
-            <a style={{ color: "#C3BEF7" }} href="/login">
-              login
-            </a>{" "}
-            or{" "}
-            <a style={{ color: "#C3BEF7" }} href="/signup">
-              create an account
-            </a>
-            !
-          </h3>
-        </div> */}
         <br></br>
         <Carousel indicators={false} className="introCarousel small">
           <Carousel.Item interval={2000}>

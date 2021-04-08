@@ -54,39 +54,7 @@ class AdminApplications extends React.Component {
   render() {
     let { availPets, userApps } = this.state;
     return (
-      <div>
-        {availPets.length !== 0 ? (
-          <div className="appsContainer">
-            {availPets.map((pet) => (
-              <Card key={pet.id} className="appsCard">
-                <Card.Header>
-                  <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
-                </Card.Header>
-                <ul className="list-group list-group-flush">
-                  {userApps
-                    .filter((app) => app.appliedPet === pet.name)
-                    .map((app) => (
-                      <li
-                        className="list-group-item"
-                        key={userApps.indexOf(app)}
-                      >
-                        <UserApplication
-                          imgSrc="/user-profile-placeholder.png"
-                          userName={app.userName}
-                          appliedPet={app.appliedPet}
-                          summary="I really like this pet! Please consider my application."
-                        />
-                      </li>
-                    ))}
-                </ul>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <h3 style={{ color: "white" }}>
-            There are no pets left at the moment
-          </h3>
-        )}
+      <div className="AdminAppContainer">
         <div className="appsSearch">
           <Form onSubmit={this.searchApps}>
             <Form.Group as={Row} controlId="searchName">
@@ -159,13 +127,45 @@ class AdminApplications extends React.Component {
               block
               size="lg"
               type="submit"
-              style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
+              style={{ backgroundColor: "#429EA6", borderColor: "transparent"}}
               className="justify-content-md-center"
             >
               Search
             </Button>
           </Form>
         </div>
+        {availPets.length !== 0 ? (
+        <div className="appsContainer2">
+            {availPets.map((pet) => (
+              <Card key={pet.id} className="appsCard">
+                <Card.Header>
+                  <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
+                </Card.Header>
+                <ul className="list-group list-group-flush">
+                  {userApps
+                    .filter((app) => app.appliedPet === pet.name)
+                    .map((app) => (
+                      <li
+                        className="list-group-item"
+                        key={userApps.indexOf(app)}
+                      >
+                        <UserApplication
+                          imgSrc="/user-profile-placeholder.png"
+                          userName={app.userName}
+                          appliedPet={app.appliedPet}
+                          summary="I really like this pet! Please consider my application."
+                        />
+                      </li>
+                    ))}
+                </ul>
+              </Card>
+            ))}
+          </div>
+        ) : (
+        <h3 style={{ color: "white" }}>
+            There are no pets left at the moment
+          </h3>
+        )}
       </div>
     );
   }

@@ -1,8 +1,15 @@
-.appsContainer{
-    margin: 5%;
+.appsContainer2{
+    margin: auto;
     width: 50%;
-    float: left;
+}
 
+.AdminAppContainer{
+    /* align-content: center; */
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    display: table;
+    /* padding: 0;  */
 }
 
 .appsCard{
@@ -14,7 +21,9 @@
     border-color:transparent;
     background-color: #F6F680;
     padding: 20px 20px 10px 20px;
-    float: left;
-    width: 30%;
-    margin: 5%;
+    width: 100%;
+    margin: 0 auto;
+    float: none;
+
 }
+
