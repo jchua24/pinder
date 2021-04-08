@@ -4,7 +4,6 @@ import {Row, Col, Image, Button} from "react-bootstrap";
 class UserApplication extends React.Component{
     constructor(props){
         super(props);
-        console.log('the user app constructor was called');
     }
     static defaultProps = {
         admin: true,
@@ -24,11 +23,9 @@ class UserApplication extends React.Component{
     cancelApplication = (e) => {
         e.preventDefault();
         alert("Successfully cancelled application")
-        console.log(this.props.width)
     }
 
     render(){
-        console.log(this.props);
         return (
             <Row>
                 <Col>

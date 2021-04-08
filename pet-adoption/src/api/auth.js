@@ -9,7 +9,8 @@ export const apiCheckSession = async (app) => {
     const session = await axios.get(`${API_HOST}/api/auth/sessionchecker`); 
     return session.data; 
   } catch(error) {
-    console.log(error); 
+    // no need to log here, we are logging in App.js
+    // console.log(error); 
     throw(error); 
   }
 };
@@ -23,7 +24,7 @@ export const apiLogin = async (email, password) => {
 
   try{
     const res = await axios.post(`${API_HOST}/api/auth/login`, reqBody); 
-    console.log("login: " + JSON.stringify(res));
+    // console.log("login: " + JSON.stringify(res));
     return res.data; 
   } catch(error) {
     console.log(error); 

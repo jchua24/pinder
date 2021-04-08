@@ -173,7 +173,7 @@ class SignUp extends React.Component {
               onChange={(e) => this.updateAdmin(e)}
             >
               <option value="">Choose..</option>
-              {/* <option value="Yes">Yes</option> */}
+              <option value="Yes">Yes</option>
               <option value="No">No</option>
             </Form.Control>
           </Form.Group>
