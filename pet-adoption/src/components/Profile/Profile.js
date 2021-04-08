@@ -41,7 +41,8 @@ class Profile extends React.Component {
   //check if the user has a profile picture
   async componentDidMount() {
     if (this.state.user && this.state.profilePic == "") {
-      this.state.user.profilePic = "/user-profile-placeholder.png"; //default pic
+      this.setState(update(this.state, {"user": {"profilePic": {$set: "/user-profile-placeholder.png"}}}));
+      //this.state.user.profilePic = "/user-profile-placeholder.png"; //default pic
     }
   }
 
@@ -52,7 +53,8 @@ class Profile extends React.Component {
   onProfilePicChange = async (imageList, addUpdateIndex) => {
     if (imageList.length > 0) {
       // adding image
-      this.state.user.profilePic = imageList[0]["data_url"];
+      this.setState(update(this.state, {"user": {"profilePic": {$set: imageList[0]["data_url"]}}}));
+      //this.state.user.profilePic = imageList[0]["data_url"];
 
       try {
         await apiUpdateProfilePicture(this.state.user.profilePic);
@@ -62,18 +64,20 @@ class Profile extends React.Component {
       }
     } else {
       //removing image
-      this.state.user.profilePic = "/user-profile-placeholder.png";
+      this.setState(update(this.state, {"user": {"profilePic": {$set: "/user-profile-placeholder.png"}}}));
     }
     this.forceUpdate();
   };
 
   onPreferenceAgeChange = (value) => {
-    this.state.user.preferences.age = value;
+    this.setState(update(this.state, {"user": {"preferences": {"age": {$set: value}}}}));
+    //this.state.user.preferences.age = value;
     this.forceUpdate();
   };
 
   onPreferenceDistanceChange = (value) => {
-    this.state.user.preferences.distance = value;
+    this.setState(update(this.state, {"user": {"preferences": {"distance": {$set: value}}}}));
+    //this.state.user.preferences.distance = value;
     this.forceUpdate();
   };
 
@@ -84,7 +88,8 @@ class Profile extends React.Component {
       petTypes.push(pet.value);
     });
 
-    this.state.user.preferences.petTypes = petTypes;
+    this.setState(update(this.state, {"user": {"preferences": {"petTypes": {$set: petTypes}}}}));
+    //this.state.user.preferences.petTypes = petTypes;
     this.forceUpdate();
   };
 
@@ -95,7 +100,8 @@ class Profile extends React.Component {
       clinics.push(clinic.value);
     });
 
-    this.state.user.preferences.clinics = clinics;
+    this.setState(update(this.state, {"user": {"preferences": {"clinics": {$set: clinics}}}}));
+    //this.state.user.preferences.clinics = clinics;
     this.forceUpdate();
   };
 
