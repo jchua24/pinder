@@ -2,10 +2,10 @@ import React from "react";
 import { Tabs, Tab} from "react-bootstrap";
 import ReactRoundedImage from "react-rounded-image";
 
-
 import InfoSection from "./InfoSection/InfoSection";
 import PreferenceSection from "./PreferencesSection/PreferencesSection";
 import ApplicationSection from "./ApplicationSection/ApplicationSection";
+import update from 'immutability-helper';
 
 import "./Profile.css";
 

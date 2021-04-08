@@ -11,7 +11,8 @@ class Questionnaire extends React.Component {
     this.json = userjson;
     this.onCompleteComponent = this.onCompleteComponent.bind(this);
   }
-  onCompleteComponent() {
+  onCompleteComponent(survey) {
+    console.log(survey.valuesHash)
     this.setState({ isCompleted: true });
   }
   render() {
