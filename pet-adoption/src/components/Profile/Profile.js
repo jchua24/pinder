@@ -14,22 +14,22 @@ class Profile extends React.Component {
     super();
     this.state = {
         user: {
-            name: "Joshua Chua", 
-            email: "joshuagodwin.chua@mail.utoronto.ca",
-            password: "....",
-            address: "123 Front Street West",
-            city: "Toronto",
-            province: "ON",
-            postal: "L4T 6HJ",
-            isClinic: "",
-            preferences: {
-                age: [0, 10], 
-                distance: [0, 50], 
-                petTypes: [],
-                clinic: []
-            },
-            applicationResponses: {}, 
-            profilePic: "/user-profile-placeholder.png"
+            // name: "Joshua Chua", 
+            // email: "joshuagodwin.chua@mail.utoronto.ca",
+            // password: "....",
+            // address: "123 Front Street West",
+            // city: "Toronto",
+            // province: "ON",
+            // postal: "L4T 6HJ",
+            // isClinic: "",
+            // preferences: {
+            //     age: [0, 10], 
+            //     distance: [0, 50], 
+            //     petTypes: [],
+            //     clinic: []
+            // },
+            // applicationResponses: {}, 
+            // profilePic: "/user-profile-placeholder.png"
         },
         profilePic: [], 
     } 
@@ -86,6 +86,9 @@ class Profile extends React.Component {
 
 
   render() {
+
+    const { app } = this.props;
+    this.state.user = app.state.user; 
 
     return (
         <div className="userProfile">

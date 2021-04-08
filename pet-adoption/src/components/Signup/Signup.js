@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { signUp } from "../../actions/users";
+import { apiSignUp } from "../../api/auth";
 
 import "./Signup.css";
 
@@ -42,10 +42,25 @@ class SignUp extends React.Component {
     else if (val === "Yes") this.setState({ admin: true });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    signUp(this, this.props.app);
-    this.props.history.push("/questionnaire");
+
+    try{
+      const userData = await apiSignUp(this.state); 
+     
+      console.log('updating current user after signup');
+      this.setState({ currUser: userData.user});
+
+      if(userData.user.admin) {
+        this.props.history.push('/adminapps'); //show admin apps if admin user
+      } else {
+        this.props.history.push("/questionnaire"); //show user questionnaire if regular user
+      }
+      
+    } catch(error) {
+      console.log(error); 
+      alert('This user already exists!');
+    }
   }
 
   render() {
