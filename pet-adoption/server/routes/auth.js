@@ -156,6 +156,7 @@ router.post("/add", sessionChecker, async (req, res) => {
         phone: req.body.phone,
         url: req.body.admin ? req.body.url : "",
         admin: req.body.admin,
+        application: {}, 
         petApplications: [],
         petPostings: [],
         preferences: {
