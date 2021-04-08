@@ -25,13 +25,24 @@ class Navigation extends React.Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/about"> About </Nav.Link>
-              {app.state.currUser
-                ? app.state.currUser.admin
-                  ? ((<Nav.Link href="/adminapps">Applications</Nav.Link>),
-                    (<Nav.Link href="/postapet">Post a Pet</Nav.Link>))
-                  : ((<Nav.Link href="/swiper">Pets</Nav.Link>),
-                    (<Nav.Link href="/applications">Applications</Nav.Link>))
-                : ""}
+              {app.state.currUser ? (
+                app.state.currUser.admin ? (
+                  <Nav.Link href="/adminapps">Applications</Nav.Link>
+                ) : (
+                  <Nav.Link href="/swiper">Pets</Nav.Link>
+                )
+              ) : (
+                ""
+              )}
+              {app.state.currUser ? (
+                app.state.currUser.admin ? (
+                  <Nav.Link href="/postapet">Post a Pet</Nav.Link>
+                ) : (
+                  <Nav.Link href="/applications">Applications</Nav.Link>
+                )
+              ) : (
+                ""
+              )}
             </Nav>
             <Nav>
               {app.state.currUser ? (

@@ -8,6 +8,7 @@ import "./Intro.css";
 class Intro extends React.Component {
   constructor(props) {
     super(props);
+    this.props.history.push('/intro');
   }
   loadLogin(){
     this.props.history.push('/login');    

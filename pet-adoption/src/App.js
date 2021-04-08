@@ -32,9 +32,9 @@ class App extends React.Component {
   async componentDidMount() {
 
     try {
-      const user = await apiCheckSession();
-      if(user) {
-        this.setState({currUser: user}); 
+      const data = await apiCheckSession();
+      if(data) {
+        this.setState({currUser: data.user}); 
       }
     } catch (error) {
       console.log(error); 
@@ -59,7 +59,7 @@ class App extends React.Component {
                       this.state.currUser.admin ? (
                         <AdminApplications {...props} app={this} />
                       ) : (
-                        <Applications {...props} app={this} />
+                        <PetSwiper {...props} app={this} />
                       )
                     ) : (
                       <Intro {...props} app={this} />

@@ -20,6 +20,7 @@ class SignUp extends React.Component {
       status: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.history.push('/signup');
   }
 
   validateForm() {
@@ -49,7 +50,7 @@ class SignUp extends React.Component {
       const userData = await apiSignUp(this.state); 
      
       console.log('updating current user after signup');
-      this.setState({ currUser: userData.user});
+      this.props.app.setState({ currUser: userData.user});
 
       if(userData.user.admin) {
         this.props.history.push('/adminapps'); //show admin apps if admin user

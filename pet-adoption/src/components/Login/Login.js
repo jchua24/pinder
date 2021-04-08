@@ -12,6 +12,7 @@ class Login extends React.Component {
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.history.push('/login');
   }
 
   validateForm() {
@@ -27,7 +28,7 @@ class Login extends React.Component {
       const userData = await apiLogin(this.state.email, this.state.password); 
      
       console.log('updating current user');
-      this.setState({ currUser: userData.user});
+      this.props.app.setState({ currUser: userData.user});
 
       if(userData.user.admin) {
         this.props.history.push('/adminapps'); //show admin apps if admin user
