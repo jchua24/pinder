@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Redirect, useHistory } from "react-router-dom";
-import { login } from "../../actions/users";
+import { apiLogin } from "../../api/auth";
 
 import "./Login.css";
 class Login extends React.Component {
@@ -12,22 +12,37 @@ class Login extends React.Component {
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.history.push('/login');
   }
-  updateUser() {
-    alert('The email or password that you have entered is incorrect!');
-  }
+
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
-  handleSubmit(event) {
+
+
+  //login event 
+  async handleSubmit(event) {
     event.preventDefault();
-    login(this, this.props.app);
-    let user = this.props.app.state.currUser;
-    if (user && user.admin)
-      this.props.history.push('/adminapps');
-    else
-      this.props.history.push('/applications'); 
+
+    try{
+      const userData = await apiLogin(this.state.email, this.state.password); 
+     
+      console.log('updating current user');
+      this.props.app.setState({ currUser: userData.user});
+
+      if(userData.user.admin) {
+        this.props.history.push('/adminapps'); //show admin apps if admin user
+      } else {
+        this.props.history.push('/applications'); //show user apps if regular user
+      }
+      
+    } catch(error) {
+      console.log(error); 
+      alert('The email or password that you have entered is incorrect!');
+    }
   }
+
+
   render() {
     return (
       <div className="Login">

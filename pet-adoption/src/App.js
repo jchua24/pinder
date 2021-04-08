@@ -1,9 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import "./components/Footer/Footer";
-import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
 import Intro from "./components/Intro/Intro";
 import Navigation from "./components/Navigation";
@@ -16,18 +15,33 @@ import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
 import Logout from "./components/Logout";
-import { checkSession } from "./actions/users";
+import { apiCheckSession } from "./api/auth";
 
 class App extends React.Component {
-  // check to see if the user has logged in
-  componentDidMount() {
-    checkSession(this);
+
+  constructor(props) {
+    super(); 
+
+    //state object, to be accessible by children elements
+    this.state = {
+      currUser: null
+    }
   }
 
-  // global state that is going to be passed down
-  state = {
-    currUser: null,
-  };
+  // check to see if the user has logged in
+  async componentDidMount() {
+
+    try {
+      const data = await apiCheckSession();
+      if(data) {
+        this.setState({currUser: data.user}); 
+      }
+    } catch (error) {
+      console.log(error); 
+    } 
+    
+  }
+
 
   render() {
     return (
@@ -45,7 +59,7 @@ class App extends React.Component {
                       this.state.currUser.admin ? (
                         <AdminApplications {...props} app={this} />
                       ) : (
-                        <Applications {...props} app={this} />
+                        <PetSwiper {...props} app={this} />
                       )
                     ) : (
                       <Intro {...props} app={this} />

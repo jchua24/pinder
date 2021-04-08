@@ -1,36 +1,36 @@
 import React from "react";
 import { Tabs, Tab} from "react-bootstrap";
 import ReactRoundedImage from "react-rounded-image";
-
-
 import InfoSection from "./InfoSection/InfoSection";
 import PreferenceSection from "./PreferencesSection/PreferencesSection";
 import ApplicationSection from "./ApplicationSection/ApplicationSection";
 
+import { apiUpdateProfilePic } from "../../api/auth";
+
 import "./Profile.css";
 
 class Profile extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-        user: {
-            name: "Joshua Chua", 
-            email: "joshuagodwin.chua@mail.utoronto.ca",
-            password: "....",
-            address: "123 Front Street West",
-            city: "Toronto",
-            province: "ON",
-            postal: "L4T 6HJ",
-            isClinic: "",
-            preferences: {
-                age: [0, 10], 
-                distance: [0, 50], 
-                petTypes: [],
-                clinic: []
-            },
-            applicationResponses: {}, 
-            profilePic: "/user-profile-placeholder.png"
-        },
+        //user: {
+            // name: "Joshua Chua", 
+            // email: "joshuagodwin.chua@mail.utoronto.ca",
+            // password: "....",
+            // address: "123 Front Street West",
+            // city: "Toronto",
+            // province: "ON",
+            // postal: "L4T 6HJ",
+            // isClinic: "",
+            // preferences: {
+            //     age: [0, 10], 
+            //     distance: [0, 50], 
+            //     petTypes: [],
+            //     clinic: []
+            // },
+            // applicationResponses: {}, 
+            // profilePic: "/user-profile-placeholder.png"
+        //},
         profilePic: [], 
     } 
   }  
@@ -43,8 +43,16 @@ class Profile extends React.Component {
 
     if(imageList.length > 0) { // adding image
         this.state.user.profilePic = imageList[0]['data_url']; 
+
     } else { //removing image
         this.state.user.profilePic = "/user-profile-placeholder.png"; 
+    }
+
+    try{
+      await apiUpdateProfilePic(this.state.user.profilePic); 
+    } catch(error) {
+      console.log(error); 
+      alert('Profile picture could not be saved. Please try again!');
     }
 
     this.forceUpdate();
@@ -87,8 +95,16 @@ class Profile extends React.Component {
 
   render() {
 
+    const { app } = this.props;
+    const user = app.state.user; 
+    this.state.user = user;
+
+    console.log("user: " + JSON.stringify(user)); 
+
     return (
-        <div className="userProfile">
+      <div> 
+        {user && 
+          <div className="userProfile">
 
             <div className="profileIntro"> 
                 <h1 className="name">{this.state.user.name} </h1> 
@@ -131,9 +147,13 @@ class Profile extends React.Component {
                   </Tab> 
               </Tabs> 
             </div> 
-           
+          </div> 
+        }
+
+      </div> 
         
-        </div> 
+
+        
 
     );
   }

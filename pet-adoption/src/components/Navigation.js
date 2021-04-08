@@ -24,24 +24,28 @@ class Navigation extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              {/* Removed login from the nav bar */}
-              {/* {!global.isLoggedIn ? (
-                <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/about"> About </Nav.Link>
+              {app.state.currUser ? (
+                app.state.currUser.admin ? (
+                  <Nav.Link href="/adminapps">Applications</Nav.Link>
+                ) : (
+                  <Nav.Link href="/swiper">Pets</Nav.Link>
+                )
               ) : (
                 ""
-              )} */}
-              {/* I think the about page should also be moved to the footer */}
-              <Nav.Link href="/about"> About </Nav.Link>
-              {app.currUser
-                ? app.currUser.admin
-                  ? ((<Nav.Link href="/adminapps">Applications</Nav.Link>),
-                    (<Nav.Link href="/postapet">Post a Pet</Nav.Link>))
-                  : ((<Nav.Link href="/swiper">Pets</Nav.Link>),
-                    (<Nav.Link href="/applications">Applications</Nav.Link>))
-                : ""}
+              )}
+              {app.state.currUser ? (
+                app.state.currUser.admin ? (
+                  <Nav.Link href="/postapet">Post a Pet</Nav.Link>
+                ) : (
+                  <Nav.Link href="/applications">Applications</Nav.Link>
+                )
+              ) : (
+                ""
+              )}
             </Nav>
             <Nav>
-              {app.currUser ? (
+              {app.state.currUser ? (
                 <NavDropdown
                   title={
                     <Image
