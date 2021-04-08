@@ -5,7 +5,7 @@ import InfoSection from "./InfoSection/InfoSection";
 import PreferenceSection from "./PreferencesSection/PreferencesSection";
 import ApplicationSection from "./ApplicationSection/ApplicationSection";
 
-import { apiUpdateProfilePic } from "../../api/auth";
+import { apiUpdateProfilePicture } from "../../api/user";
 
 import "./Profile.css";
 
@@ -39,7 +39,7 @@ class Profile extends React.Component {
     event.preventDefault();
   }
 
-  onProfilePicChange = (imageList, addUpdateIndex) => {
+  async onProfilePicChange(imageList, addUpdateIndex){
 
     if(imageList.length > 0) { // adding image
         this.state.user.profilePic = imageList[0]['data_url']; 
@@ -49,14 +49,14 @@ class Profile extends React.Component {
     }
 
     try{
-      await apiUpdateProfilePic(this.state.user.profilePic); 
+      await apiUpdateProfilePicture(this.state.user.profilePic); 
     } catch(error) {
       console.log(error); 
       alert('Profile picture could not be saved. Please try again!');
     }
 
     this.forceUpdate();
-  };
+  }
 
   onPreferenceAgeChange = (value) => {
     this.state.user.preferences.age = value; 
