@@ -107,6 +107,10 @@ const userSchema = mongoose.Schema({
         type: String, 
         required: false
     },
+    application: {
+        type: Object, 
+        required: false
+    },
     preferences: PreferencesSchema, 
     petApplications: [ApplicationSchema], 
     petPostings: [PostSchema], //Note: regular users will never have any petPostings

@@ -14,6 +14,8 @@ class Questionnaire extends React.Component {
   onCompleteComponent(survey) {
     console.log(survey.valuesHash)
     this.setState({ isCompleted: true });
+    // updated the database with the new information for the user
+    this.props.history.push('/swiper');
   }
   render() {
     Survey.StylesManager.ThemeColors["default"]["$main-color"] = "#1A8FE6";

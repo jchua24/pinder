@@ -1,9 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import "./components/Footer/Footer";
-import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
 import Intro from "./components/Intro/Intro";
 import Navigation from "./components/Navigation";
@@ -16,24 +15,35 @@ import PetSwiper from "./components/PetSwiper/PetSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
 import Logout from "./components/Logout";
-import { checkSession } from "./actions/users";
+import { apiCheckSession } from "./api/auth";
 
 class App extends React.Component {
-  // check to see if the user has logged in
-  componentDidMount() {
-    checkSession(this);
+  constructor(props) {
+    super();
+
+    //state object, to be accessible by children elements
+    this.state = {
+      currUser: null,
+    };
   }
 
-  // global state that is going to be passed down
-  state = {
-    currUser: null,
-  };
+  // check to see if the user has logged in
+  async componentDidMount() {
+    try {
+      const data = await apiCheckSession();
+      if (data) {
+        this.setState({ currUser: data.user });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <Navigation />
+          <Navigation app={this} />
           <div className="appContent">
             <Switch>
               <Route
@@ -45,7 +55,7 @@ class App extends React.Component {
                       this.state.currUser.admin ? (
                         <AdminApplications {...props} app={this} />
                       ) : (
-                        <Applications {...props} app={this} />
+                        <PetSwiper {...props} app={this} />
                       )
                     ) : (
                       <Intro {...props} app={this} />
@@ -55,6 +65,7 @@ class App extends React.Component {
               />
               {/* add a path that will always take user to the intro page */}
               <Route
+                exact
                 path="/intro"
                 render={(props) => (
                   <div>
@@ -63,6 +74,7 @@ class App extends React.Component {
                 )}
               />
               <Route
+                exact
                 path="/login"
                 render={(props) => (
                   <div>
@@ -75,6 +87,7 @@ class App extends React.Component {
                 )}
               />
               <Route
+                exact
                 path="/signup"
                 render={(props) => (
                   <div>
@@ -82,10 +95,11 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/about">
+              <Route exact path="/about">
                 <About />
               </Route>
               <Route
+                exact
                 path="/applications"
                 render={(props) => (
                   <div>
@@ -93,27 +107,57 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route path="/postapet">
+              <Route exact path="/postapet">
                 <PetPosting clinic="test" />
               </Route>
-              <Route path="/profile">
-                <Profile />
-              </Route>
-              <Route path="/swiper">
-                <PetSwiper />
-              </Route>
-              <Route 
-                path="/adminapps"
+              <Route
+                exact
+                path="/profile"
+                render={(props) =>
+                  this.state.currUser ? (
+                    <div><Profile {...props} app={this} /></div>
+                  ) : (
+                    <div><Login {...props} app={this} /></div>
+                  )
+                }
+              />
+              <Route
+                path="/swiper"
                 render={(props) => (
                   <div>
-                    <AdminApplications {...props} app={this} />
+                    <PetSwiper {...props} app={this} />
                   </div>
                 )}
               />
-              <Route path="/questionnaire">
-                <Questionnaire />
-              </Route>
               <Route
+                exact
+                path="/adminapps"
+                render={(props) =>
+                  this.state.currUser ? (
+                    this.state.currUser.admin ? (
+                      <div>
+                        {" "}
+                        <AdminApplications {...props} app={this} />{" "}
+                      </div>
+                    ) : (
+                      <div>You are not an admin user!</div>
+                    )
+                  ) : (
+                    <div>You need to login first.</div>
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/questionnaire"
+                render={(props) => (
+                  <div>
+                    <Questionnaire {...props} app={this} />
+                  </div>
+                )}
+              />
+              <Route
+                exact
                 path="/logout"
                 render={(props) => (
                   <div>
@@ -121,6 +165,8 @@ class App extends React.Component {
                   </div>
                 )}
               />
+              {/* 404 if the URL cannot be found */}
+              <Route render={() => <div>404 URL Not Found.</div>} />
             </Switch>
           </div>
         </div>

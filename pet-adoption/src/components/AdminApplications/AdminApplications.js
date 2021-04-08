@@ -2,19 +2,24 @@ import React from "react";
 
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import UserApplication from "../userApplication/userApplication";
+import RcSlider, {createSliderWithTooltip} from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 import "./AdminApplications.css";
+
+const RcRange = RcSlider.createSliderWithTooltip(RcSlider.Range);
+const ToolTipSlider = createSliderWithTooltip(RcSlider);
+
 class AdminApplications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       availPets: [],
       userApps: [],
-      searchName: "",
+      searchAge: "",
       searchType: "",
-      serachBreed: "",
+      searchBreed: "",
     };
-    this.props.history.push('/adminapps');
   }
 
   getAvailPets = () => {
@@ -54,47 +59,69 @@ class AdminApplications extends React.Component {
   render() {
     let { availPets, userApps } = this.state;
     return (
-      <div>
-        {availPets.length !== 0 ? (
-          <div className="appsContainer">
-            {availPets.map((pet) => (
-              <Card key={pet.id} className="appsCard">
-                <Card.Header>
-                  <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
-                </Card.Header>
-                <ul className="list-group list-group-flush">
-                  {userApps
-                    .filter((app) => app.appliedPet === pet.name)
-                    .map((app) => (
-                      <li
-                        className="list-group-item"
-                        key={userApps.indexOf(app)}
-                      >
-                        <UserApplication
-                          imgSrc="/user-profile-placeholder.png"
-                          userName={app.userName}
-                          appliedPet={app.appliedPet}
-                          summary="I really like this pet! Please consider my application."
-                        />
-                      </li>
-                    ))}
-                </ul>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <h3 style={{ color: "white" }}>
-            There are no pets left at the moment
-          </h3>
-        )}
+      <div className="AdminAppContainer">
         <div className="appsSearch">
           <Form onSubmit={this.searchApps}>
-            <Form.Group as={Row} controlId="searchName">
+            <Form.Group as={Row} controlId="searchType">
               <Form.Label column sm={2}>
-                <strong>Name:</strong>{" "}
+                <strong>Type:</strong>{" "}
               </Form.Label>
               <Col>
                 <Form.Control
+                  as="select"
+                  custom
+                  defaultValue=""
+                  onChange={(e) => {
+                    this.setState({ searchType: e.target.value });
+                  }}
+                >
+                <option value="">
+                  Choose..
+                </option>
+                {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
+                  <option value={p}>{p}</option>
+                ))}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} controlId="searchBreed">
+              <Form.Label column sm={2}>
+                <strong>Breed:</strong>{" "}
+              </Form.Label>
+              <Col>
+                <Form.Control
+                  as="select"
+                  custom
+                  defaultValue=""
+                  onChange={(e) => {
+                    this.setState({ searchBreed: e.target.value });
+                  }}
+                >
+                <option value="">
+                  Choose..
+                </option>
+                {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
+                  <option value={p}>{p}</option>
+                ))}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} controlId="searchAge">
+              <Form.Label column sm={2}>
+                <strong>Age Range:</strong>{" "}
+              </Form.Label>
+              <Col>
+              <RcRange
+                tipFormatter={(value) => `${value}`}
+                tipProps={{ visible: true }}
+                defaultValue={[0, 10]}
+                min={0}
+                max={50}
+                className="slider"
+                handleStyle={{borderColor: '#17a2b8', backgroundColor: 'white'}}
+                trackStyle={[{backgroundColor: "#17a2b8"}]}
+              />
+                {/* <Form.Control
                   as="select"
                   custom
                   defaultValue=""
@@ -108,64 +135,479 @@ class AdminApplications extends React.Component {
                 {availPets.map(pet => (
                   <option value={pet.name}>{pet.name}</option>
                 ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId="searchType">
-              <Form.Label column sm={2}>
-                <strong>Type:</strong>{" "}
-              </Form.Label>
-              <Col>
-                <Form.Control
-                  as="select"
-                  custom
-                  defaultValue=""
-                  onChange={(e) => {
-                    this.setState({ searchName: e.target.value });
-                  }}
-                >
-                <option value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId="searchType">
-              <Form.Label column sm={2}>
-                <strong>Breed:</strong>{" "}
-              </Form.Label>
-              <Col>
-                <Form.Control
-                  as="select"
-                  custom
-                  defaultValue=""
-                  onChange={(e) => {
-                    this.setState({ searchName: e.target.value });
-                  }}
-                >
-                <option value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
-                </Form.Control>
+                </Form.Control> */}
               </Col>
             </Form.Group>
             <Button
-              block
+              inline-block
               size="lg"
               type="submit"
-              style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
-              className="justify-content-md-center"
+              style={{ backgroundColor: "#429EA6", borderColor: "transparent"}}
+              className="searchButton"/*"justify-content-md-center"*/
             >
               Search
             </Button>
           </Form>
         </div>
+        {availPets.length !== 0 ? (
+        <div class="center">
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+        
+          <div class="card green">
+            <div class="additional">
+              <div class="user-card">
+                
+              <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value infinity">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+        
+          <div class="card green">
+            <div class="additional">
+              <div class="user-card">
+                
+              <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value infinity">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+        
+          <div class="card green">
+            <div class="additional">
+              <div class="user-card">
+                
+              <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value infinity">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="additional">
+              <div class="user-card">
+                <img src="/user-profile-placeholder.png" className="img-center"></img>
+              </div>
+              <div class="more-info">
+                <h1>John</h1>
+                <div class="coords">
+                  <span>AGE</span>
+                  <br></br>
+                  <span>Job</span>
+                  <br></br>
+                  <span>City, Address</span>
+                  <br></br>
+                  <span>Joined January 2019</span>
+                </div>
+                <div class="stats">
+                  <div>
+                    <div class="title">Enviroment</div>
+                    <i class="fa fa-trophy"></i>
+                    <div class="value">Condo</div>
+                  </div>
+                  <div>
+                    <div class="title">Owned Pet</div>
+                    <i class="fa fa-gamepad"></i>
+                    <div class="value">Yes</div>
+                  </div>
+                  <div>
+                    <div class="title">Household</div>
+                    <i class="fa fa-group"></i>
+                    <div class="value">3</div>
+                  </div>
+                  <div>
+                    <div class="title">Pet Diet</div>
+                    <i class="fa fa-coffee"></i>
+                    <div class="value">Raw</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="general">
+              <h1>John</h1>
+              <p>This is some more info about me...</p>
+              <span class="more">Mouse over the card for more info</span>
+            </div>
+          </div>
+        
+        
+        </div>
+          // <div className="appsContainer2">
+          //   {availPets.map((pet) => (
+          //     <Card key={pet.id} className="appsCard">
+          //       <Card.Header>
+          //         <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
+          //       </Card.Header>
+          //       <ul className="list-group list-group-flush">
+          //         {userApps
+          //           .filter((app) => app.appliedPet === pet.name)
+          //           .map((app) => (
+          //             <li
+          //               className="list-group-item"
+          //               key={userApps.indexOf(app)}
+          //             >
+          //               <UserApplication
+          //                 imgSrc="/user-profile-placeholder.png"
+          //                 userName={app.userName}
+          //                 appliedPet={app.appliedPet}
+          //                 summary="I really like this pet! Please consider my application."
+          //               />
+          //             </li>
+          //           ))}
+          //       </ul>
+          //     </Card>
+          //   ))}
+          // </div>
+        ) : (
+          <h3 style={{ color: "white" }}>
+            There are no pets left at the moment
+          </h3>
+        )}
       </div>
     );
   }

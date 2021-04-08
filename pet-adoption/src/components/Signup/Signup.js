@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
-import { signUp } from "../../actions/users";
+import { apiSignUp } from "../../api/auth";
 
 import "./Signup.css";
 
@@ -15,11 +15,12 @@ class SignUp extends React.Component {
       city: "",
       province: "",
       postal: "",
-      isClinic: "",
-      status: ""
+      admin: "",
+      phone: "",
+      status: "",
     };
-    this.props.history.push('/signup');
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.history.push('/signup');
   }
 
   validateForm() {
@@ -31,13 +32,36 @@ class SignUp extends React.Component {
       this.state.city.length > 0 &&
       this.state.province !== "" &&
       this.state.postal.length > 0 &&
-      this.state.isClinic.length > 0
+      this.state.phone.length > 0 && 
+      this.state.admin !== ""
     );
   }
 
-  handleSubmit(event) {
+  updateAdmin(event) {
+    let val = event.target.value;
+    if (val === "No") this.setState({ admin: false });
+    else if (val === "Yes") this.setState({ admin: true });
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    signUp(this, this.props.app);
+
+    try{
+      const userData = await apiSignUp(this.state); 
+     
+      console.log('updating current user after signup');
+      this.props.app.setState({ currUser: userData.user});
+
+      if(userData.user.admin) {
+        this.props.history.push('/adminapps'); //show admin apps if admin user
+      } else {
+        this.props.history.push("/questionnaire"); //show user questionnaire if regular user
+      }
+      
+    } catch(error) {
+      console.log(error); 
+      alert('This user already exists!');
+    }
   }
 
   render() {
@@ -70,7 +94,14 @@ class SignUp extends React.Component {
               onChange={(e) => this.setState({ password: e.target.value })}
             />
           </Form.Group>
-
+          <Form.Group size="lg" controlId="phoneNumber">
+            <Form.Label>Phone Number</Form.Label>
+            <Form.Control
+              type="tel"
+              value={this.state.phone}
+              onChange={(e) => this.setState({ phone: e.target.value })}
+            />
+          </Form.Group>
           <Form.Group controlId="formAddress">
             <Form.Label>Address</Form.Label>
             <Form.Control
@@ -101,9 +132,7 @@ class SignUp extends React.Component {
                 defaultValue=""
                 onChange={(e) => this.setState({ province: e.target.value })}
               >
-                <option value="">
-                  Choose..
-                </option>
+                <option value="">Choose..</option>
                 <option value="Alberta">Alberta</option>
                 <option value="British Columbia">British Columbia</option>
                 <option value="Manitoba">Manitoba</option>
@@ -142,12 +171,10 @@ class SignUp extends React.Component {
               as="select"
               custom
               defaultValue=""
-              onChange={(e) => this.setState({ isClinic: e.target.value })}
+              onChange={(e) => this.updateAdmin(e)}
             >
-              <option value="">
-                Choose..
-              </option>
-              {/* <option value="Yes">Yes</option> */}
+              <option value="">Choose..</option>
+              <option value="Yes">Yes</option>
               <option value="No">No</option>
             </Form.Control>
           </Form.Group>

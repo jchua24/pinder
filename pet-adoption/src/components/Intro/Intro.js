@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, CardDeck } from "react-bootstrap";
+import { Button, Carousel, CardDeck } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Pet from "../Pet/Pet";
@@ -10,25 +10,34 @@ class Intro extends React.Component {
     super(props);
     this.props.history.push('/intro');
   }
+  loadLogin(){
+    this.props.history.push('/login');    
+  }
+  loadSignUp(){
+    this.props.history.push('/signup');
+  }
   render() {
     return (
       <div className="intro">
-        <div className="introText">
-          <h1>Welcome to Pinder!</h1>
-          <h2>
-            The best pet adoption platform on the internet.
-          </h2>
-          <h3>
-            Please{" "}
-            <a style={{ color: "#C3BEF7" }} href="/login">
-              login
-            </a>{" "}
-            or{" "}
-            <a style={{ color: "#C3BEF7" }} href="/signup">
-              create an account
-            </a>
-            !
-          </h3>
+        <div className="hero-image">
+          <div className="hero-text">
+            <h1>Welcome to Pinder!</h1>
+            <p>The Best Adoption Platform on the internet.</p>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => this.loadLogin()}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className="btn btn-success"
+              onClick={() => this.loadSignUp()}
+            >
+              Signup
+            </button>
+          </div>
         </div>
         <br></br>
         <Carousel indicators={false} className="introCarousel small">
