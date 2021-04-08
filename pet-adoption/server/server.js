@@ -39,6 +39,7 @@ const buildPath = path.join(__dirname, "..", "build");
 app.use(express.static(buildPath));
 app.use("/static", express.static(path.join(__dirname, "../build/static")));
 
+
 //import router object
 const router = require("./routes/routes");
 app.use(router);
