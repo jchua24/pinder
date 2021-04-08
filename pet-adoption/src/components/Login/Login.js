@@ -12,15 +12,18 @@ class Login extends React.Component {
       password: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.props.history.push('/login');
   }
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
   handleSubmit(event) {
     event.preventDefault();
-    // login(this, this.props.app);
-    this.props.history.push('/Applications'); 
+    login(this, this.props.app);
+    let user = this.props.app.state.currUser;
+    if (user.admin)
+      this.props.history.push('/adminapps');
+    else
+      this.props.history.push('/applications'); 
   }
   render() {
     return (
