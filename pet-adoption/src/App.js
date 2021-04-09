@@ -30,6 +30,7 @@ class App extends React.Component {
     //state object, to be accessible by children elements
     this.state = {
       currUser: null,
+      isMounted: false,
     };
   }
 
@@ -38,18 +39,25 @@ class App extends React.Component {
     try {
       const data = await apiCheckSession();
       if (data) {
-        this.setState({ currUser: data.user });
+        this.setState({ currUser: data.user, isMounted: true });
       }
     } catch (error) {
       console.log(error);
+      localStorage.removeItem("isLoggedIn");
+      this.setState({ isMounted: true });
     }
   }
 
+  isValid() {
+    let { currUser, isMounted } = this.state,
+      isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn && !currUser) return false;
+    return true;
+  }
+
   render() {
-    let { currUser } = this.state;
-    console.log("Rendering");
-    console.log(currUser);
-    return (
+    let { currUser, isMounted } = this.state;
+    return this.isValid() ? (
       <Router>
         <div className="App">
           <Navigation app={this} />
@@ -130,13 +138,13 @@ class App extends React.Component {
                 path="/applications"
                 render={(props) => (
                   <div>
-                    {currUser ? 
+                    {currUser ? (
                       currUser.admin ? (
                         <Redirect to={{ pathname: "/adminapps" }} />
                       ) : (
                         <Applications {...props} app={this} />
                       )
-                     : (
+                    ) : (
                       <div>
                         <Alert variant="primary" dismissible transition>
                           You need to login to access this page.
@@ -147,9 +155,23 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route exact path="/postapet">
-                <PetPosting clinic="test" />
-              </Route>
+              <Route
+                exact
+                path="/postapet"
+                render={(props) => (
+                  <div>
+                    {currUser ? (
+                      currUser.admin ? (
+                        <PetPosting {...props} app={this} />
+                      ) : (
+                        <div>This page is only accessible to clinics!</div>
+                      )
+                    ) : (
+                      <Redirect to={{ pathname: "/login" }} />
+                    )}
+                  </div>
+                )}
+              />
               <Route
                 exact
                 path="/profile"
@@ -169,7 +191,18 @@ class App extends React.Component {
                 path="/swiper"
                 render={(props) => (
                   <div>
-                    <PetSwiper {...props} app={this} />
+                    {currUser ? (
+                      currUser.admin ? (
+                        <div>
+                          This page is only accessible to individuals looking for pets.<br/>
+                          Please login using your personal account.
+                        </div>
+                      ) : (
+                        <PetSwiper {...props} app={this} />
+                      )
+                    ) : (
+                      <Redirect to={{pathname : '/login'}}/>
+                    )}
                   </div>
                 )}
               />
@@ -210,7 +243,12 @@ class App extends React.Component {
                 )}
               />
 
-              {/* These routes are added to speed up front end style change tests */}
+              {/* These routes are added to speed up front end style change tests 
+
+                  *****MAKE SURE TO REMOVE THESE BEFORE SUBMISSION!******
+              
+              */}
+
               <Route
                 exact
                 path="/testadminapps"
@@ -253,6 +291,8 @@ class App extends React.Component {
           </div>
         </div>
       </Router>
+    ) : (
+      ""
     );
   }
 }

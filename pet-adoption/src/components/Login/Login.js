@@ -25,7 +25,7 @@ class Login extends React.Component {
 
     try{
       const userData = await apiLogin(this.state.email, this.state.password); 
-     
+      localStorage.setItem('isLoggedIn', true);
       console.log('updating current user');
       this.props.app.setState({ currUser: userData.user});
 
