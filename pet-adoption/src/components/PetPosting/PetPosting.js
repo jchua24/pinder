@@ -18,7 +18,10 @@ class PetPosting extends React.Component {
   validateForm() {
     return (
       this.state.age.length > 0 &&
-      this.state.type.length > 0     
+      this.state.type.length > 0 &&
+      this.state.breed.length > 0 &&
+      this.state.addInfo.length > 0 &&
+      this.state.petImages.length > 0    
     );
   }
 
