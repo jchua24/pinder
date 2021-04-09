@@ -15,33 +15,20 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //user: {
-      // name: "Joshua Chua",
-      // email: "joshuagodwin.chua@mail.utoronto.ca",
-      // password: "....",
-      // address: "123 Front Street West",
-      // city: "Toronto",
-      // province: "ON",
-      // postal: "L4T 6HJ",
-      // isClinic: "",
-      // preferences: {
-      //     age: [0, 10],
-      //     distance: [0, 50],
-      //     petTypes: [],
-      //     clinic: []
-      // },
-      // applicationResponses: {},
-      // profilePic: "/user-profile-placeholder.png"
-      //},
+      user: {},
       profilePic: [],
     };
   }
 
   //check if the user has a profile picture
   async componentDidMount() {
+
+    const { app } = this.props; 
+    const user = app.state.user;
+    this.state.user = user;
+
     if (this.state.user && this.state.profilePic == "") {
       this.setState(update(this.state, {"user": {"profilePic": {$set: "/user-profile-placeholder.png"}}}));
-      //this.state.user.profilePic = "/user-profile-placeholder.png"; //default pic
     }
   }
 
@@ -53,7 +40,6 @@ class Profile extends React.Component {
     if (imageList.length > 0) {
       // adding image
       this.setState(update(this.state, {"user": {"profilePic": {$set: imageList[0]["data_url"]}}}));
-      //this.state.user.profilePic = imageList[0]["data_url"];
 
       try {
         await apiUpdateProfilePicture(this.state.user.profilePic);
@@ -70,13 +56,11 @@ class Profile extends React.Component {
 
   onPreferenceAgeChange = (value) => {
     this.setState(update(this.state, {"user": {"preferences": {"age": {$set: value}}}}));
-    //this.state.user.preferences.age = value;
     this.forceUpdate();
   };
 
   onPreferenceDistanceChange = (value) => {
     this.setState(update(this.state, {"user": {"preferences": {"distance": {$set: value}}}}));
-    //this.state.user.preferences.distance = value;
     this.forceUpdate();
   };
 
@@ -88,7 +72,6 @@ class Profile extends React.Component {
     });
 
     this.setState(update(this.state, {"user": {"preferences": {"petTypes": {$set: petTypes}}}}));
-    //this.state.user.preferences.petTypes = petTypes;
     this.forceUpdate();
   };
 
@@ -100,20 +83,15 @@ class Profile extends React.Component {
     });
 
     this.setState(update(this.state, {"user": {"preferences": {"clinics": {$set: clinics}}}}));
-    //this.state.user.preferences.clinics = clinics;
     this.forceUpdate();
   };
 
   render() {
-    const { app } = this.props;
-    const user = app.state.user;
-    this.state.user = user;
-
-    console.log("user: " + JSON.stringify(user));
+    console.log("user: " + JSON.stringify(this.state.user));
 
     return (
       <div>
-        {user && (
+        {this.state.user != {} && (
           <div className="userProfile">
             <div className="profileIntro">
               <h1 className="name">{this.state.user.name} </h1>

@@ -267,26 +267,26 @@ router.get("/posts", authenticate, mongoChecker, async (req, res) => {
 
 
 //get user application data 
-router.get("/application", authenticate, mongoChecker, async (req, res) => {
+router.get("/questionnaire", authenticate, mongoChecker, async (req, res) => {
 
     if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
     }
 
-    if("application" in req.user && req.user.application != {}) {
+    if("questionnaire" in req.user && req.user.application != {}) {
         return res.send(req.user.application); 
     } else {
-        return res.send(401).status("No application data found for this user."); 
+        return res.send(404).status("No questionnaire data found for this user."); 
     }
 });
 
 //set user application data 
-router.put("/application", authenticate, mongoChecker, async (req, res) => {
+router.put("/questionnaire", authenticate, mongoChecker, async (req, res) => {
 
     if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
-    } else if (!("application" in req.body)) {
-        return res.status(401).send('Invalid request - application data not provided.'); 
+    } else if (!("questionnaire" in req.body)) {
+        return res.status(401).send('Invalid request - questionnaire data not provided.'); 
     }
 
     try {
