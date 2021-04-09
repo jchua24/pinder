@@ -20,10 +20,12 @@ class Questionnaire extends React.Component {
   render() {
     Survey.StylesManager.ThemeColors["default"]["$main-color"] = "#1A8FE6";
     Survey.StylesManager.applyTheme();
+    let survey = new Survey.Model(this.json);
+    survey.data = this.props.data;
     return (
         <div className="Questionnaire">
         <Survey.Survey
-          json={this.json}
+          model={survey}
           showCompletedPage={false}
           onComplete={this.onCompleteComponent}
         />

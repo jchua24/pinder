@@ -22,20 +22,20 @@ class Intro extends React.Component {
           <div className="hero-text">
             <h1>Welcome to Pinder!</h1>
             <p>The Best Adoption Platform on the internet.</p>
-            <button
+            <Button
               type="button"
               className="btn btn-primary"
               onClick={() => this.loadLogin()}
             >
               Login
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
               className="btn btn-success"
               onClick={() => this.loadSignUp()}
             >
               Signup
-            </button>
+            </Button>
           </div>
         </div>
         <br></br>
