@@ -211,20 +211,41 @@ class App extends React.Component {
               />
 
               {/* These routes are added to speed up front end style change tests */}
-              <Route 
+              <Route
                 exact
                 path="/testadminapps"
-                render={(props) => <div><AdminApplications {...props} app={this} /></div>}
+                render={(props) => (
+                  <div>
+                    <AdminApplications {...props} app={this} />
+                  </div>
+                )}
               />
-              <Route 
+              <Route
                 exact
                 path="/testapplications"
-                render={(props) => <div><Applications {...props} app={this} /></div>}
+                render={(props) => (
+                  <div>
+                    <Applications {...props} app={this} />
+                  </div>
+                )}
               />
-              <Route 
+              <Route
                 exact
                 path="/testswiper"
-                render={(props) => <div><PetSwiper {...props} app={this} /></div>}
+                render={(props) => (
+                  <div>
+                    <PetSwiper {...props} app={this} />
+                  </div>
+                )}
+              />
+              <Route
+                exact
+                path="/testpostapet"
+                render={(props) => (
+                  <div>
+                    <PetPosting {...props} app={this} />
+                  </div>
+                )}
               />
               {/* 404 if the URL cannot be found */}
               <Route render={() => <div>404 URL Not Found.</div>} />
