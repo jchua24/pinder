@@ -5,9 +5,9 @@ import SimpleReactLightBox from 'simple-react-lightbox';
 import {SRLWrapper} from "simple-react-lightbox"; 
 import {ArrowCounterclockwise } from 'react-bootstrap-icons';
 
-import "./PetCard.css"
+import "./PostCard.css"
 
-class PetCard extends React.Component {
+class PostCard extends React.Component {
   constructor(props) {
       super();
       this.state = {
@@ -19,13 +19,9 @@ class PetCard extends React.Component {
     this.setState({showDetails: !this.state.showDetails})
   }
 
-  submitApplication = () => {
-      alert("submit application!");
-  }
-
   render() {
 
-    const petData = this.props.petData;
+    const postData = this.props.postData;
 
     const lightBoxOptions = {
         settings: {
@@ -46,19 +42,19 @@ class PetCard extends React.Component {
 
             {/* Front Side */}
             <Card bg="light">
-                <Card.Img src={petData.coverImage}/>
+                <Card.Img src={postData.pet.images[0].src}/>
                 <Card.Body>
-                    <Card.Title>{petData.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard}/> </Card.Title>
-                    <Card.Subtitle>Type: {petData.type} | Breed: {petData.breed}</Card.Subtitle>
-                    <Card.Text>{petData.tagline}</Card.Text>
+                    <Card.Title>{postData.pet.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard}/> </Card.Title>
+                    <Card.Subtitle>Type: {postData.pet.type} | Breed: {postData.pet.breed}</Card.Subtitle>
+                    <Card.Text>{postData.pet.description}</Card.Text>
                 </Card.Body>
 
                 <Card.Footer> 
                     <SimpleReactLightBox> 
                         <SRLWrapper options={lightBoxOptions}> 
-                            {petData.images.map((petImg) => (
-                                <a href={petImg.src}>
-                                    <img src={petImg.src} alt={petImg.caption} style={{height: '100px'}}/>
+                            {postData.pet.images.map((petImg) => (
+                                <a href={petImg}>
+                                    <img src={petImg} style={{height: '100px'}}/>
                                 </a>
                             ))}
                         </SRLWrapper>
@@ -68,28 +64,28 @@ class PetCard extends React.Component {
 
             {/* Back Side */}
             <Card bg="light">
-                <Card.Img src={petData.coverImage} className="opaque"/>
+                <Card.Img src={postData.pet.images[0].src} className="opaque"/>
 
                 <Card.ImgOverlay>
-                    <Card.Title>{petData.name}</Card.Title>
-                    <Card.Text>Type: {petData.type} | Breed: {petData.breed}</Card.Text>
-                    <Card.Text>Age: {petData.age}</Card.Text>
-                    <Card.Text>Clinic Name: {petData.clinicName}</Card.Text>
-                    <Card.Text>Clinic Address: {petData.clinicAddress}</Card.Text>
-                    <Card.Text>Additional Info: {petData.addInfo}</Card.Text>
+                    <Card.Title>{postData.pet.name}</Card.Title>
+                    <Card.Text>Type: {postData.pet.type} | Breed: {postData.pet.breed}</Card.Text>
+                    <Card.Text>Age: {postData.pet.age}</Card.Text>
+                    <Card.Text>Clinic Name: {postData.clinicName}</Card.Text>
+                    <Card.Text>Clinic Address: {postData.clinicAddress}</Card.Text>
+                    <Card.Text>Additional Info: {postData.pet.additionalInfo}</Card.Text>
                 </Card.ImgOverlay> 
 
                 <Card.Body className="elevate">
-                    <Card.Title>{petData.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard} /></Card.Title>
-                    <Button variant="primary" onClick={this.submitApplication}>Apply</Button>
+                    <Card.Title>{postData.pet.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard} /></Card.Title>
+                    <Button variant="primary" onClick={this.props.submitApplication}>Apply</Button>
                 </Card.Body>
 
                 <Card.Footer className="elevate"> 
                     <SimpleReactLightBox> 
                         <SRLWrapper options={lightBoxOptions}> 
-                            {petData.images.map((petImg) => (
-                                <a href={petImg.src}>
-                                    <img src={petImg.src} alt={petImg.caption} style={{height: '100px'}}/>
+                            {postData.pet.images.map((petImg) => (
+                                <a href={petImg}>
+                                    <img src={petImg} style={{height: '100px'}}/>
                                 </a>
                             ))}
                         </SRLWrapper>
@@ -103,10 +99,10 @@ class PetCard extends React.Component {
   }
 }
 
-PetCard.defaultProps = {
+PostCard.defaultProps = {
     'Bread' : 'Unknown',
     'Age' : 'Uknown',
     'addInfo' : 'No additional information available at the moment'
 }
 
-export default PetCard;
+export default PostCard;
