@@ -41,12 +41,14 @@ class PetPosting extends React.Component {
     let currImages = this.state.petImages, currAge = this.state.age;
     this.setState({ petImages: currImages.map((img) => img["data_url"]), age : parseInt(currAge) });
     console.log(this.state.images); 
+
     let user = this.props.app.state.currUser;
-    let pet = JSON.stringify(this.state),
-      clinicID = user.id,
-      description = this.state.addClinicDesc;
+    let pet = this.state; 
+    let clinicID = user.id; 
+    let description = this.state.addClinicDesc;
+
     try {
-      const posting = await apiSubmitPosting(pet, clinicID, description);
+      await apiSubmitPosting(pet, clinicID, description);
       alert("The posting was successfully added!");
     } catch (err) {
       console.log(err);
