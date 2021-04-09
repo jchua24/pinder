@@ -87,10 +87,10 @@ class App extends React.Component {
                           You have already logged in.
                         </Alert>
                         {currUser.admin ? (
-                          <Redirect to={{ pathname: "/swiper" }} />
+                          <Redirect to={{ pathname: "/adminapps" }} />
                         ) : (
                           // <PetSwiper {...props} app={this} />
-                          <Redirect to={{ pathname: "/adminapps" }} />
+                          <Redirect to={{ pathname: "/swiper" }} />
                           // <AdminApplications {...props} app={this} />
                         )}
                       </div>
@@ -130,13 +130,13 @@ class App extends React.Component {
                 path="/applications"
                 render={(props) => (
                   <div>
-                    {this.currUser ? (
-                      this.currUser.admin ? (
+                    {currUser ? 
+                      currUser.admin ? (
                         <Redirect to={{ pathname: "/adminapps" }} />
                       ) : (
                         <Applications {...props} app={this} />
                       )
-                    ) : (
+                     : (
                       <div>
                         <Alert variant="primary" dismissible transition>
                           You need to login to access this page.
