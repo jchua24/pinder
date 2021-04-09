@@ -43,10 +43,12 @@ export const apiGetPosting = async (postingID) => {
 };
 
 //submit a new post
-export const apiSubmitPosting = async (pet, clinicID, description) => {
+export const apiSubmitPosting = async (pet, clinicID, clinicName, clinicAddress, description) => {
   const reqBody = {
     pet,
     clinicID,
+    clinicName, 
+    clinicAddress,
     description,
   };
 

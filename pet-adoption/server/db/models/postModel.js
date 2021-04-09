@@ -39,6 +39,14 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    clinicName: {
+        type: String,
+        required: true
+    }, 
+    clinicAddress: {
+        type: String,
+        required: true
+    }, 
     pet: {
         type: petSchema,
         required: true

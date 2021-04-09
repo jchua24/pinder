@@ -85,7 +85,7 @@ export const apiGetSpecificApplication = async (id) => {
 export const apiSubmitApplication = async (postingID, clinicID) => {
   const reqBody = {
     postingID,
-    clinicID,
+    clinicID
   };
 
   try {

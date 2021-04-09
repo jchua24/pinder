@@ -69,7 +69,11 @@ class PostSwiper extends React.Component {
 
   //get posts to display in swiper 
   async componentDidMount() {
- 
+    await this.getPosts(); 
+  }
+
+  async getPosts() {
+
     try {
       const posts = await apiGetPosts();
       if(posts && posts.length > 0) {
@@ -82,19 +86,21 @@ class PostSwiper extends React.Component {
     } catch (error) {
       console.log(error);
     }
-  
+
   }
 
-  submitApplication = () => {
+  submitApplication = (postData) => {
     
     try {
-      
-      await apiSubmitApplication();
-      
-
+      await apiSubmitApplication(postData.id, postData.clinicID);
+      alert("Application submitted successfully!"); 
     } catch (error) {
       console.log(error);
+      alert("Could not submit application."); 
     }
+
+    //reload posts
+    await this.getPosts(); 
   }
 
   render() {

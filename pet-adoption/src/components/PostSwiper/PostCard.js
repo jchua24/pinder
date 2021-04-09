@@ -77,7 +77,7 @@ class PostCard extends React.Component {
 
                 <Card.Body className="elevate">
                     <Card.Title>{postData.pet.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard} /></Card.Title>
-                    <Button variant="primary" onClick={this.props.submitApplication}>Apply</Button>
+                    <Button variant="primary" onClick={() => this.props.submitApplication(postData)}>Apply</Button>
                 </Card.Body>
 
                 <Card.Footer className="elevate"> 
