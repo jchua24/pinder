@@ -1,15 +1,11 @@
 .swiperContainer{
-    margin-left: 20%; 
-    margin-right: 20%;
-    margin-top: 0;  
-    margin-bottom: 0;  
-    position: absolute;
-    top: 15%;
-    /* width: 100%;  */
+    background: linear-gradient(#E6DADA, #56737a);
+    height: 100vh;
 }
 
 
-/* .swiper{
-    width: 100%; 
-    height: 100%;
-} */
+.swiper{
+    margin: auto;
+    top: 20%;
+    width: 50%; 
+}

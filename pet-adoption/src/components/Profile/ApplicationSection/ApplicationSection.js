@@ -1,30 +1,22 @@
 import React from "react";
-import { Tabs, Tab, Dropdown} from "react-bootstrap";
-import ImageUploading from 'react-images-uploading';
-import ReactRoundedImage from "react-rounded-image";
-
+import {Button} from "react-bootstrap";
 import "./ApplicationSection.css";
-import Select from 'react-select';
-import RcSlider from 'rc-slider';
-import 'rc-slider/assets/index.css';
-const RcRange = RcSlider.createSliderWithTooltip(RcSlider.Range);
-
 
 class ApplicationSection extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
     } 
   }  
 
- 
+  loadQuestionnaire(){
+    this.props.history.push('/questionnaire');
+  }
  
 
   render() {
-
     return (
-        <p>To-Do</p>
-
+      <Button type="button" className="btn btn-primary" onClick={() => this.loadQuestionnaire()}> Your Questionnaire </Button>
     );
   }
 }

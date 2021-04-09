@@ -148,7 +148,7 @@ class Profile extends React.Component {
                   title="Application"
                   tabClassName="sectionTab"
                 >
-                  <ApplicationSection />
+                  <ApplicationSection {...this.props}/>
                 </Tab>
               </Tabs>
             </div>

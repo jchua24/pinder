@@ -26,8 +26,8 @@ const ApplicationSchema = new mongoose.Schema({
         type: String,
         required: true
     }, 
-    comment: {
-        type: String, 
+    questionnaire: {
+        type: Object,
         required: false
     }
 })
@@ -103,7 +103,7 @@ const userSchema = mongoose.Schema({
         type: String, 
         required: false
     },
-    application: {
+    questionnaire: {
         type: Object, 
         required: false
     },
