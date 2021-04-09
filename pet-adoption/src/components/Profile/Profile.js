@@ -98,7 +98,7 @@ class Profile extends React.Component {
 
     return (
       <div>
-        {this.state.user != {} && (
+        {this.state.user != {} && !this.state.user.admin && (
           <div className="userProfile">
             <div className="profileIntro">
               <h1 className="name">{this.state.user.name} </h1>
@@ -153,6 +153,42 @@ class Profile extends React.Component {
             </div>
           </div>
         )}
+
+
+
+        {this.state.user != {} && this.state.user.admin && (
+          <div className="userProfile">
+            <div className="profileIntro">
+              <h1 className="name">{this.state.user.name} </h1>
+
+              <div className="photo">
+                <ReactRoundedImage
+                  image={this.state.user.profilePic}
+                  roundedColor="#17a2b8"
+                  imageWidth="200"
+                  imageHeight="200"
+                  roundedSize="12"
+                  margin="auto"
+                />
+              </div>
+            </div>
+
+            <div className="profileSections">
+              <Tabs defaultActiveKey="infoSection">
+                <Tab
+                  eventKey="infoSection"
+                  title="User Info"
+                  tabClassName="sectionTab"
+                >
+                  <InfoSection
+                    user={this.state.user}
+                    onProfilePicChange={this.onProfilePicChange}
+                  />
+                </Tab>
+              </Tabs>
+            </div>
+          </div>
+        )}  
       </div>
     );
   }
