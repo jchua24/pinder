@@ -162,7 +162,7 @@ class AdminApplications extends React.Component {
             houseHold="4"
             petDiet="dry"
             summary="I really like this pet! Please consider my application."
-            admin={false}
+            admin={true}
             province="Ontario"
             color=""
             petName="catty"
@@ -201,6 +201,7 @@ class AdminApplications extends React.Component {
           //     </Card>
           //   ))}
           // </div>
+          
         ) : (
           <h3 style={{ color: "white" }}>
             There are no pets left at the moment

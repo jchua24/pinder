@@ -45,7 +45,7 @@
     transform: translate(-50%, -50%);
     color: white;
 }
-button{
+.hero-text button{
     margin-left: 13px;
     margin-right: 13px;
 }
