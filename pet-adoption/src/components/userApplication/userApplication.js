@@ -27,7 +27,68 @@ class UserApplication extends React.Component{
 
     render(){
         return (
-            <Row>
+            <div>
+                {this.props.admin ? (
+                    <div className={`card ${this.props.color}`}>
+                        <div className="additional">
+                            <div className="user-card">
+                                <img src={this.props.imgSrc} className="img-center"></img>
+                            </div>
+                            <div className="more-info">
+                                <h1>{this.props.userName}</h1>
+                                <div className="coords">
+                                    <span>{this.props.email}</span>
+                                    <br></br>
+                                    <span>{this.props.province}</span>
+                                    <br></br>
+                                    <span>{this.props.city}</span>
+                                    <br></br>
+                                    <span>{this.props.phoneNumber}</span>
+                                </div>
+                                <div className="stats">
+                                    <div>
+                                        <div className="title">Enviroment</div>
+                                        <div className="value">{this.props.env}</div>
+                                    </div>
+                                    <div>
+                                        <div className="title">Owned Pet</div>
+                                        <div className="value">{this.props.owned}</div>
+                                    </div>
+                                    <div>
+                                        <div className="title">Household</div>
+                                        <div className="value">{this.props.houseHold}</div>
+                                    </div>
+                                    <div>
+                                        <div className="title">Pet Diet</div>
+                                        <div className="value">{this.props.petDiet}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="general">
+                            <h1>{this.props.userName}</h1>
+                            <p>{this.props.summary}</p>
+                            <span className="more">Mouse over the card for more info</span>
+                        </div>
+                    </div>
+                    ) : (
+                        <div>
+                            <h1>hellow</h1>
+                        </div>
+                    )}
+               
+            </div>
+        );
+    }
+}
+
+export default UserApplication;
+
+
+
+
+
+{/* 
                 <Col>
                     <Image width={this.props.width} height={this.props.height} src={this.props.imgSrc} rounded/>
                 </Col>
@@ -63,9 +124,4 @@ class UserApplication extends React.Component{
                         <Button variant="danger" onClick={this.cancelApplication}>Cancel</Button>
                     )}
                 </Col>
-            </Row>
-        );
-    }
-}
-
-export default UserApplication;
+            */}
