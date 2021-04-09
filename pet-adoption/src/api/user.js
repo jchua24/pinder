@@ -66,7 +66,7 @@ export const apiGetApplications = async(status) => {
 //get specific application (based on id )
 export const apiGetSpecificApplication = async(id) => {
     try {
-        const res = await axios.get(`${API_HOST}/api/user/applications/${id}`, reqBody); 
+        const res = await axios.get(`${API_HOST}/api/user/applications/${id}`); 
         return res.data; 
     } catch(error) {
         if(error.response.status == 401) {
@@ -115,7 +115,7 @@ export const apiDeleteApplication = async(applicationID) => {
 export const apiGetPosts = async() => {
 
     try {
-        const res = await axios.get(`${API_HOST}/api/user/posts/${applicationID}`); 
+        const res = await axios.get(`${API_HOST}/api/user/posts`); 
         return res.data; 
     } catch(error) {
         if(error.response.status == 401) {
