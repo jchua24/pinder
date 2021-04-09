@@ -90,7 +90,11 @@ class PostSwiper extends React.Component {
 
   }
 
+<<<<<<< HEAD
   submitApplication = async (postData) => {
+=======
+  async submitApplication(postData) {
+>>>>>>> ef347489c9e452ded155a000195acb4528dec352
     
     try {
       await apiSubmitApplication(postData.id, postData.clinicID);

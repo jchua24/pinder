@@ -34,8 +34,8 @@ class UserApplication extends React.Component{
                             <div className="user-card">
                                 <img src={this.props.imgSrc} className="img-center"></img>
                                 <div class="multi-button">
-                                    <button className="a-r-btn accept-button">Success</button>
-                                    <button className="a-r-btn reject-button">Danger</button>
+                                    <button className="a-r-btn accept-button">Accept</button>
+                                    <button className="a-r-btn reject-button">Reject</button>
                                 </div>
                             </div>
                             <div className="more-info">
@@ -80,15 +80,8 @@ class UserApplication extends React.Component{
                         <div className="additional">
                             <div className="user-card">
                                 <img src={this.props.petImgSrc} className="img-center"></img>
-                            </div>
-                            <div className="more-info">
-                                <h1>{this.props.petName}</h1>
-                                <div className="coords">
-                                    <span>{this.props.clinic}</span>
-                                    <br></br>
-                                    <span>{this.props.petBreed}</span>
-                                    <br></br>
-                                    <span>{this.props.petAge}</span>
+                                <div class="multi-button">
+                                    <button className="a-r-btn reject-button">Cancel Application</button>
                                 </div>
                                 <div className="stats">
                                     <div>
@@ -96,6 +89,17 @@ class UserApplication extends React.Component{
                                         <div className="value">{this.props.appStatus}</div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="more-info">
+                                <h1>{this.props.petName}</h1>
+                                <div className="coords">
+                                    <span>CLinic: {this.props.clinic}</span>
+                                    <br></br>
+                                    <span>Breed: {this.props.petBreed}</span>
+                                    <br></br>
+                                    <span>Age: {this.props.petAge}</span>
+                                </div>
+                                
                             </div>
                         </div>
                         <div className="general">

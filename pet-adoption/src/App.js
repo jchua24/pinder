@@ -17,7 +17,11 @@ import About from "./components/About";
 import Applications from "./components/Applications/Applications";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
+<<<<<<< HEAD
 import PetSwiper from "./components/PostSwiper/PostSwiper";
+=======
+import PostSwiper from "./components/PostSwiper/PostSwiper";
+>>>>>>> ef347489c9e452ded155a000195acb4528dec352
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
 import Logout from "./components/Logout";
@@ -72,9 +76,7 @@ class App extends React.Component {
                       currUser.admin ? (
                         <Redirect to={{ pathname: "/adminapps" }} />
                       ) : (
-                        // <AdminApplications {...props} app={this} />
                         <Redirect to={{ pathname: "/swiper" }} />
-                        // <PetSwiper {...props} app={this} />
                       )
                     ) : (
                       <Intro {...props} app={this} />
@@ -96,10 +98,8 @@ class App extends React.Component {
                         </Alert>
                         {currUser.admin ? (
                           <Redirect to={{ pathname: "/adminapps" }} />
-                        ) : (
-                          // <PetSwiper {...props} app={this} />
+                        ) : (     
                           <Redirect to={{ pathname: "/swiper" }} />
-                          // <AdminApplications {...props} app={this} />
                         )}
                       </div>
                     )}
@@ -121,9 +121,7 @@ class App extends React.Component {
                         {currUser.admin ? (
                           <Redirect to={{ pathname: "/swiper" }} />
                         ) : (
-                          // <PetSwiper {...props} app={this} />
                           <Redirect to={{ pathname: "/adminapps" }} />
-                          // <AdminApplications {...props} app={this} />
                         )}
                       </div>
                     )}
@@ -198,7 +196,7 @@ class App extends React.Component {
                           Please login using your personal account.
                         </div>
                       ) : (
-                        <PetSwiper {...props} app={this} />
+                        <PostSwiper {...props} app={this} />
                       )
                     ) : (
                       <Redirect to={{pathname : '/login'}}/>
@@ -272,7 +270,7 @@ class App extends React.Component {
                 path="/testswiper"
                 render={(props) => (
                   <div>
-                    <PetSwiper {...props} app={this} />
+                    <PostSwiper {...props} app={this} />
                   </div>
                 )}
               />
