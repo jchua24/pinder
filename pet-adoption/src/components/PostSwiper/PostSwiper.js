@@ -4,7 +4,7 @@ import { Carousel} from "react-bootstrap";
 import PostCard from "./PostCard";
 import "./PostSwiper.css";
 
-import { apiGetPosts } from "../../api/user";
+import { apiGetPosts, apiSubmitApplication } from "../../api/user";
 
 class PostSwiper extends React.Component {
   constructor(props) {
@@ -89,7 +89,7 @@ class PostSwiper extends React.Component {
 
   }
 
-  submitApplication = (postData) => {
+  async submitApplication(postData) {
     
     try {
       await apiSubmitApplication(postData.id, postData.clinicID);
@@ -112,7 +112,7 @@ class PostSwiper extends React.Component {
 
           {this.state.posts.map((post) => (
             <Carousel.Item interval={50000}>
-              <PostCard postData={post} submitApplication={submitApplication}/> 
+              <PostCard postData={post} submitApplication={this.submitApplication}/> 
             </Carousel.Item>
           ))}
 
