@@ -42,7 +42,7 @@ class PostCard extends React.Component {
 
             {/* Front Side */}
             <Card bg="light">
-                <Card.Img src={postData.pet.images[0].src}/>
+                <Card.Img src={postData.pet.images[0]}/>
                 <Card.Body>
                     <Card.Title>{postData.pet.name} <ArrowCounterclockwise color="grey" size={25} onClick={this.flipCard}/> </Card.Title>
                     <Card.Subtitle>Type: {postData.pet.type} | Breed: {postData.pet.breed}</Card.Subtitle>
@@ -64,7 +64,7 @@ class PostCard extends React.Component {
 
             {/* Back Side */}
             <Card bg="light">
-                <Card.Img src={postData.pet.images[0].src} className="opaque"/>
+                <Card.Img src={postData.pet.images[0]} className="opaque"/>
 
                 <Card.ImgOverlay>
                     <Card.Title>{postData.pet.name}</Card.Title>

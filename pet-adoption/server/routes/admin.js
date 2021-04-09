@@ -78,6 +78,8 @@ router.post("/postings", authenticate, mongoChecker, async (req, res) => {
 
         const posting = req.user.petPostings.create({
             clinicID: req.body.clinicID,
+            clinicName: req.body.clinicName, 
+            clinicAddress: req.body.clinicAddress,
             pet: req.body.pet, 
             description: req.body.description || "", 
             status: "pending"
