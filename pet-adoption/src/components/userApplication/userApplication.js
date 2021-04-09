@@ -72,9 +72,34 @@ class UserApplication extends React.Component{
                         </div>
                     </div>
                     ) : (
-                        <div>
-                            <h1>hellow</h1>
+                    <div className={`card ${this.props.color}`}>
+                        <div className="additional">
+                            <div className="user-card">
+                                <img src={this.props.petImgSrc} className="img-center"></img>
+                            </div>
+                            <div className="more-info">
+                                <h1>{this.props.petName}</h1>
+                                <div className="coords">
+                                    <span>{this.props.clinic}</span>
+                                    <br></br>
+                                    <span>{this.props.petBreed}</span>
+                                    <br></br>
+                                    <span>{this.props.petAge}</span>
+                                </div>
+                                <div className="stats">
+                                    <div>
+                                        <div className="title">Status:</div>
+                                        <div className="value">{this.props.appStatus}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div className="general">
+                            <h1>{this.props.petName}</h1>
+                            <p>{this.props.petSummary}</p>
+                            <span className="more">Mouse over the card for more info</span>
+                        </div>
+                    </div>
                     )}
                
             </div>

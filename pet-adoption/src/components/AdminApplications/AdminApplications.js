@@ -165,6 +165,14 @@ class AdminApplications extends React.Component {
             admin={true}
             province="Ontario"
             color=""
+            petName="catty"
+            petImgSrc="/cat1.jpg"
+            petSummary="Im very cute pleaaase take me!"
+            appStatus="Pending"
+            clinic="Animal Hospital"
+            petBreed="pussycatlol"
+            petAge="8"
+
             />
         </div>
           // <div className="appsContainer2">
