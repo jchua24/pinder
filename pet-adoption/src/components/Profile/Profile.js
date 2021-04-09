@@ -35,7 +35,6 @@ class Profile extends React.Component {
       //},
       profilePic: [],
     };
-    this.props.history.push('/profile');
   }
 
   //check if the user has a profile picture
