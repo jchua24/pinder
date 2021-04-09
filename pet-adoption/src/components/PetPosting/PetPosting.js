@@ -39,11 +39,10 @@ class PetPosting extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     let currImages = this.state.petImages, currAge = this.state.age;
-    this.setState({ petImages: currImages.map((img) => img["data_url"]), age : parseInt(currAge) });
-    console.log(this.state.images); 
-
     let user = this.props.app.state.currUser;
-    let pet = this.state; 
+    let pet = {...this.state};
+    pet['images'] = currImages.map(img => img["data_url"]);
+    pet['age'] = parseInt(currAge); 
     let clinicID = user.id; 
     let description = this.state.addClinicDesc;
 
