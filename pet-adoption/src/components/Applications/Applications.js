@@ -1,209 +1,98 @@
 import React from "react";
 import "./Applications.css";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
+import {
+  apiGetApplications,
+  apiGetPosting,
+  apiGetPostings,
+} from "../../api/admin";
+import { apiGetUserData } from "../../api/user";
 import UserApplication from "../userApplication/userApplication";
-import { uid } from 'react-uid'
+import { uid } from "react-uid";
 
 class Applications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      availPets: [],
       userApps: [],
-      searchName: "",
-      searchType: "",
-      serachBreed: "",
     };
   }
 
-  getAvailPets = () => {
-    // get the current pets of the current clinic from the database
-    let availPets = [
-      { name: "Biscuit", type: "Dog", breed: "Golden Retriever", img: "/dogo.jpeg" },
-      { name: "Nosey", type: "Fish", breed: "YYZ", img: "/nosey-fish.jpg" },
-      { name: "Pussy Cat", type: "Cat", breed: "Long Haired", img: "/cat1.jpg"},
-    ];
-    this.setState({ availPets: availPets }, () =>
-      console.log("available pets were acquired")
-    );
-    this.getUserApps();
+  getUserApps = async (status = "") => {
+    try {
+      let data = await apiGetApplications(status);
+      this.setState({ userApps: data });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  getUserApps = () => {
-    // get user applications that were sent to this clinic from the database
-    let userApps = [
-      { userName: "Parsa", appliedPet: "Biscuit" },
-      { userName: "Bam", appliedPet: "Nosey" },
-      { userName: "Parsa", appliedPet: "Pussy Cat" },
-    ];
-    this.setState({ userApps: userApps }, () =>
-      console.log("user applications were acquired")
-    );
+  getUser = async (userID) => {
+    try {
+      return await apiGetUserData(userID);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  searchApps = (e) => {
-    e.preventDefault();
-    alert('The search functionality is not fully implemented at the moment.');
+  getPosting = async (postingID) => {
+    try {
+      return await apiGetPosting(postingID);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  getAllInfo() {
+    let ret = [],
+      selected = this.state.userApps;
+    for (let i = 0; i < selected.length; i++)
+      ret.push([
+        this.getUser(selected[i].userID),
+        this.getPosting(selected[i].postingID),
+        selected[i].status,
+        selected[i].id
+      ]);
+    return ret;
+  }
 
   componentDidMount() {
-    if (this.state.availPets.length === 0) this.getAvailPets();
+    if (this.state.availPets.length === 0) this.getUserApps();
   }
   render() {
-    let { availPets, userApps } = this.state;
+    let { userApps } = this.state;
     return (
       <div className="AdminAppContainer">
-        {availPets.length !== 0 ? (
+        {userApps.length !== 0 ? (
           <div class="center">
-            <UserApplication
+            {this.getAllInfo.map(app => (
+              <UserApplication
               imgSrc="/user-profile-placeholder.png"
-              userName="Jack"
-              email="testing@123.com"
-              city="toronto"
-              phoneNumber="1113334455"
-              env="condo"
-              owned="no"
-              houseHold="4"
-              petDiet="dry"
-              summary="I really like this pet! Please consider my application."
+              userName={app[0].name}
+              email={app[0].email}
+              city={app[0].city}
+              phoneNumber={app[0].phone}
               admin={false}
-              province="Ontario"
-              color=""
-              petName="catty"
-              petImgSrc="/cat1.jpg"
-              petSummary="Im very cute pleaaase take me!"
-              appStatus="Pending"
-              clinic="Animal Hospital"
-              petBreed="pussycatlol"
-              petAge="8"
+              clinic={app[1].clinicID}
+              province={app[0].province}
+              petName={app[1].pet.name}
+              petImgSrc={app[1].pet.images[0]}
+              petSummary={app[1].pet.additionalInfo.substring(0, Math.min(8, app[1].pet.additionalInfo.length))}
+              appStatus={app[2]}
+              petBreed={app[1].pet.breed}
+              petAge={app[1].pet.age}
+              id={app[3]}
             />
+            ))}
           </div>
         ) : (
           <h3 style={{ color: "white" }}>
-            There are no pets left at the moment
+            You have not submitted any recent applications.
           </h3>
         )}
       </div>
     );
   }
-  // render() {
-  //   let { availPets, userApps } = this.state;
-  //   return (
-  //     <div>
-  //       {availPets.length !== 0 ? (
-  //         <div className="appsContainer">
-  //           {availPets.map((pet) => (
-  //             <Card className="appsCard">
-  //               <Card.Header>
-  //                 <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
-  //               </Card.Header>
-  //               <ul className="list-group list-group-flush">
-  //                 {userApps
-  //                   .filter((app) => app.appliedPet === pet.name)
-  //                   .map((app) => (
-  //                     <li
-  //                       className="list-group-item"
-  //                       key={userApps.indexOf(app)}
-  //                     >
-  //                       <UserApplication
-  //                         admin={false}
-  //                         width={100}
-  //                         height={100}
-  //                         imgSrc={pet.img}
-  //                         userName={app.userName}
-  //                         appliedPet={app.appliedPet}
-  //                         summary="I really like this pet! Please consider my application."
-  //                       />
-  //                     </li>
-  //                   ))}
-  //               </ul>
-  //             </Card>
-  //           ))}
-  //         </div>
-  //       ) : (
-  //         <h3 style={{ color: "white" }}>
-  //           There are no pets left at the moment
-  //         </h3>
-  //       )}
-  //       <div className="appsSearch">
-  //         <Form onSubmit={this.searchApps}>
-  //           <Form.Group as={Row} controlId="searchName">
-  //             <Form.Label column sm={2}>
-  //               <strong>Name:</strong>{" "}
-  //             </Form.Label>
-  //             <Col>
-  //               <Form.Control
-  //                 as="select"
-  //                 custom
-  //                 onChange={(e) => {
-  //                   this.setState({ searchName: e.target.value });
-  //                 }}
-  //               >
-  //               <option selected value="">
-  //                 Choose..
-  //               </option>
-  //               {availPets.map(pet => (
-  //                 <option value={pet.name}>{pet.name}</option>
-  //               ))}
-  //               </Form.Control>
-  //             </Col>
-  //           </Form.Group>
-  //           <Form.Group as={Row} controlId="searchType">
-  //             <Form.Label column sm={2}>
-  //               <strong>Type:</strong>{" "}
-  //             </Form.Label>
-  //             <Col>
-  //               <Form.Control
-  //                 as="select"
-  //                 custom
-  //                 onChange={(e) => {
-  //                   this.setState({ searchName: e.target.value });
-  //                 }}
-  //               >
-  //               <option selected value="">
-  //                 Choose..
-  //               </option>
-  //               {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-  //                 <option value={p}>{p}</option>
-  //               ))}
-  //               </Form.Control>
-  //             </Col>
-  //           </Form.Group>
-  //           <Form.Group as={Row} controlId="searchType">
-  //             <Form.Label column sm={2}>
-  //               <strong>Breed:</strong>{" "}
-  //             </Form.Label>
-  //             <Col>
-  //               <Form.Control
-  //                 as="select"
-  //                 custom
-  //                 onChange={(e) => {
-  //                   this.setState({ searchName: e.target.value });
-  //                 }}
-  //               >
-  //               <option selected value="">
-  //                 Choose..
-  //               </option>
-  //               {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-  //                 <option value={p}>{p}</option>
-  //               ))}
-  //               </Form.Control>
-  //             </Col>
-  //           </Form.Group>
-  //           <Button
-  //             block
-  //             size="lg"
-  //             type="submit"
-  //             style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
-  //             className="justify-content-md-center"
-  //           >
-  //             Search
-  //           </Button>
-  //         </Form>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 }
 
 export default Applications;
