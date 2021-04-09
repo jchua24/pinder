@@ -124,8 +124,7 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
             clinicName: req.body.clinicName, 
             clinicAddress: req.body.clinicAddress,
             postingID: req.body.postingID, 
-            status: "pending",
-            comment: req.body.comment || ""
+            status: "pending"
         }); 
 
         const adminUser = await User.findById(req.body.clinicID).exec(); 
@@ -146,6 +145,15 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
         if(!req.user.petApplications.every((application) => application.postingID != req.body.postingID)) {
             return res.status(400).send('User has already applied to this posting.');
         }
+
+
+        //add user questionnaire to application 
+        if("questionnaire" in req.user && req.user.questionnaire != {}) {
+            application["questionnaire"] = req.user.questionnaire; 
+        } else {
+            application["questionnaire"] = {}; 
+        }
+
 
         //add new application to clinic 
         adminUser.petApplications.push(application); 
@@ -276,8 +284,8 @@ router.get("/questionnaire", authenticate, mongoChecker, async (req, res) => {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
     }
 
-    if("questionnaire" in req.user && req.user.application != {}) {
-        return res.send(req.user.application); 
+    if("questionnaire" in req.user && req.user.questionnaire != {}) {
+        return res.send(req.user.questionnaire); 
     } else {
         return res.send(404).status("No questionnaire data found for this user."); 
     }
@@ -293,7 +301,7 @@ router.put("/questionnaire", authenticate, mongoChecker, async (req, res) => {
     }
 
     try {
-        req.user.application = req.body.application; 
+        req.user.questionnaire = req.body.questionnaire; 
         req.user.save(); 
         return res.sendStatus(200);
     } catch(error) {

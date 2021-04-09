@@ -1,5 +1,6 @@
 import React from "react";
-import { Tabs, Tab, Dropdown} from "react-bootstrap";
+import { Tabs, Button, Tab, Dropdown} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import ImageUploading from 'react-images-uploading';
 import ReactRoundedImage from "react-rounded-image";
 
@@ -17,14 +18,14 @@ class ApplicationSection extends React.Component {
     } 
   }  
 
- 
+  loadQuest(){
+    this.props.history.push('/questionnaire');
+  }
  
 
   render() {
-
     return (
-        <p>To-Do</p>
-
+      <Button type="button" className="btn btn-primary" onClick={() => this.loadQuest()}> Your Questionnaire </Button>
     );
   }
 }
