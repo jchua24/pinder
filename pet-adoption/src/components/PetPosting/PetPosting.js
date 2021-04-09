@@ -1,18 +1,25 @@
 import React from "react";
 import { Form, Row, Col, Button, Card, Container } from "react-bootstrap";
+import ImageUploading from "react-images-uploading";
 import bsCustomFileInput from "bs-custom-file-input";
+import { apiSubmitPosting } from "../../api/admin";
 
 import "./PetPosting.css";
 class PetPosting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       age: "",
       breed: "",
       type: "",
-      addInfo: "",
-      petImages: []
+      additionalInfo: "",
+      addClinicDesc: "",
+      petImages: [],
+      images: [],
     };
+    this.onImageChange = this.onImageChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   validateForm() {
@@ -20,14 +27,30 @@ class PetPosting extends React.Component {
       this.state.age.length > 0 &&
       this.state.type.length > 0 &&
       this.state.breed.length > 0 &&
-      this.state.addInfo.length > 0 &&
-      this.state.petImages.length > 0    
+      this.state.name.length > 0
     );
   }
 
-  handleSubmit(event){
+  onImageChange(imageList, addUpdateIndex) {
+    console.log(imageList, addUpdateIndex);
+    this.setState({ petImages: imageList });
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    alert('The pet application was submitted!'); 
+    let currImages = this.state.petImages, currAge = this.state.age;
+    this.setState({ petImages: currImages.map((img) => img["data_url"]), age : parseInt(currAge) });
+    console.log(this.state.images); 
+    let user = this.props.app.state.currUser;
+    let pet = JSON.stringify(this.state),
+      clinicID = user.id,
+      description = this.state.addClinicDesc;
+    try {
+      const posting = await apiSubmitPosting(pet, clinicID, description);
+      alert("The posting was successfully added!");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
@@ -40,8 +63,17 @@ class PetPosting extends React.Component {
                 <Form.Label>Affiliated Clinic</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder={this.props.clinic}
+                  placeholder={this.props.app.state.currUser.name}
                   readOnly
+                />
+              </Form.Group>
+              <Form.Group controlId="name">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Please enter the pets name.."
+                  value={this.state.name}
+                  onChange={(e) => this.setState({ name: e.target.value })}
                 />
               </Form.Group>
               <Form.Group controlId="petType">
@@ -68,7 +100,7 @@ class PetPosting extends React.Component {
                   type="text"
                   placeholder="Golden Retriever, Husky, etc.."
                   value={this.state.breed}
-                  onChange={(e) => this.setState({breed : e.target.value})}
+                  onChange={(e) => this.setState({ breed: e.target.value })}
                 />
               </Form.Group>
               <Form.Group controlId="age">
@@ -77,41 +109,96 @@ class PetPosting extends React.Component {
                   type="text"
                   placeholder="Please enter a valid number.."
                   value={this.state.age}
-                  onChange={(e) => this.setState({age: e.target.value})}
+                  onChange={(e) => this.setState({ age: e.target.value })}
                 />
               </Form.Group>
-              <Form.Group controlId="addInfo">
-                <Form.Label>Additional Information</Form.Label>
-                <Form.Control 
-                  as="textarea" 
-                  rows={5} 
+              <Form.Group controlId="additionalInfo">
+                <Form.Label>Additional Pet Information</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={5}
                   placeholder="Please enter more information about the pet, let the Hoomans know who they are adopting!"
-                  value={this.state.addInfo}
-                  onChange={(e) => this.setState({addInfo: e.target.value})}
+                  value={this.state.additionalInfo}
+                  onChange={(e) =>
+                    this.setState({ additionalInfo: e.target.value })
+                  }
                 />
               </Form.Group>
-              <Form.Group>
-                <Form.File
-                  id="custom-file"
-                  label="Attach Pet Images"
-                  custom
+              <Form.Group controlId="addClinicDesc">
+                <Form.Label>Additional Clinic Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={5}
+                  placeholder="Please enter any additional clinic related information that you would like the applicants to know"
+                  value={this.state.addClinicDesc}
+                  onChange={(e) =>
+                    this.setState({ addClinicDesc: e.target.value })
+                  }
                 />
               </Form.Group>
               <Button
                 block
                 size="lg"
                 type="submit"
-                style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
+                style={{
+                  backgroundColor: "#429EA6",
+                  borderColor: "transparent",
+                }}
                 disabled={!this.validateForm()}
               >
                 Submit
               </Button>
             </Form>
           </Col>
-          <Col xs={3}>
-            <Card style={{ width: "17rem", height: "100%", backgroundColor: '#F6F680' }}>
-              <Card.Title style={{paddingTop: '10px'}}>Uploded Images</Card.Title>
-            </Card>
+          <Col>
+            <p>Please attach the images of the pet here:</p> <br />
+            <ImageUploading
+              multiple
+              value={this.state.petImages}
+              onChange={this.onImageChange}
+              maxNumber={15}
+              dataURLKey="data_url"
+            >
+              {({
+                imageList,
+                onImageUpload,
+                onImageRemoveAll,
+                onImageUpdate,
+                onImageRemove,
+                isDragging,
+                dragProps,
+              }) => (
+                // write your building UI
+                <div
+                  className="upload__image-wrapper"
+                  style={{ backgroundColor: "" }}
+                >
+                  <Button
+                    className="btn-images1"
+                    style={isDragging ? { color: "red" } : undefined}
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    Click or Drop here
+                  </Button>
+                  &nbsp;
+                  <Button onClick={onImageRemoveAll}>Remove all images</Button>
+                  {imageList.map((image, index) => (
+                    <div key={index} className="image-item">
+                      <img src={image["data_url"]} alt="" width="100" />
+                      <div className="image-item__btn-wrapper">
+                        <Button size="sm" onClick={() => onImageUpdate(index)}>
+                          &#8635;
+                        </Button>
+                        <Button size="sm" onClick={() => onImageRemove(index)}>
+                          x
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ImageUploading>
           </Col>
         </Row>
       </Container>
