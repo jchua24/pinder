@@ -1,4 +1,4 @@
-@media all and (min-width: 700px) {
+/* @media all and (min-width: 700px) {
     .petPosting {
       padding: 60px 0;
       padding-bottom: 100px;
@@ -9,4 +9,15 @@
       margin: 0 auto;
       height: 100%;
     }
+} */
+
+.petPosting {
+  padding: 60px 0;
+  padding-bottom: 100px;
+  width: 90%;
+}
+
+.petPosting form {
+  margin: 0 auto;
+  height: 100%;
 }

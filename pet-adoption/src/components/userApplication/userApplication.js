@@ -33,17 +33,21 @@ class UserApplication extends React.Component{
                         <div className="additional">
                             <div className="user-card">
                                 <img src={this.props.imgSrc} className="img-center"></img>
+                                <div class="multi-button">
+                                    <button className="a-r-btn accept-button">Success</button>
+                                    <button className="a-r-btn reject-button">Danger</button>
+                                </div>
                             </div>
                             <div className="more-info">
                                 <h1>{this.props.userName}</h1>
                                 <div className="coords">
-                                    <span>{this.props.email}</span>
+                                    <span>Email: {this.props.email}</span>
                                     <br></br>
-                                    <span>{this.props.province}</span>
+                                    <span>Province: {this.props.province}</span>
                                     <br></br>
-                                    <span>{this.props.city}</span>
+                                    <span>City: {this.props.city}</span>
                                     <br></br>
-                                    <span>{this.props.phoneNumber}</span>
+                                    <span>Phone: {this.props.phoneNumber}</span>
                                 </div>
                                 <div className="stats">
                                     <div>

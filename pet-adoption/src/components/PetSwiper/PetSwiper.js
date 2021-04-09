@@ -4,6 +4,8 @@ import { Carousel} from "react-bootstrap";
 import PetCard from "./PetCard";
 import "./PetSwiper.css";
 
+import { apiGetPosts } from "../../api/user";
+
 class PetSwiper extends React.Component {
   constructor(props) {
     super(props);
@@ -85,6 +87,25 @@ class PetSwiper extends React.Component {
     };
   }
 
+  //get pets to display in swiper 
+  async componentDidMount() {
+ 
+
+    try {
+      const pets = await apiGetPosts();
+      if(pets && pets.length > 0) {
+        this.setState({pets: pets}); 
+        this.forceUpdate();
+      } else {
+        alert("No pets found! Try adjusting your search preferences.");
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  
+  }
+
   handleSubmit(event) {
     event.preventDefault();
   }
@@ -92,7 +113,9 @@ class PetSwiper extends React.Component {
   render() {
     return (
       <div className="swiperContainer">
-        <Carousel className="swiper" indicators={false}>
+
+        {this.state.pets && 
+         <Carousel className="swiper" indicators={false}>
 
           {this.state.pets.map((pet) => (
             <Carousel.Item interval={50000}>
@@ -101,6 +124,8 @@ class PetSwiper extends React.Component {
           ))}
 
         </Carousel>
+        }
+       
       </div>
     );
   }

@@ -45,10 +45,6 @@ const PreferencesSchema = new mongoose.Schema({
     petTypes: {
         type: [String],
         required: true
-    }, 
-    clinic: {
-        type: [String],
-        required: true
     }
 })
 

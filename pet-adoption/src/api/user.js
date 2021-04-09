@@ -27,8 +27,15 @@ export const apiUpdateProfilePicture = async (img_URI) => {
 
 //update user preferences
 export const apiUpdatePreferences = async (preferences) => {
+
+  const reqBody = {
+    preferences
+  }
+
+  console.log("preferences to send: " + JSON.stringify(reqBody));
+
   try {
-    await axios.put(`${API_HOST}/api/user/preferences`, preferences);
+    await axios.put(`${API_HOST}/api/user/preferences`, reqBody);
   } catch (error) {
     if (error.response.status === 401) {
       logoutHelper();
