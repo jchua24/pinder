@@ -159,8 +159,7 @@ router.post("/add", sessionChecker, async (req, res) => {
         preferences: {
           age: [0, 100],
           radius: 100,
-          petTypes: [],
-          clinic: [],
+          petTypes: []
         },
       };
 

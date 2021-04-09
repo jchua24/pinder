@@ -7,7 +7,7 @@ import PreferenceSection from "./PreferencesSection/PreferencesSection";
 import ApplicationSection from "./ApplicationSection/ApplicationSection";
 import update from 'immutability-helper';
 
-import { apiUpdateProfilePicture } from "../../api/user";
+import { apiUpdateProfilePicture, apiUpdatePreferences } from "../../api/user";
 
 import "./Profile.css";
 
@@ -19,20 +19,33 @@ class Profile extends React.Component {
       profilePic: [],
     };
   }
-
+ 
   //check if the user has a profile picture
   async componentDidMount() {
  
     const { app } = this.props; 
     this.setState({user: app.state.currUser});
+    console.log("user:" + JSON.stringify(app.state.currUser));
+    this.forceUpdate();  
 
-    if (this.state.user && this.state.profilePic == "") {
+    if (this.state.user && this.state.user.profilePic == "") {
       this.setState(update(this.state, {"user": {"profilePic": {$set: "/user-profile-placeholder.png"}}}));
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+  }
+
+  onUpdatePreferences = async () => {
+    try {
+      await apiUpdatePreferences(this.state.user.preferences);
+      this.props.app.setState({ currUser: this.state.user}); //update app user 
+      alert("Preferences saved successfully!");
+    } catch (error) {
+      console.log(error);
+      alert("Preferences could not be saved. Please try again!");
+    }
   }
 
   onProfilePicChange = async (imageList, addUpdateIndex) => {
@@ -42,6 +55,7 @@ class Profile extends React.Component {
 
       try {
         await apiUpdateProfilePicture(this.state.user.profilePic);
+        this.props.app.setState({ currUser: this.state.user}); //update app user
       } catch (error) {
         console.log(error);
         alert("Profile picture could not be saved. Please try again!");
@@ -54,12 +68,15 @@ class Profile extends React.Component {
   };
 
   onPreferenceAgeChange = (value) => {
+
+    console.log("profile user: " + JSON.stringify(this.state.user));
+
     this.setState(update(this.state, {"user": {"preferences": {"age": {$set: value}}}}));
     this.forceUpdate();
   };
 
   onPreferenceDistanceChange = (value) => {
-    this.setState(update(this.state, {"user": {"preferences": {"distance": {$set: value}}}}));
+    this.setState(update(this.state, {"user": {"preferences": {"radius": {$set: value}}}}));
     this.forceUpdate();
   };
 
@@ -70,19 +87,11 @@ class Profile extends React.Component {
       petTypes.push(pet.value);
     });
 
+    console.log("selected pets: " + petTypes); 
+    console.log("original list: " + selectedPets); 
+
     this.setState(update(this.state, {"user": {"preferences": {"petTypes": {$set: petTypes}}}}));
-    this.forceUpdate();
-  };
-
-  onClinicSelectChange = (selectedClinics) => {
-    let clinics = [];
-
-    selectedClinics.forEach((clinic) => {
-      clinics.push(clinic.value);
-    });
-
-    this.setState(update(this.state, {"user": {"preferences": {"clinics": {$set: clinics}}}}));
-    this.forceUpdate();
+    this.forceUpdate(); 
   };
 
   render() {
@@ -128,8 +137,8 @@ class Profile extends React.Component {
                     user={this.state.user}
                     onPreferenceAgeChange={this.onPreferenceAgeChange}
                     onPreferenceDistanceChange={this.onPreferenceDistanceChange}
-                    onPetSelectChange={this.onPreferenceDistanceChange}
-                    onClinicSelectChange={this.onClinicSelectChange}
+                    onPetSelectChange={this.onPetSelectChange}
+                    onUpdatePreferences={this.onUpdatePreferences}
                   />
                 </Tab>
 
