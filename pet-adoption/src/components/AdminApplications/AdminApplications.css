@@ -132,12 +132,12 @@
   .center .card .additional .more-info h1 {
     color: #fff;
     margin-bottom: 0;
-    margin-left: -15%;
+    margin-left: -5%;
   }
   
   .center .card.green .additional .more-info h1 {
     color: #224C36;
-    margin-left: -15%;
+    margin-left: -5%;
   }
   
   .center .card .additional .coords {
@@ -203,7 +203,11 @@
     box-sizing: border-box;
     padding: 1rem;
     padding-top: 0;
+    padding-left: 10%;
     align-content: center;
+  }
+  .center .card .general p {
+    text-align: left;
   }
   
   .center .card .general .more {
@@ -247,8 +251,18 @@
     /* width: 90%; */
     border-color: #f44336;
     background: #c9372c;
-
-    
+  }
+  
+  .ques-btn{
+    background: #36f4d4;
+    color: rgb(0, 0, 0);
+    margin-left: -10px;
+  }
+  .ques-btn:hover{
+    border-radius: 5mm;
+    /* width: 90%; */
+    border-color: #36f4d4;
+    background: #219c88;
   }
 
   

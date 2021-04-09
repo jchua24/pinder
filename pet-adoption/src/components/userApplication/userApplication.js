@@ -29,7 +29,7 @@ class UserApplication extends React.Component{
         return (
             <div>
                 {this.props.admin ? (
-                    <div className={`card ${this.props.color}`}>
+                    <div className="card">
                         <div className="additional">
                             <div className="user-card">
                                 <img src={this.props.imgSrc} className="img-center"></img>
@@ -43,40 +43,25 @@ class UserApplication extends React.Component{
                                 <div className="coords">
                                     <span>Email: {this.props.email}</span>
                                     <br></br>
-                                    <span>Province: {this.props.province}</span>
-                                    <br></br>
                                     <span>City: {this.props.city}</span>
+                                    <br></br>
+                                    <span>Province: {this.props.province}</span>
                                     <br></br>
                                     <span>Phone: {this.props.phoneNumber}</span>
                                 </div>
                                 <div className="stats">
-                                    <div>
-                                        <div className="title">Enviroment</div>
-                                        <div className="value">{this.props.env}</div>
-                                    </div>
-                                    <div>
-                                        <div className="title">Owned Pet</div>
-                                        <div className="value">{this.props.owned}</div>
-                                    </div>
-                                    <div>
-                                        <div className="title">Household</div>
-                                        <div className="value">{this.props.houseHold}</div>
-                                    </div>
-                                    <div>
-                                        <div className="title">Pet Diet</div>
-                                        <div className="value">{this.props.petDiet}</div>
-                                    </div>
+                                    <button className="a-r-btn ques-btn">Show Questionnaire Results</button>
                                 </div>
                             </div>
                         </div>
                         <div className="general">
                             <h1>{this.props.userName}</h1>
-                            <p>{this.props.summary}</p>
+                            <p>I am eager to find out more about this little guy! I really connected with him!</p>
                             <span className="more">Mouse over the card for more info</span>
                         </div>
                     </div>
                     ) : (
-                    <div className={`card ${this.props.color}`}>
+                    <div className="card">
                         <div className="additional">
                             <div className="user-card">
                                 <img src={this.props.petImgSrc} className="img-center"></img>
@@ -93,7 +78,7 @@ class UserApplication extends React.Component{
                             <div className="more-info">
                                 <h1>{this.props.petName}</h1>
                                 <div className="coords">
-                                    <span>CLinic: {this.props.clinic}</span>
+                                    <span>Clinic: {this.props.clinic}</span>
                                     <br></br>
                                     <span>Breed: {this.props.petBreed}</span>
                                     <br></br>
