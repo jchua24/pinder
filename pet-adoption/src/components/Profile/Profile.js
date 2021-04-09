@@ -20,7 +20,7 @@ class Profile extends React.Component {
     };
   }
  
-  //check if the user has a profile picture
+  //set user data
   async componentDidMount() {
  
     const { app } = this.props; 
@@ -28,6 +28,7 @@ class Profile extends React.Component {
     console.log("user:" + JSON.stringify(app.state.currUser));
     this.forceUpdate();  
 
+    //check if the user has a profile picture
     if (this.state.user && this.state.user.profilePic == "") {
       this.setState(update(this.state, {"user": {"profilePic": {$set: "/user-profile-placeholder.png"}}}));
     }
