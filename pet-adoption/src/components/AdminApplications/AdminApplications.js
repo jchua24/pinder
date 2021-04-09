@@ -107,6 +107,7 @@ class AdminApplications extends React.Component {
         this.getUser(selected[i].userID),
         this.getPosting(selected[i].postingID),
         selected[i].status,
+        selected[i].id
       ]);
     return ret;
   }
@@ -229,6 +230,7 @@ class AdminApplications extends React.Component {
                 appStatus={app[2]}
                 petBreed={app[1].pet.breed}
                 petAge={app[1].pet.age}
+                id={}
               />
             ))}
           </div>
