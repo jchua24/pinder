@@ -218,7 +218,12 @@ class App extends React.Component {
                 )}
               />
 
-              {/* These routes are added to speed up front end style change tests */}
+              {/* These routes are added to speed up front end style change tests 
+
+                  *****MAKE SURE TO REMOVE THESE BEFORE SUBMISSION!******
+              
+              */}
+
               <Route
                 exact
                 path="/testadminapps"
