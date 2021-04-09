@@ -165,7 +165,7 @@ var userjson =
        {
         type: "radiogroup",
         name: "HaveVet",
-        title: "Do you have Veterinarian?",
+        title: "Do you have access to a Veterinarian?",
         isRequired: true,
         choices: [
          {
@@ -183,6 +183,7 @@ var userjson =
         name: "GotoVet",
         visibleIf: "{HaveVet} = 'Yes'",
         title: "How often should your pet be examined by a veterinarian?",
+        hideNumber: true,
         requiredIf: "{HaveVet} = 'Yes'",
         choices: [
          {
