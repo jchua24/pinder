@@ -30,6 +30,7 @@ class App extends React.Component {
     //state object, to be accessible by children elements
     this.state = {
       currUser: null,
+      isMounted: false,
     };
   }
 
@@ -38,18 +39,25 @@ class App extends React.Component {
     try {
       const data = await apiCheckSession();
       if (data) {
-        this.setState({ currUser: data.user });
+        this.setState({ currUser: data.user, isMounted: true });
       }
     } catch (error) {
       console.log(error);
+      localStorage.removeItem("isLoggedIn");
+      this.setState({ isMounted: true });
     }
   }
 
+  isValid() {
+    let { currUser, isMounted } = this.state,
+      isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn && !currUser) return false;
+    return true;
+  }
+
   render() {
-    let { currUser } = this.state;
-    console.log("Rendering");
-    console.log(currUser);
-    return (
+    let { currUser, isMounted } = this.state;
+    return this.isValid() ? (
       <Router>
         <div className="App">
           <Navigation app={this} />
@@ -130,13 +138,13 @@ class App extends React.Component {
                 path="/applications"
                 render={(props) => (
                   <div>
-                    {currUser ? 
+                    {currUser ? (
                       currUser.admin ? (
                         <Redirect to={{ pathname: "/adminapps" }} />
                       ) : (
                         <Applications {...props} app={this} />
                       )
-                     : (
+                    ) : (
                       <div>
                         <Alert variant="primary" dismissible transition>
                           You need to login to access this page.
@@ -253,6 +261,8 @@ class App extends React.Component {
           </div>
         </div>
       </Router>
+    ) : (
+      ""
     );
   }
 }

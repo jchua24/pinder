@@ -10,18 +10,16 @@ class Logout extends React.Component {
   logout = async () =>  {
     try{
       await apiLogout();
+      alert('You have successfully logged out'); 
+      localStorage.removeItem('isLoggedIn');
+      this.props.app.setState({
+        currUser: null,
+      });
+      this.props.history.push('/');
     } catch(error) {
       console.log(error); 
       alert('The email or password that you have entered is incorrect!');
     }    
-
-    this.props.app.setState({
-      currUser: null,
-      message: { type: "", body: "" },
-    });
-
-    alert('You have successfully logged out'); 
-    this.props.history.push('/');
   }
 
   stay() {
