@@ -11,6 +11,7 @@ class PetPosting extends React.Component {
       breed: "",
       type: "",
       addInfo: "",
+      petImages: []
     };
   }
 
