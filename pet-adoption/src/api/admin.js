@@ -2,7 +2,6 @@
 Wrapper functions to call user endpoints 
 */ 
 
-
 import axios from 'axios'; 
 import { logoutHelper } from "../helper";
 
@@ -12,7 +11,6 @@ const API_HOST = ENV.api_host;
 
 //get all pet postings from this admin user 
 export const apiGetPostings = async (status) => {
-
 
     const reqBody = {}; 
 
