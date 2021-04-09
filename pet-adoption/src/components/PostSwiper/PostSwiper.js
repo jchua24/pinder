@@ -65,6 +65,7 @@ class PostSwiper extends React.Component {
         }
       ]
     };
+    this.submitApplication = this.submitApplication.bind(this);
   }
 
   //get posts to display in swiper 

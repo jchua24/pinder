@@ -2,10 +2,11 @@ import React from "react";
 
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import UserApplication from "../userApplication/userApplication";
-import RcSlider, {createSliderWithTooltip} from 'rc-slider';
-import 'rc-slider/assets/index.css';
+import RcSlider, { createSliderWithTooltip } from "rc-slider";
+import "rc-slider/assets/index.css";
 
 import "./AdminApplications.css";
+import { apiGetApplications, apiGetPostings } from "../../api/admin";
 
 const RcRange = RcSlider.createSliderWithTooltip(RcSlider.Range);
 const ToolTipSlider = createSliderWithTooltip(RcSlider);
@@ -22,34 +23,34 @@ class AdminApplications extends React.Component {
     };
   }
 
-  getAvailPets = () => {
+  getAvailPets = async (status = "") => {
     // get the current pets of the current clinic from the database
-    let availPets = [
-      { name: "Biscuit", type: "Dog", breed: "Golden Retriever", id: 1 },
-      { name: "Nosey", type: "Fish", breed: "YYZ", id: 2 },
-      { name: "Pussy Cat", type: "Cat", breed: "Long Haired", id: 3 },
-    ];
-    this.setState({ availPets: availPets }, () =>
-      console.log("available pets were acquired")
-    );
-    this.getUserApps();
+    try {
+      let availPets = await apiGetPostings();
+      this.setState({ availPets: availPets }, () =>
+        console.log("available pets were acquired")
+      );
+      this.getUserApps();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  getUserApps = () => {
+  getUserApps = async () => {
     // get user applications that were sent to this clinic from the database
-    let userApps = [
-      { userName: "Parsa", appliedPet: "Biscuit" },
-      { userName: "Bam", appliedPet: "Nosey" },
-      { userName: "Parsa", appliedPet: "Pussy Cat" },
-    ];
-    this.setState({ userApps: userApps }, () =>
-      console.log("user applications were acquired")
-    );
+    try {
+      let userApps = await apiGetApplications();
+      this.setState({ userApps: userApps }, () =>
+        console.log("user applications were acquired")
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   searchApps = (e) => {
     e.preventDefault();
-    alert('The search functionality is not fully implemented at the moment.');
+    alert("The search functionality is not fully implemented at the moment.");
   };
 
   componentDidMount() {
@@ -75,12 +76,13 @@ class AdminApplications extends React.Component {
                     this.setState({ searchType: e.target.value });
                   }}
                 >
-                <option value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
+                  <option value="">Choose..</option>
+                  {availPets
+                    .map((pet) => pet.type)
+                    .filter((x, i, a) => a.indexOf(x) === i)
+                    .map((p) => (
+                      <option value={p}>{p}</option>
+                    ))}
                 </Form.Control>
               </Col>
             </Form.Group>
@@ -97,12 +99,13 @@ class AdminApplications extends React.Component {
                     this.setState({ searchBreed: e.target.value });
                   }}
                 >
-                <option value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
+                  <option value="">Choose..</option>
+                  {availPets
+                    .map((pet) => pet.breed)
+                    .filter((x, i, a) => a.indexOf(x) === i)
+                    .map((p) => (
+                      <option value={p}>{p}</option>
+                    ))}
                 </Form.Control>
               </Col>
             </Form.Group>
@@ -111,16 +114,19 @@ class AdminApplications extends React.Component {
                 <strong>Age Range:</strong>{" "}
               </Form.Label>
               <Col>
-              <RcRange
-                tipFormatter={(value) => `${value}`}
-                tipProps={{ visible: true }}
-                defaultValue={[0, 10]}
-                min={0}
-                max={50}
-                className="slider"
-                handleStyle={{borderColor: '#17a2b8', backgroundColor: 'white'}}
-                trackStyle={[{backgroundColor: "#17a2b8"}]}
-              />
+                <RcRange
+                  tipFormatter={(value) => `${value}`}
+                  tipProps={{ visible: true }}
+                  defaultValue={[0, 10]}
+                  min={0}
+                  max={50}
+                  className="slider"
+                  handleStyle={{
+                    borderColor: "#17a2b8",
+                    backgroundColor: "white",
+                  }}
+                  trackStyle={[{ backgroundColor: "#17a2b8" }]}
+                />
                 {/* <Form.Control
                   as="select"
                   custom
@@ -142,39 +148,39 @@ class AdminApplications extends React.Component {
               inline-block
               size="lg"
               type="submit"
-              style={{ backgroundColor: "#429EA6", borderColor: "transparent"}}
-              className="searchButton"/*"justify-content-md-center"*/
+              style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
+              className="searchButton" /*"justify-content-md-center"*/
             >
               Search
             </Button>
           </Form>
         </div>
         {availPets.length !== 0 ? (
-        <div class="center">
-          <UserApplication
-            imgSrc="/user-profile-placeholder.png"
-            userName="Jack"
-            email="testing@123.com"
-            city="toronto"
-            phoneNumber="1113334455"
-            env="condo"
-            owned="no"
-            houseHold="4"
-            petDiet="dry"
-            summary="I really like this pet! Please consider my application."
-            admin={false}
-            province="Ontario"
-            color=""
-            petName="catty"
-            petImgSrc="/cat1.jpg"
-            petSummary="Im very cute pleaaase take me!"
-            appStatus="Pending"
-            clinic="Animal Hospital"
-            petBreed="pussycatlol"
-            petAge="8"
-
+          <div class="center">
+            <UserApplication
+              imgSrc="/user-profile-placeholder.png"
+              userName="Jack"
+              email="testing@123.com"
+              city="toronto"
+              phoneNumber="1113334455"
+              env="condo"
+              owned="no"
+              houseHold="4"
+              petDiet="dry"
+              summary="I really like this pet! Please consider my application."
+              admin={false}
+              province="Ontario"
+              color=""
+              petName="catty"
+              petImgSrc="/cat1.jpg"
+              petSummary="Im very cute pleaaase take me!"
+              appStatus="Pending"
+              clinic="Animal Hospital"
+              petBreed="pussycatlol"
+              petAge="8"
             />
-        </div>
+          </div>
+        ) : (
           // <div className="appsContainer2">
           //   {availPets.map((pet) => (
           //     <Card key={pet.id} className="appsCard">
@@ -201,8 +207,7 @@ class AdminApplications extends React.Component {
           //     </Card>
           //   ))}
           // </div>
-          
-        ) : (
+
           <h3 style={{ color: "white" }}>
             There are no pets left at the moment
           </h3>

@@ -49,125 +49,161 @@ class Applications extends React.Component {
   componentDidMount() {
     if (this.state.availPets.length === 0) this.getAvailPets();
   }
-
   render() {
     let { availPets, userApps } = this.state;
     return (
-      <div>
+      <div className="AdminAppContainer">
         {availPets.length !== 0 ? (
-          <div className="appsContainer">
-            {availPets.map((pet) => (
-              <Card className="appsCard">
-                <Card.Header>
-                  <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
-                </Card.Header>
-                <ul className="list-group list-group-flush">
-                  {userApps
-                    .filter((app) => app.appliedPet === pet.name)
-                    .map((app) => (
-                      <li
-                        className="list-group-item"
-                        key={userApps.indexOf(app)}
-                      >
-                        <UserApplication
-                          admin={false}
-                          width={100}
-                          height={100}
-                          imgSrc={pet.img}
-                          userName={app.userName}
-                          appliedPet={app.appliedPet}
-                          summary="I really like this pet! Please consider my application."
-                        />
-                      </li>
-                    ))}
-                </ul>
-              </Card>
-            ))}
+          <div class="center">
+            <UserApplication
+              imgSrc="/user-profile-placeholder.png"
+              userName="Jack"
+              email="testing@123.com"
+              city="toronto"
+              phoneNumber="1113334455"
+              env="condo"
+              owned="no"
+              houseHold="4"
+              petDiet="dry"
+              summary="I really like this pet! Please consider my application."
+              admin={false}
+              province="Ontario"
+              color=""
+              petName="catty"
+              petImgSrc="/cat1.jpg"
+              petSummary="Im very cute pleaaase take me!"
+              appStatus="Pending"
+              clinic="Animal Hospital"
+              petBreed="pussycatlol"
+              petAge="8"
+            />
           </div>
         ) : (
           <h3 style={{ color: "white" }}>
             There are no pets left at the moment
           </h3>
         )}
-        <div className="appsSearch">
-          <Form onSubmit={this.searchApps}>
-            <Form.Group as={Row} controlId="searchName">
-              <Form.Label column sm={2}>
-                <strong>Name:</strong>{" "}
-              </Form.Label>
-              <Col>
-                <Form.Control
-                  as="select"
-                  custom
-                  onChange={(e) => {
-                    this.setState({ searchName: e.target.value });
-                  }}
-                >
-                <option selected value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => (
-                  <option value={pet.name}>{pet.name}</option>
-                ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId="searchType">
-              <Form.Label column sm={2}>
-                <strong>Type:</strong>{" "}
-              </Form.Label>
-              <Col>
-                <Form.Control
-                  as="select"
-                  custom
-                  onChange={(e) => {
-                    this.setState({ searchName: e.target.value });
-                  }}
-                >
-                <option selected value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row} controlId="searchType">
-              <Form.Label column sm={2}>
-                <strong>Breed:</strong>{" "}
-              </Form.Label>
-              <Col>
-                <Form.Control
-                  as="select"
-                  custom
-                  onChange={(e) => {
-                    this.setState({ searchName: e.target.value });
-                  }}
-                >
-                <option selected value="">
-                  Choose..
-                </option>
-                {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
-                  <option value={p}>{p}</option>
-                ))}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Button
-              block
-              size="lg"
-              type="submit"
-              style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
-              className="justify-content-md-center"
-            >
-              Search
-            </Button>
-          </Form>
-        </div>
       </div>
     );
   }
+  // render() {
+  //   let { availPets, userApps } = this.state;
+  //   return (
+  //     <div>
+  //       {availPets.length !== 0 ? (
+  //         <div className="appsContainer">
+  //           {availPets.map((pet) => (
+  //             <Card className="appsCard">
+  //               <Card.Header>
+  //                 <strong>{pet.name + " - " + pet.type + " - " + pet.breed}</strong>
+  //               </Card.Header>
+  //               <ul className="list-group list-group-flush">
+  //                 {userApps
+  //                   .filter((app) => app.appliedPet === pet.name)
+  //                   .map((app) => (
+  //                     <li
+  //                       className="list-group-item"
+  //                       key={userApps.indexOf(app)}
+  //                     >
+  //                       <UserApplication
+  //                         admin={false}
+  //                         width={100}
+  //                         height={100}
+  //                         imgSrc={pet.img}
+  //                         userName={app.userName}
+  //                         appliedPet={app.appliedPet}
+  //                         summary="I really like this pet! Please consider my application."
+  //                       />
+  //                     </li>
+  //                   ))}
+  //               </ul>
+  //             </Card>
+  //           ))}
+  //         </div>
+  //       ) : (
+  //         <h3 style={{ color: "white" }}>
+  //           There are no pets left at the moment
+  //         </h3>
+  //       )}
+  //       <div className="appsSearch">
+  //         <Form onSubmit={this.searchApps}>
+  //           <Form.Group as={Row} controlId="searchName">
+  //             <Form.Label column sm={2}>
+  //               <strong>Name:</strong>{" "}
+  //             </Form.Label>
+  //             <Col>
+  //               <Form.Control
+  //                 as="select"
+  //                 custom
+  //                 onChange={(e) => {
+  //                   this.setState({ searchName: e.target.value });
+  //                 }}
+  //               >
+  //               <option selected value="">
+  //                 Choose..
+  //               </option>
+  //               {availPets.map(pet => (
+  //                 <option value={pet.name}>{pet.name}</option>
+  //               ))}
+  //               </Form.Control>
+  //             </Col>
+  //           </Form.Group>
+  //           <Form.Group as={Row} controlId="searchType">
+  //             <Form.Label column sm={2}>
+  //               <strong>Type:</strong>{" "}
+  //             </Form.Label>
+  //             <Col>
+  //               <Form.Control
+  //                 as="select"
+  //                 custom
+  //                 onChange={(e) => {
+  //                   this.setState({ searchName: e.target.value });
+  //                 }}
+  //               >
+  //               <option selected value="">
+  //                 Choose..
+  //               </option>
+  //               {availPets.map(pet => pet.type).filter((x, i, a) => a.indexOf(x) === i).map(p => (
+  //                 <option value={p}>{p}</option>
+  //               ))}
+  //               </Form.Control>
+  //             </Col>
+  //           </Form.Group>
+  //           <Form.Group as={Row} controlId="searchType">
+  //             <Form.Label column sm={2}>
+  //               <strong>Breed:</strong>{" "}
+  //             </Form.Label>
+  //             <Col>
+  //               <Form.Control
+  //                 as="select"
+  //                 custom
+  //                 onChange={(e) => {
+  //                   this.setState({ searchName: e.target.value });
+  //                 }}
+  //               >
+  //               <option selected value="">
+  //                 Choose..
+  //               </option>
+  //               {availPets.map(pet => pet.breed).filter((x, i, a) => a.indexOf(x) === i).map(p => (
+  //                 <option value={p}>{p}</option>
+  //               ))}
+  //               </Form.Control>
+  //             </Col>
+  //           </Form.Group>
+  //           <Button
+  //             block
+  //             size="lg"
+  //             type="submit"
+  //             style={{ backgroundColor: "#429EA6", borderColor: "transparent" }}
+  //             className="justify-content-md-center"
+  //           >
+  //             Search
+  //           </Button>
+  //         </Form>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }
 
 export default Applications;
