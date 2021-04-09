@@ -162,7 +162,7 @@ class AdminApplications extends React.Component {
             houseHold="4"
             petDiet="dry"
             summary="I really like this pet! Please consider my application."
-            admin={true}
+            admin={false}
             province="Ontario"
             color=""
             petName="catty"
