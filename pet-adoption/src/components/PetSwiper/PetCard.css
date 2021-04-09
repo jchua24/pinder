@@ -6,17 +6,3 @@
 .opaque {
     opacity: 0.3; 
 }
-.popup-overlay {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.SubmitApp {
-    background-color: lightcyan;
-    border-radius: 10px;
-    padding: 50px;
-    size: 200%;
-}
-
-.SubmitAppDetail {
-    font-size: 25px;
-}

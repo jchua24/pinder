@@ -95,7 +95,7 @@ class PetSwiper extends React.Component {
         <Carousel className="swiper" indicators={false}>
 
           {this.state.pets.map((pet) => (
-            <Carousel.Item interval={5000}>
+            <Carousel.Item interval={50000}>
               <PetCard petData={pet}/> 
             </Carousel.Item>
           ))}
