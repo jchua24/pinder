@@ -17,11 +17,7 @@ import About from "./components/About";
 import Applications from "./components/Applications/Applications";
 import PetPosting from "./components/PetPosting/PetPosting";
 import Profile from "./components/Profile/Profile";
-<<<<<<< HEAD
-import PetSwiper from "./components/PostSwiper/PostSwiper";
-=======
 import PostSwiper from "./components/PostSwiper/PostSwiper";
->>>>>>> ef347489c9e452ded155a000195acb4528dec352
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
 import Logout from "./components/Logout";
