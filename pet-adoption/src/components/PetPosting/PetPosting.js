@@ -46,7 +46,7 @@ class PetPosting extends React.Component {
     let clinic = {
       id: user.id,
       name: user.name,
-      address: user.address + ',' + user.city + ',' + user.province + ',' + user.postal
+      address: user.address + ', ' + user.city + ', ' + user.province + ', ' + user.postal
     }; 
     let description = this.state.addClinicDesc;
 
