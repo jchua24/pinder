@@ -18,7 +18,7 @@ This is the first page that you see. It has three main components to it.
 We will click on the "About" Button on the very top of the page. This page only has one thing to explain about:
 1. It's an set of pictures about the creators of this page and the names.
 
-#### User Signup
+### User Signup
 Click Back onto the Dog Icon on the navigation bar, and then click on the signup page. In here we will:
 1. Fill in the form with some information. The following should work: (If it does not, choose a different email)
 Name: John Smith
@@ -31,8 +31,9 @@ Province: Choose Ontario
 Postal Code: A1B2C3
 Registering a Clinic: No
 2. Click the SignUp Button. This will create a user account. 
-**Note: **After logging in, the icon of a dog on the navigation bar will redirect them to the Pet Adoption page described below instead of the home page
-###### User Navigation bar update:
+######Note: After logging in, the icon of a dog on the navigation bar will redirect them to the Pet Adoption page described below instead of the home page
+
+##### User Navigation bar update:
 You are now greeted with the following new options:
 1. Pet Adoption
     - Where you may search pets who needs to be adopted
@@ -41,7 +42,7 @@ You are now greeted with the following new options:
 3. Profile
     - On the right top corner, you may go to your profile
 
-#### User Questionnaire
+### User Questionnaire
 Upon Signup, a questionnaire is to be filled to have this applicant be more acquaintable with Clinics when they go to adopt a pet. This questionnaire has a few hidden interactions, explained in the following questions:
 1. What is your Age group?
     - Choose your age group
@@ -71,15 +72,19 @@ Upon Signup, a questionnaire is to be filled to have this applicant be more acqu
     - This is a signature to acknowledge the person who filled this questionnaire. This in theory may be different than the name of the profile because it may be a different person who fills this questionnaire, but is the same party as the user.
 Upon clicking Preview, you will be notified if you left any questions blank. If you did not, then you are able to preview your submittions before finally clicking Complete. Upon clicking Complete, you are redirected to the Pet Adoption page described below.
 
-#### User Pet Adoption
+### User Pet Adoption
+This is where the user gets to take a look at the list of pets available for adoption. The user has the following features to use:
+1. Arrow to the left goes to the previous pet
+2. Arrow to the right goes to the next pet
+3. A circular arrow to do a flip on this pet.
+    - By flipping it over, you are greeted with more details and an apply button, should you wish to apply for this pet.
 
-
-#### User Applications 
+### User Applications 
 Each application is formatted as a card.
 1. On the left side of the card, we have a picture of the pet and below it, a cancel application button. Below that, a status. This status turns into approved if the clinic decides that this user is a good adopter for this pet. If the user changes decision and no longer wishes to pursue this pet, they may press the cancel button.
 2. On the right side of the card, we have the name of the cat and a comment about it. By mousing over this region, the card shows more detail about this pet.
 
-#### User Profile
+### User Profile
 By clicking the profile icon on the very top right on the navigation bar, we have two options: Profile and LogOut. Press the profile button
 Here you will see a profile Icon, which is filled with blue by default. There are three tabs here:
 1. User Info
@@ -89,16 +94,17 @@ Here you will see a profile Icon, which is filled with blue by default. There ar
 3. Applications
     - A redirect button to the questionnaire that you have filled it before. By pressing this, you can fill it out again, but your previous options are filled in there for you so you do not have to refill the same answers every time
     
-#### Logout
+### Logout
 By clicking the profile icon on the very top right on the navigation bar, we have two options: Profile and LogOut. Press the Logout button
 Here you are greeted with a confirm message. Press Yes. This will bring you back to the home page.
 
-#### Admin Login
+### Admin Login
 We will use the following credentials to login
 Email: admin\@admin
 Password: admin
-**Note: **After logging in, the icon of a dog on the navigation bar will redirect them to the Applications page described below instead of the home page
-###### Admin Navigation bar update:
+######Note: After logging in, the icon of a dog on the navigation bar will redirect them to the Applications page described below instead of the home page
+
+##### Admin Navigation bar update:
 You are now greeted with the following new options:
 After logging in, you are redirected to the Admin Applications page and your navigation bar is updated with the following:
 1. Applications
@@ -107,10 +113,10 @@ After logging in, you are redirected to the Admin Applications page and your nav
     - Where admins can put pets up for adoption
 3. Profile
     - On the right top corner, you may go to your profile
-#### Admin Applications
+### Admin Applications
 This page is to organize all of the applications by users for the pets that this clinic offers. The cards in this page is very similar to the User Applications cards, which one major difference: The ability to accept and reject an application. By pressing accept, the User sees the approved status, and by pressing reject, the status becomes rejected from the User's side.
 
-#### Admin Post a pet 
+### Admin Post a pet 
 On the navigation bar, there exists a button that says "Post a Pet".
 In here, the admin may put a pet up for adoption. It has the following questions:
 1. Affiliated Clinic
@@ -132,7 +138,7 @@ In here, the admin may put a pet up for adoption. It has the following questions
 9. Submit
     - With all fields made, you can put it up for adoption, and the User will see it in the User Pet Adoption
 
-#### Admin Profile
+### Admin Profile
 By clicking the profile icon on the very top right on the navigation bar, we have two options: Profile and LogOut. Press the profile button
 This page is very similar to the User Profile. Here you will see a profile Icon, which is filled with blue by default. There is however only one tab:
 1. User Info
@@ -141,15 +147,15 @@ An admin does not require the other functionality such as 'preferences' or 'ques
 
 ## Notes on progress made from phase 1
 
-#### Improvement of UI 
+### Edits to UI and features
 1. The home page was very minimalistic before, featuring only a carousel and a login button. We have added extra styling to have a background picture and made the styling fit all the content into one screen
-2. User and Admin Applications look like actual cards that have interactivity upon hovering. This is a significant improvement to the previous design, where there was no interactivity other than a button to remove the application.
+2. User and Admin Applications look more in card format that have interactivity upon hovering. This is a significant improvement to the previous design, where there was no interactivity other than a button to remove the application.
+3. Our user pet adoption page does not swipe the same way as the Tinder app would. We instead decided to navigate the list of pets with arrows: left arrow to go back to the previous pet and right arrow for the next, and finally a flip button for an apply button. In this manner the pet adopter may have a better range of choice and does not have the pressure of choose or discard.
 
-#### New features
+### New features
 In addition to backend implementation...
 1. Questionnaire
     - In addition to basic information, a large questionnaire was made for the user to fill, and for the admins to see so that the admins have more than just basic information to look upon when deciding which applicant may adopt the pet.
-2. 
 
 TIDI:
 Briefly explain any edits you made to the features and any new features, how end user would use them (separate instruction for user and admin) and any other info about phase 2
