@@ -60,6 +60,8 @@ class Questionnaire extends React.Component {
     //settings answers, if we have any 
     survey.data = this.state.questionnaireData;
 
+    //Read Only
+    survey.mode = 'display';
     return (
         <div className="Questionnaire">
         <Survey.Survey
