@@ -4,24 +4,62 @@ import "./Questionnaire.css";
 import "survey-react/survey.css";
 import {userjson} from "./UserQuest.js";
 
+import { apiSetQuestionnaireData, apiGetQuestionnaireData } from "../../api/user";
+
 class Questionnaire extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isCompleted: false };
+  
+    this.state = { 
+      isCompleted: false, 
+      questionnaireData: {}
+    };
+
     this.json = userjson;
     this.onCompleteComponent = this.onCompleteComponent.bind(this);
   }
-  onCompleteComponent(survey) {
+
+    //attempt to pre-populate questionnaire data
+    async componentDidMount() {
+    
+      try{
+        // updated the database with the new information for the user
+        const questionnaireData = await apiGetQuestionnaireData(); 
+
+        if(questionnaireData) {
+          this.setState({questionnaireData: questionnaireData})
+        }
+  
+      } catch(error) {
+        console.log(error);
+      }  
+    }
+  
+  async onCompleteComponent(survey) { 
     console.log(survey.valuesHash)
-    this.setState({ isCompleted: true });
-    // updated the database with the new information for the user
-    this.props.history.push('/swiper');
+
+    try{
+      // updated the database with the new information for the user
+      await apiSetQuestionnaireData(survey.valuesHash); 
+
+      this.setState({ isCompleted: true });
+      this.props.history.push('/swiper');
+    } catch(error) {
+      console.log(error); 
+      alert("Unable to submit questionnaire responses, please try again.")
+    }  
   }
+
   render() {
     Survey.StylesManager.ThemeColors["default"]["$main-color"] = "#1A8FE6";
     Survey.StylesManager.applyTheme();
+
+    //initializing questions
     let survey = new Survey.Model(this.json);
-    survey.data = this.props.data;
+    
+    //settings answers, if we have any 
+    survey.data = this.state.questionnaireData;
+
     return (
         <div className="Questionnaire">
         <Survey.Survey
