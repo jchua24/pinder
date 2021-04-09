@@ -45,7 +45,8 @@ var userjson =
           value: "No",
           text: "No"
          }
-        ]
+        ],
+        otherText: "No"
        },
        {
         type: "radiogroup",
@@ -326,13 +327,6 @@ var userjson =
        }
       ],
       hasNone: true
-     },
-     {
-      type: "boolean",
-      name: "Consent",
-      title: "You consent to Pinder using your personal information inputted in this Questionnaire for the purpose of aid in the pet adoption process",
-      hideNumber: true,
-      isRequired: true
      },
      {
       type: "text",
