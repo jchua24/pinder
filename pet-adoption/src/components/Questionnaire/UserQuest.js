@@ -141,16 +141,19 @@ var userjson =
        {
         name: "Adult",
         isRequired: true,
+        inputType: "number",
         title: "Adults (18+)"
        },
        {
         name: "Teenagers",
         isRequired: true,
+        inputType: "number",
         title: "Teenagers (13-17)"
        },
        {
         name: "Children",
         isRequired: true,
+        inputType: "number",
         title: "Children (Below 13)"
        }
       ]
