@@ -5,7 +5,7 @@ import bsCustomFileInput from "bs-custom-file-input";
 import "./PetPosting.css";
 class PetPosting extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       age: "",
       breed: "",

@@ -155,9 +155,23 @@ class App extends React.Component {
                   </div>
                 )}
               />
-              <Route exact path="/postapet">
-                <PetPosting clinic="test" />
-              </Route>
+              <Route
+                exact
+                path="/postapet"
+                render={(props) => (
+                  <div>
+                    {currUser ? (
+                      currUser.admin ? (
+                        <PetPosting {...props} app={this} />
+                      ) : (
+                        <div>This page is only accessible to clinics!</div>
+                      )
+                    ) : (
+                      <Redirect to={{ pathname: "/login" }} />
+                    )}
+                  </div>
+                )}
+              />
               <Route
                 exact
                 path="/profile"
@@ -177,7 +191,18 @@ class App extends React.Component {
                 path="/swiper"
                 render={(props) => (
                   <div>
-                    <PetSwiper {...props} app={this} />
+                    {currUser ? (
+                      currUser.admin ? (
+                        <div>
+                          This page is only accessible to individuals looking for pets.<br/>
+                          Please login using your personal account.
+                        </div>
+                      ) : (
+                        <PetSwiper {...props} app={this} />
+                      )
+                    ) : (
+                      <Redirect to={{pathname : '/login'}}/>
+                    )}
                   </div>
                 )}
               />
