@@ -10,3 +10,8 @@
     margin-top: 1.75em;
     margin-bottom: 1.75em;
 }
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}

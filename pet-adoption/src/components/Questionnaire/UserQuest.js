@@ -45,13 +45,15 @@ var userjson =
           value: "No",
           text: "No"
          }
-        ]
+        ],
+        otherText: "No"
        },
        {
         type: "radiogroup",
         name: "OwnPet",
         visibleIf: "{PetBefore} = 'Yes'",
         title: "Do you currently own a pet?",
+        hideNumber: true,
         requiredIf: "{PetBefore} = 'Yes'",
         choices: [
          "Yes",
@@ -64,6 +66,7 @@ var userjson =
         visibleIf: "{OwnPet} = 'Yes' and {PetBefore} = 'Yes'",
         title: "How many pets do you currently own?",
         description: "(Applies to pets that are required to receive vaccines)",
+        hideNumber: true,
         requiredIf: "{OwnPet} = 'Yes'",
         inputType: "number",
         min: "1",
@@ -74,6 +77,7 @@ var userjson =
         name: "OwnPetVaccine",
         visibleIf: "{OwnPet} = 'Yes' and {PetBefore} = 'Yes'",
         title: "Are your pets up to date with vaccines?",
+        hideNumber: true,
         requiredIf: "{OwnPet} = 'Yes'",
         choices: [
          {
@@ -137,16 +141,19 @@ var userjson =
        {
         name: "Adult",
         isRequired: true,
+        inputType: "number",
         title: "Adults (18+)"
        },
        {
         name: "Teenagers",
         isRequired: true,
+        inputType: "number",
         title: "Teenagers (13-17)"
        },
        {
         name: "Children",
         isRequired: true,
+        inputType: "number",
         title: "Children (Below 13)"
        }
       ]
@@ -158,7 +165,7 @@ var userjson =
        {
         type: "radiogroup",
         name: "HaveVet",
-        title: "Do you have Veterinarian?",
+        title: "Do you have access to a Veterinarian?",
         isRequired: true,
         choices: [
          {
@@ -176,6 +183,7 @@ var userjson =
         name: "GotoVet",
         visibleIf: "{HaveVet} = 'Yes'",
         title: "How often should your pet be examined by a veterinarian?",
+        hideNumber: true,
         requiredIf: "{HaveVet} = 'Yes'",
         choices: [
          {
@@ -326,13 +334,6 @@ var userjson =
        }
       ],
       hasNone: true
-     },
-     {
-      type: "boolean",
-      name: "Consent",
-      title: "You consent to Pinder using your personal information inputted in this Questionnaire for the purpose of aid in the pet adoption process",
-      hideNumber: true,
-      isRequired: true
      },
      {
       type: "text",
