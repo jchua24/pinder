@@ -128,9 +128,13 @@ export const apiGetPosts = async () => {
 };
 
 //get a posting to display in pet swiper
-export const apiGetPost = async (postingID) => {
+export const apiGetPost = async (postingID, clinicID) => {
     try {
-      const res = await axios.get(`${API_HOST}/api/user/posts/${postingID}`);
+      const reqBody = {
+          postingID: postingID,
+          clinicID: clinicID
+      }
+      const res = await axios.post(`${API_HOST}/api/user/posts`, reqBody);
       return res.data;
     } catch (error) {
       if (error.response.status === 401) {

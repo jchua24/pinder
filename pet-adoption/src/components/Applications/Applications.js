@@ -1,7 +1,7 @@
 import React from "react";
 import "./Applications.css";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
-import { apiGetUserData, apiGetApplications } from "../../api/user";
+import { apiGetUserData, apiGetApplications, apiGetPost } from "../../api/user";
 import UserApplication from "../userApplication/userApplication";
 import { uid } from "react-uid";
 
@@ -31,9 +31,9 @@ class Applications extends React.Component {
     }
   };
 
-  getPosting = async (postingID) => {
+  getPosting = async (postingID, clinicID) => {
     try {
-      return await apiGetPosting(postingID);
+      return await apiGetPost(postingID, clinicID);
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +45,7 @@ class Applications extends React.Component {
     for (let i = 0; i < selected.length; i++)
       ret.push([
         this.getUser(selected[i].userID),
-        this.getPosting(selected[i].postingID),
+        this.getPosting(selected[i].postingID, selected[i].clinicID),
         selected[i].status,
         selected[i].id
       ]);
