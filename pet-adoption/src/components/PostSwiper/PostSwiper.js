@@ -39,6 +39,11 @@ class PostSwiper extends React.Component {
 
   async submitApplication(postData) {
     
+    console.log("going to attempt to submit application");
+    
+    console.log("post id: " + postData.id); 
+    console.log("clinic id: " + postData.clinicID); 
+
     try {
       await apiSubmitApplication(postData.id, postData.clinicID);
       alert("Application submitted successfully!"); 

@@ -134,7 +134,7 @@ export const apiGetPost = async (postingID, clinicID) => {
           postingID: postingID,
           clinicID: clinicID
       }
-      const res = await axios.post(`${API_HOST}/api/user/posts`, reqBody);
+      const res = await axios.post(`${API_HOST}/api/user/post`, reqBody);
       return res.data;
     } catch (error) {
       if (error.response.status === 401) {
@@ -179,7 +179,8 @@ export const apiSetQuestionnaireData = async (questionnaireData) => {
 //get individual user data
 export const apiGetUserData = async (userID) => {
   try {
-    await axios.put(`${API_HOST}/api/user/${userID}`);
+    const res = await axios.get(`${API_HOST}/api/user/${userID}`);
+    return res.data; 
   } catch (error) {
     if (error.response.status === 401) {
       logoutHelper();

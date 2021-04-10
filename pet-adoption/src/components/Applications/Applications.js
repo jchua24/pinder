@@ -9,6 +9,7 @@ class Applications extends React.Component {
     super(props);
     this.state = {
       userApps: [],
+      allInfo: []
     };
   }
 
@@ -24,7 +25,8 @@ class Applications extends React.Component {
 
   getUser = async (userID) => {
     try {
-      return await apiGetUserData(userID);
+      const res = await apiGetUserData(userID);
+      return res;
     } catch (err) {
       console.log(err);
     }
@@ -32,35 +34,58 @@ class Applications extends React.Component {
 
   getPosting = async (postingID, clinicID) => {
     try {
-      return await apiGetPost(postingID, clinicID);
+      
+      const res = await apiGetPost(postingID, clinicID);
+      return res; 
     } catch (err) {
       console.log(err);
     }
   };
 
-  getAllInfo() {
-    let ret = [],
+  async getAllInfo() {
+    
+    try {
+
+      let ret = [],
       selected = this.state.userApps;
-    for (let i = 0; i < selected.length; i++)
-      ret.push([
-        this.getUser(selected[i].userID),
-        this.getPosting(selected[i].postingID, selected[i].clinicID),
-        selected[i].status,
-        selected[i].id
-      ]);
-    return ret;
+
+      for (let i = 0; i < selected.length; i++) {
+
+        const user = await this.getUser(selected[i].userID); 
+        const posting = await this.getPosting(selected[i].postingID, selected[i].clinicID)
+  
+        ret.push([
+          user,
+          posting,
+          selected[i].status,
+          selected[i].id
+        ]);
+      }
+
+      this.setState({allInfo: ret});
+
+      console.log("all info: " + JSON.stringify(ret)); 
+
+    } catch(error) {
+      console.log(error);
+      alert("Could not retrieve user applications. Please try again.");
+    }    
   }
 
-  componentDidMount() {
-    if (this.state.userApps.length === 0) this.getUserApps();
+  async componentDidMount() {
+    if (this.state.userApps.length === 0) {
+      await this.getUserApps();
+      await this.getAllInfo(); 
+    } 
   }
   render() {
-    let { userApps } = this.state;
+   
+
     return (
       <div className="AdminAppContainer">
-        {userApps.length !== 0 ? (
+        {this.state.allInfo.length !== 0  ? (
           <div class="center">
-            {this.getAllInfo.map(app => (
+            {this.state.allInfo.map(app => (
               <UserApplication
               imgSrc="/user-profile-placeholder.png"
               userName={app[0].name}

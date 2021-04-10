@@ -224,10 +224,10 @@ router.post("/post", authenticate, mongoChecker, async (req, res) => {
     } 
 
     try {
-        const adminUser = await User.findOne({ _id: req.body.clinic}).exec();
+        const adminUser = await User.findOne({ _id: req.body.clinicID}).exec();
 
-        if(user != null) {
-            const posting = adminUser.petApplications.id(req.body.postingID); 
+        if(adminUser != null) {
+            const posting = adminUser.petPostings.id(req.body.postingID); 
 
             if(!posting) {
                 return res.status(404).send('Posting not found.');
