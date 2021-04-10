@@ -110,8 +110,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
 //add application
 router.post("/applications", authenticate, mongoChecker, async (req, res) => {
 
-    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID") && req.body.hasOwnProperty("clinicName") && req.body.hasOwnProperty("clinicAddress")
-    && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
+    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID") && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
         return res.status(400).send('One of the required fields (postingID, clinicID) was not included in the request.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -121,8 +120,6 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
         const application = req.user.petApplications.create({
             userID: req.user._id, 
             clinicID: req.body.clinicID, 
-            clinicName: req.body.clinicName, 
-            clinicAddress: req.body.clinicAddress,
             postingID: req.body.postingID, 
             status: "pending"
         }); 
@@ -216,6 +213,39 @@ router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) 
     }
 }) 
 
+
+//get specific post based on postingID
+router.post("/post", authenticate, mongoChecker, async (req, res) => {
+
+    if(!("postingID" in req.body && "clinicID" in req.body && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
+        return res.status(400).send('Invalid request - valid postingID / clinicID not provided.');
+    } else if(req.user.admin) {
+        return res.status(401).send('Endpoint unauthorized for admin users.'); 
+    } 
+
+    try {
+        const adminUser = await User.findOne({ _id: req.body.clinic}).exec();
+
+        if(user != null) {
+            const posting = adminUser.petApplications.id(req.body.postingID); 
+
+            if(!posting) {
+                return res.status(404).send('Posting not found.');
+            }
+            return res.send(posting); 
+        } else {
+            return res.status(404).send('Clinic not found.');
+        }
+    } catch (error) {
+        console.log(error); 
+        
+    	if (isMongoError(error)) { 
+            return res.sendStatus(500);
+		} else {
+            return res.sendStatus(400);
+		} 
+    }
+});
 
 //get all relevant postings by searching with user preferences
 router.get("/posts", authenticate, mongoChecker, async (req, res) => {
