@@ -3,7 +3,6 @@ import "./Applications.css";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { apiGetUserData, apiGetApplications, apiGetPost } from "../../api/user";
 import UserApplication from "../userApplication/userApplication";
-import { uid } from "react-uid";
 
 class Applications extends React.Component {
   constructor(props) {

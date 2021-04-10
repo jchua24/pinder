@@ -217,6 +217,39 @@ router.delete('/applications/:id', authenticate, mongoChecker, async (req, res) 
 }) 
 
 
+//get specific post based on postingID
+router.post("/post", authenticate, mongoChecker, async (req, res) => {
+
+    if(!("postingID" in req.body && "clinicID" in req.body && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
+        return res.status(400).send('Invalid request - valid postingID / clinicID not provided.');
+    } else if(req.user.admin) {
+        return res.status(401).send('Endpoint unauthorized for admin users.'); 
+    } 
+
+    try {
+        const adminUser = await User.findOne({ _id: req.body.clinic}).exec();
+
+        if(user != null) {
+            const posting = adminUser.petApplications.id(req.body.postingID); 
+
+            if(!posting) {
+                return res.status(404).send('Posting not found.');
+            }
+            return res.send(posting); 
+        } else {
+            return res.status(404).send('Clinic not found.');
+        }
+    } catch (error) {
+        console.log(error); 
+        
+    	if (isMongoError(error)) { 
+            return res.sendStatus(500);
+		} else {
+            return res.sendStatus(400);
+		} 
+    }
+});
+
 //get all relevant postings by searching with user preferences
 router.get("/posts", authenticate, mongoChecker, async (req, res) => {
 
