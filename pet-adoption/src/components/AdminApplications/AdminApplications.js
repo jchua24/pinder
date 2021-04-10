@@ -27,6 +27,7 @@ class AdminApplications extends React.Component {
       searchType: "",
       searchBreed: "",
       searchName: "",
+      allInfo: []
     };
     this.getAllInfo = this.getAllInfo.bind(this);
   }
@@ -59,7 +60,7 @@ class AdminApplications extends React.Component {
 
   getUser = async (userID) => {
     try {
-      const res= await apiGetUserData(userID);
+      const res = await apiGetUserData(userID);
       return res;
     } catch (err) {
       console.log(err);
@@ -102,16 +103,19 @@ class AdminApplications extends React.Component {
   };
 
   async getAllInfo() {
-    let ret = [],
-      selected = this.state.selectedApps;
-    for (let i = 0; i < selected.length; i++)
-      ret.push([
-        await this.getUser(selected[i].userID),
-        await this.getPosting(selected[i].postingID),
-        selected[i].status,
-        selected[i].id
-      ]);
-    return ret;
+    try {
+      let ret = [],
+        selected = this.state.selectedApps;
+      for (let i = 0; i < selected.length; i++) {
+        const user = await this.getUser(selected[i].userID);
+        const posting = await this.getPosting(selected[i].postingID);
+        ret.push([user, posting, selected[i].status, selected[i].id]);
+      }
+      this.setState({allInfo : ret});
+      console.log(ret);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   componentDidMount() {
@@ -215,9 +219,9 @@ class AdminApplications extends React.Component {
             </Button>
           </Form>
         </div>
-        {userApps.length !== 0 ? (
+        {this.state.allInfo.length !== 0 ? (
           <div class="center">
-            {this.getAllInfo().map((app) => (
+            {this.state.allInfo.map((app) => (
               <UserApplication
                 imgSrc="/user-profile-placeholder.png"
                 userName={app[0].name}
@@ -228,7 +232,10 @@ class AdminApplications extends React.Component {
                 province={app[0].province}
                 petName={app[1].pet.name}
                 petImgSrc={app[1].pet.images[0]}
-                petSummary={app[1].pet.additionalInfo.substring(0, Math.min(8, app[1].pet.additionalInfo.length))}
+                petSummary={app[1].pet.additionalInfo.substring(
+                  0,
+                  Math.min(8, app[1].pet.additionalInfo.length)
+                )}
                 appStatus={app[2]}
                 petBreed={app[1].pet.breed}
                 petAge={app[1].pet.age}
