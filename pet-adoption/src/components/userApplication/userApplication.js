@@ -17,6 +17,8 @@ class UserApplication extends React.Component {
   rejectApplication = async () => {
     try {
       await apiRejectApplication(this.props.id);
+      alert("The application was successfully rejected");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -26,6 +28,8 @@ class UserApplication extends React.Component {
   acceptApplication = async () => {
     try {
       let data = await apiApproveApplication(this.props.id);
+      alert("The application was successfully accepted");
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -40,15 +44,22 @@ class UserApplication extends React.Component {
     }
   };
 
-  openQs = () => {  
-    this.props.history.push('/userqs/' + this.props.id);
-  }  
+  openQs = () => {
+    this.props.history.push("/userqs/" + this.props.id);
+  };
 
   render() {
     return (
       <div>
         {this.props.admin ? (
-          <div className="card">
+          <div
+            className="card"
+            style={
+              this.props.appStatus === "accepted"
+                ? { backgroundColor: "green" }
+                : {}
+            }
+          >
             <div className="additional">
               <div className="user-card">
                 <img src={this.props.imgSrc} className="img-center"></img>
