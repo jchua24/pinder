@@ -29,7 +29,7 @@ class Questionnaire extends React.Component {
       // updated the database with the new information for the user
 
       // get id
-      let id = this.props.history.location.pathname.split("/");
+      let id = window.location.pathname.split("/");
       if (id.length === 3) {
         id = id[2];
 
@@ -61,6 +61,10 @@ class Questionnaire extends React.Component {
     }
   }
 
+  nothing() {
+    console.log('showing questionaire data');
+  }
+
   render() {
     Survey.StylesManager.ThemeColors["default"]["$main-color"] = "#1A8FE6";
     Survey.StylesManager.applyTheme();
@@ -78,7 +82,7 @@ class Questionnaire extends React.Component {
         <Survey.Survey
           model={survey}
           showCompletedPage={false}
-          onComplete={this.onCompleteComponent}
+          onComplete={() => this.nothing()}
         />
       </div>
     );

@@ -65,7 +65,7 @@ class UserApplication extends React.Component {
             <div className="additional">
               <div className="user-card">
                 <img src={this.props.imgSrc} className="img-center"></img>
-                <div class="multi-button">
+                <div className="multi-button">
                   <button
                     onClick={() => this.acceptApplication()}
                     className="a-r-btn accept-button"
@@ -106,8 +106,7 @@ class UserApplication extends React.Component {
             <div className="general">
               <h1>{this.props.userName}</h1>
               <p>
-                I am eager to find out more about this little guy! I really
-                connected with him!
+                I would love to adopt {this.props.petName}!
               </p>
               <span className="more">Mouse over the card for more info</span>
             </div>
@@ -117,7 +116,7 @@ class UserApplication extends React.Component {
             <div className="additional">
               <div className="user-card">
                 <img src={this.props.petImgSrc} className="img-center"></img>
-                <div class="multi-button">
+                <div className="multi-button">
                   <button className="a-r-btn reject-button" onClick={() => this.cancelApplication()}>
                     Cancel Application
                   </button>

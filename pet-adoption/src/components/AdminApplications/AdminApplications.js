@@ -219,7 +219,7 @@ class AdminApplications extends React.Component {
           </Form>
         </div>
         {this.state.allInfo.length !== 0 ? (
-          <div class="center">
+          <div className="center">
             {this.state.allInfo.map((app) => (
               <UserApplication
                 imgSrc="/user-profile-placeholder.png"

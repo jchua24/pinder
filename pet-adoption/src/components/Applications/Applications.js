@@ -86,7 +86,7 @@ class Applications extends React.Component {
     return (
       <div className="AdminAppContainer">
         {this.state.allInfo.length !== 0  ? (
-          <div class="center">
+          <div className="center">
             {this.state.allInfo.map(app => (
               <UserApplication
               imgSrc="/user-profile-placeholder.png"
