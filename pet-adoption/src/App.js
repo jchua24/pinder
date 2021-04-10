@@ -20,6 +20,7 @@ import Profile from "./components/Profile/Profile";
 import PostSwiper from "./components/PostSwiper/PostSwiper";
 import AdminApplications from "./components/AdminApplications/AdminApplications";
 import Questionnaire from "./components/Questionnaire/Questionnaire";
+import QuestionnaireAdmin from "./components/Questionnaire/QuestionnaireAdmin";
 import Logout from "./components/Logout";
 import { apiCheckSession } from "./api/auth";
 
@@ -94,7 +95,7 @@ class App extends React.Component {
                         </Alert>
                         {currUser.admin ? (
                           <Redirect to={{ pathname: "/adminapps" }} />
-                        ) : (     
+                        ) : (
                           <Redirect to={{ pathname: "/swiper" }} />
                         )}
                       </div>
@@ -188,14 +189,16 @@ class App extends React.Component {
                     {currUser ? (
                       currUser.admin ? (
                         <div>
-                          This page is only accessible to individuals looking for pets.<br/>
+                          This page is only accessible to individuals looking
+                          for pets.
+                          <br />
                           Please login using your personal account.
                         </div>
                       ) : (
                         <PostSwiper {...props} app={this} />
                       )
                     ) : (
-                      <Redirect to={{pathname : '/login'}}/>
+                      <Redirect to={{ pathname: "/login" }} />
                     )}
                   </div>
                 )}
@@ -228,54 +231,25 @@ class App extends React.Component {
                 )}
               />
               <Route
+                path="/userqs"
+                render={(props) =>
+                  this.currUser ? (
+                    this.currUser.admin ? (
+                      <QuestionnaireAdmin {...props} app={this} />
+                    ) : (
+                      <div>You need to be an admin to view this page.</div>
+                    )
+                  ) : (
+                    <Redirect to={{ pathname: "/login" }} />
+                  )
+                }
+              />
+              <Route
                 exact
                 path="/logout"
                 render={(props) => (
                   <div>
                     <Logout {...props} app={this} />
-                  </div>
-                )}
-              />
-
-              {/* These routes are added to speed up front end style change tests 
-
-                  *****MAKE SURE TO REMOVE THESE BEFORE SUBMISSION!******
-              
-              */}
-
-              <Route
-                exact
-                path="/testadminapps"
-                render={(props) => (
-                  <div>
-                    <AdminApplications {...props} app={this} />
-                  </div>
-                )}
-              />
-              <Route
-                exact
-                path="/testapplications"
-                render={(props) => (
-                  <div>
-                    <Applications {...props} app={this} />
-                  </div>
-                )}
-              />
-              <Route
-                exact
-                path="/testswiper"
-                render={(props) => (
-                  <div>
-                    <PostSwiper {...props} app={this} />
-                  </div>
-                )}
-              />
-              <Route
-                exact
-                path="/testpostapet"
-                render={(props) => (
-                  <div>
-                    <PetPosting {...props} app={this} />
                   </div>
                 )}
               />
