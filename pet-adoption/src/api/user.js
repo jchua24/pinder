@@ -127,6 +127,20 @@ export const apiGetPosts = async () => {
   }
 };
 
+//get a posting to display in pet swiper
+export const apiGetPost = async (postingID) => {
+    try {
+      const res = await axios.get(`${API_HOST}/api/user/posts/${postingID}`);
+      return res.data;
+    } catch (error) {
+      if (error.response.status === 401) {
+        logoutHelper();
+      } else {
+        throw error;
+      }
+    }
+  };
+
 //get user questionnaire data
 export const apiGetQuestionnaireData = async () => {
   try {

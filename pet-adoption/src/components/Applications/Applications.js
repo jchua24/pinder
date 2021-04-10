@@ -1,12 +1,7 @@
 import React from "react";
 import "./Applications.css";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
-import {
-  apiGetApplications,
-  apiGetPosting,
-  apiGetPostings,
-} from "../../api/admin";
-import { apiGetUserData } from "../../api/user";
+import { apiGetUserData, apiGetApplications } from "../../api/user";
 import UserApplication from "../userApplication/userApplication";
 import { uid } from "react-uid";
 
@@ -21,6 +16,7 @@ class Applications extends React.Component {
   getUserApps = async (status = "") => {
     try {
       let data = await apiGetApplications(status);
+      console.log(data); 
       this.setState({ userApps: data });
     } catch (err) {
       console.log(err);
@@ -57,7 +53,7 @@ class Applications extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.availPets.length === 0) this.getUserApps();
+    if (this.state.userApps.length === 0) this.getUserApps();
   }
   render() {
     let { userApps } = this.state;
