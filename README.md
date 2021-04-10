@@ -159,25 +159,3 @@ An admin does not require the other functionality such as 'preferences' or 'ques
 In addition to backend implementation...
 1. Questionnaire
     - In addition to basic information, a large questionnaire was made for the user to fill, and for the admins to see so that the admins have more than just basic information to look upon when deciding which applicant may adopt the pet.
-
-TIDI:
-Briefly explain any edits you made to the features and any new features, how end user would use them (separate instruction for user and admin) and any other info about phase 2
-
-
-
-
-
-
-
-
-Basic Functionalities for Admin Users (in sequential order): 
-
-1. Posting a pet (http://localhost:3000/postapet): this is the page that admin users would use to post a pet. Filling out the form with the applicable info, would add this new pet to the list of pet postings that the clinic has made available for regular users. 
-
-2. Viewing Applications (http://localhost:3000/adminapps): allows users to view applications they have previously posted. 
-
-
-
-
-
-
