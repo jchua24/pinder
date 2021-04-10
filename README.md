@@ -2,14 +2,50 @@
 #### Heroku Link:
 https://pinderpetadoption.herokuapp.com/
 
-#### Basic credentials note:
-We use an email/password login system. Because emails need the \@ symbol in them, the credentials cannot only have 'user' or 'admin' in the username, but 'user\@user' and 'admin\@admin' instead
+#### Credentials note:
+We use an email/password login system. As a result, the username requires an \@ symbol. As a result, here are the following test credentials: 
+
+Regular User: 
+
+    email - user@user.com
+    password - user
+
+Admin user: 
+
+    email - admin@admin.com
+    password - admin
+
+
+### Backend Documentation: 
+We have prepared a document for all of the backend endpoints used by our platform, which can be found here: https://docs.google.com/document/d/1iknG0W6U4r8HJ2zfrtPAXw-u5cVvDU8hGvNJzFMCQak/edit?usp=sharing
+
+This document also contains the Mongoose Document models which we used to represent our Users, Posts, and Applications. 
+
 
 #### Third party libraries
 ```material-ui, bootstrap, rc-slider, react-bootstrap, react-bootstrap-icons, react-card-flip, react-images-uploading, react-rounded-image, reactjs-popup, simple-react-lightbox, survey-react```
 
 ## Intro
-This pet adoption platform is made for every-day users who wish to adopt a pet, as well as Clinics who have pets to 
+This pet adoption platform is made for every-day users who wish to adopt a pet, as well as clinics who have pets that need a new family, and hence the need to be put up for adoption. It connects two users (the clinic admin and the regular user) through this platform.  
+
+
+## Notes on progress made from phase 1
+
+### Edits to UI and features
+1. The home page was very minimalistic before, featuring only a carousel and a login button. We have added extra styling to have a background picture and made the styling fit all the content into one screen
+2. User and Admin Applications look more in card format that have interactivity upon hovering. This is a significant improvement to the previous design, where there was no interactivity other than a button to remove the application.
+3. Our user pet adoption page does not swipe the same way as the Tinder app would. We instead decided to navigate the list of pets with arrows: left arrow to go back to the previous pet and right arrow for the next, and finally a flip button for an apply button. In this manner the pet adopter may have a better range of choice and does not have the pressure of choose or discard.
+
+### Questionnaire 
+
+1. In addition to basic information, a large questionnaire was made for the user to fill, and for the admins to see so that the admins have more than just basic information to look upon when deciding which applicant may adopt the pet.
+
+
+### Robust Backend 
+1. Authentication - we used express-sessions to handle user sessions and used middleware helper functions in each of the routes to ensure the app is more secure. 
+2. Database - we established models for our Users, Posts, and Applications. This helps keep our data in predictable, organized formats that make it easier to work with when performing backend operations and UI manipulations. 
+3. Routes - we implemented routes for admins and users, which were used to differentiate between the functionalities available for the two types of users. The routes implement actions such as submitting a new application for a pet, retrieving user data, accepting/rejecting applications from the admin side, etc. If an admin user calls a regular user endpoint, a 401 error will be returned. Similarly, if a regular user calls an admin route, a 401 error will be returned.
+
 
 ### Home Page
 This is the first page that you see. It has three main components to it.
@@ -148,14 +184,3 @@ This page is very similar to the User Profile. Here you will see a profile Icon,
     - Has your email, address, city, and province. You may also upload your own profile picture here
 An admin does not require the other functionality such as 'preferences' or 'questionnaire' since the admin does not need either.
 
-## Notes on progress made from phase 1
-
-### Edits to UI and features
-1. The home page was very minimalistic before, featuring only a carousel and a login button. We have added extra styling to have a background picture and made the styling fit all the content into one screen
-2. User and Admin Applications look more in card format that have interactivity upon hovering. This is a significant improvement to the previous design, where there was no interactivity other than a button to remove the application.
-3. Our user pet adoption page does not swipe the same way as the Tinder app would. We instead decided to navigate the list of pets with arrows: left arrow to go back to the previous pet and right arrow for the next, and finally a flip button for an apply button. In this manner the pet adopter may have a better range of choice and does not have the pressure of choose or discard.
-
-### New features
-In addition to backend implementation...
-1. Questionnaire
-    - In addition to basic information, a large questionnaire was made for the user to fill, and for the admins to see so that the admins have more than just basic information to look upon when deciding which applicant may adopt the pet.
