@@ -21,6 +21,8 @@ We have prepared a document for all of the backend endpoints used by our platfor
 
 This document also contains the Mongoose Document models which we used to represent our Users, Posts, and Applications. 
 
+Additionally, we have a collection of Postman requests that we used in our testing. However, due to a Postman bug, we are unable to export this collection, and instead plan on showing our TA during the project demo. 
+
 
 #### Third party libraries
 ```material-ui, bootstrap, rc-slider, react-bootstrap, react-bootstrap-icons, react-card-flip, react-images-uploading, react-rounded-image, reactjs-popup, simple-react-lightbox, survey-react```
