@@ -109,7 +109,7 @@ class AdminApplications extends React.Component {
       for (let i = 0; i < selected.length; i++) {
         const user = await this.getUser(selected[i].userID);
         const posting = await this.getPosting(selected[i].postingID);
-        ret.push([user, posting, selected[i].status, selected[i].id]);
+        ret.push([user, posting, selected[i].status, selected[i]._id]);
       }
       this.setState({ allInfo: ret });
     } catch (err) {
@@ -239,6 +239,7 @@ class AdminApplications extends React.Component {
                 petBreed={app[1].pet.breed}
                 petAge={app[1].pet.age}
                 id={app[3]}
+                parent={this}
               />
             ))}
           </div>

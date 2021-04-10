@@ -217,7 +217,7 @@ class App extends React.Component {
                       <div>You are not an admin user!</div>
                     )
                   ) : (
-                    <div>You need to login first.</div>
+                    <Redirect pathname={{ to: "/login" }} />
                   )
                 }
               />

@@ -5,6 +5,7 @@ import { apiDeleteApplication } from "../../api/user";
 class UserApplication extends React.Component {
   constructor(props) {
     super(props);
+    this.openQs = this.openQs.bind(this);
   }
   static defaultProps = {
     admin: true,
@@ -46,7 +47,7 @@ class UserApplication extends React.Component {
   };
 
   openQs = () => {
-    this.props.history.push("/userqs/" + this.props.id);
+    this.props.parent.props.history.push("/userqs/" + this.props.id);
   };
 
   render() {
@@ -68,12 +69,14 @@ class UserApplication extends React.Component {
                   <button
                     onClick={() => this.acceptApplication()}
                     className="a-r-btn accept-button"
+                    disabled={this.props.appStatus === 'rejected'}
                   >
                     Accept
                   </button>
                   <button
                     onClick={() => this.rejectApplication()}
                     className="a-r-btn reject-button"
+                    disabled={this.props.appStatus === 'accepted'}
                   >
                     Reject
                   </button>
