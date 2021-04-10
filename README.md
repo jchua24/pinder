@@ -1,3 +1,5 @@
+####Heroku Link:
+https://pinderpetadoption.herokuapp.com/
 
 #### Basic credentials note:
 We use an email/password login system. Because emails need the \@ symbol in them, the credentials cannot only have 'user' or 'admin' in the username, but 'user\@user' and 'admin\@admin' instead
