@@ -47,6 +47,7 @@ This pet adoption platform is made for every-day users who wish to adopt a pet, 
 1. Authentication - we used express-sessions to handle user sessions and used middleware helper functions in each of the routes to ensure the app is more secure. 
 2. Database - we established models for our Users, Posts, and Applications. This helps keep our data in predictable, organized formats that make it easier to work with when performing backend operations and UI manipulations. 
 3. Routes - we implemented routes for admins and users, which were used to differentiate between the functionalities available for the two types of users. The routes implement actions such as submitting a new application for a pet, retrieving user data, accepting/rejecting applications from the admin side, etc. If an admin user calls a regular user endpoint, a 401 error will be returned. Similarly, if a regular user calls an admin route, a 401 error will be returned.
+4. Geocode API - our backend converts the user's address to latitude/longitude coordinates using the Google Geocode API. As a result, we are able to perform searches for posts within a certain radius (radius is calculated by one of our helper functions). 
 
 
 ### Home Page
