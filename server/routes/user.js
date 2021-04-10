@@ -110,8 +110,7 @@ router.get("/applications/:id", authenticate, mongoChecker, async (req, res) => 
 //add application
 router.post("/applications", authenticate, mongoChecker, async (req, res) => {
 
-    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID") && req.body.hasOwnProperty("clinicName") && req.body.hasOwnProperty("clinicAddress")
-    && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
+    if(!(req.body.hasOwnProperty("postingID") && req.body.hasOwnProperty("clinicID") && ObjectID.isValid(req.body.postingID) && ObjectID.isValid(req.body.clinicID))) {
         return res.status(400).send('One of the required fields (postingID, clinicID) was not included in the request.');
     } else if(req.user.admin) {
         return res.status(401).send('Endpoint unauthorized for admin users.'); 
@@ -121,8 +120,6 @@ router.post("/applications", authenticate, mongoChecker, async (req, res) => {
         const application = req.user.petApplications.create({
             userID: req.user._id, 
             clinicID: req.body.clinicID, 
-            clinicName: req.body.clinicName, 
-            clinicAddress: req.body.clinicAddress,
             postingID: req.body.postingID, 
             status: "pending"
         }); 
