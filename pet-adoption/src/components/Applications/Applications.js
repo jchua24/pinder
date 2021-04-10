@@ -18,6 +18,7 @@ class Applications extends React.Component {
       let data = await apiGetApplications(status);
       console.log(data); 
       this.setState({ userApps: data });
+      this.forceUpdate(); 
     } catch (err) {
       console.log(err);
     }
@@ -34,7 +35,6 @@ class Applications extends React.Component {
 
   getPosting = async (postingID, clinicID) => {
     try {
-      
       const res = await apiGetPost(postingID, clinicID);
       return res; 
     } catch (err) {
@@ -53,14 +53,16 @@ class Applications extends React.Component {
 
         const user = await this.getUser(selected[i].userID); 
         const posting = await this.getPosting(selected[i].postingID, selected[i].clinicID)
-  
+    
+        console.log("APPLICATION: " + JSON.stringify(selected[i]));
+
         ret.push([
           user,
           posting,
           selected[i].status,
-          selected[i].id
+          selected[i]._id
         ]);
-      }
+      } 
 
       this.setState({allInfo: ret});
 
@@ -93,11 +95,11 @@ class Applications extends React.Component {
               city={app[0].city}
               phoneNumber={app[0].phone}
               admin={false}
-              clinic={app[1].clinicID}
+              clinic={app[1].clinicName}
               province={app[0].province}
               petName={app[1].pet.name}
               petImgSrc={app[1].pet.images[0]}
-              petSummary={app[1].pet.additionalInfo.substring(0, Math.min(8, app[1].pet.additionalInfo.length))}
+              petSummary={app[1].pet.additionalInfo}
               appStatus={app[2]}
               petBreed={app[1].pet.breed}
               petAge={app[1].pet.age}

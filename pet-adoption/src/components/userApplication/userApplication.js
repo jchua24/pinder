@@ -1,5 +1,4 @@
 import React from "react";
-import { Row, Col, Image, Button } from "react-bootstrap";
 import { apiApproveApplication, apiRejectApplication } from "../../api/admin";
 import { apiDeleteApplication } from "../../api/user";
 
@@ -39,6 +38,8 @@ class UserApplication extends React.Component {
   cancelApplication = async () => {
     try {
       await apiDeleteApplication(this.props.id);
+      window.location.reload();
+    
     } catch (err) {
       console.log(err);
     }
@@ -114,7 +115,7 @@ class UserApplication extends React.Component {
               <div className="user-card">
                 <img src={this.props.petImgSrc} className="img-center"></img>
                 <div class="multi-button">
-                  <button className="a-r-btn reject-button">
+                  <button className="a-r-btn reject-button" onClick={() => this.cancelApplication()}>
                     Cancel Application
                   </button>
                 </div>
@@ -144,48 +145,6 @@ class UserApplication extends React.Component {
           </div>
         )}
       </div>
-      //         <div className="general">
-      //           <h1>{this.props.userName}</h1>
-      //           <p>{this.props.summary}</p>
-      //           <span className="more">Mouse over the card for more info</span>
-      //         </div>
-      //       </div>
-      //         ) : (
-      //       <div className={`card ${this.props.color}`}>
-      //         <div className="additional">
-      //           <div className="user-card">
-      //             <img src={this.props.petImgSrc} className="img-center"></img>
-      //             <div class="multi-button">
-      //               <button className="a-r-btn reject-button">
-      //                 Cancel Application
-      //               </button>
-      //             </div>
-      //             <div className="stats">
-      //               <div>
-      //                 <div className="title">Status:</div>
-      //                 <div className="value">{this.props.appStatus}</div>
-      //               </div>
-      //             </div>
-      //           </div>
-      //           <div className="more-info">
-      //             <h1>{this.props.petName}</h1>
-      //             <div className="coords">
-      //               <span>CLinic: {this.props.clinic}</span>
-      //               <br></br>
-      //               <span>Breed: {this.props.petBreed}</span>
-      //               <br></br>
-      //               <span>Age: {this.props.petAge}</span>
-      //             </div>
-      //           </div>
-      //         </div>
-      //         <div className="general">
-      //           <h1>{this.props.petName}</h1>
-      //           <p>{this.props.petSummary}</p>
-      //           <span className="more">Mouse over the card for more info</span>
-      //         </div>
-      //       </div>
-      //     )}
-      //   </div>
     );
   }
 }
