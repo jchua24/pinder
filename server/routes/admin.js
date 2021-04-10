@@ -250,8 +250,8 @@ router.get("/applications/approve/:id", authenticate, mongoChecker, async (req, 
             return res.status(404).send('Application not found.'); 
         }
 
-        //remove accepted application from admin user application list 
-        req.user.petApplications.remove(req.params.id);
+        // //remove accepted application from admin user application list 
+        // req.user.petApplications.remove(req.params.id);
  
         //update posting status and owner 
         const posting = req.user.petPostings.id(application.postingID); 
