@@ -22,12 +22,12 @@ class AdminApplications extends React.Component {
     this.state = {
       availPets: [],
       userApps: [],
-      selctedApps: [],
+      selectedApps: [],
       searchAge: "",
       searchType: "",
       searchBreed: "",
       searchName: "",
-      allInfo: []
+      allInfo: [],
     };
     this.getAllInfo = this.getAllInfo.bind(this);
   }
@@ -52,7 +52,7 @@ class AdminApplications extends React.Component {
       this.setState({ userApps: userApps }, () =>
         console.log("user applications were acquired")
       );
-      this.setState({ selctedApps: userApps });
+      this.setState({ selectedApps: userApps }, () => this.getAllInfo());
     } catch (err) {
       console.log(err);
     }
@@ -111,8 +111,7 @@ class AdminApplications extends React.Component {
         const posting = await this.getPosting(selected[i].postingID);
         ret.push([user, posting, selected[i].status, selected[i].id]);
       }
-      this.setState({allInfo : ret});
-      console.log(ret);
+      this.setState({ allInfo: ret });
     } catch (err) {
       console.log(err);
     }
