@@ -1,6 +1,7 @@
 .swiperContainer{
     background: linear-gradient(#E6DADA, #56737a);
-    height: 100vh;
+    /* height: 100vh; */
+    padding: 10%;
 }
 
 
