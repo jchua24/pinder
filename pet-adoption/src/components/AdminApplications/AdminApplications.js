@@ -59,7 +59,8 @@ class AdminApplications extends React.Component {
 
   getUser = async (userID) => {
     try {
-      return await apiGetUserData(userID);
+      const res= await apiGetUserData(userID);
+      return res;
     } catch (err) {
       console.log(err);
     }
@@ -67,7 +68,8 @@ class AdminApplications extends React.Component {
 
   getPosting = async (postingID) => {
     try {
-      return await apiGetPosting(postingID);
+      const res = await apiGetPosting(postingID);
+      return res;
     } catch (err) {
       console.log(err);
     }
@@ -99,13 +101,13 @@ class AdminApplications extends React.Component {
     this.setState({ selectedApps: currApps });
   };
 
-  getAllInfo() {
+  async getAllInfo() {
     let ret = [],
       selected = this.state.selectedApps;
     for (let i = 0; i < selected.length; i++)
       ret.push([
-        this.getUser(selected[i].userID),
-        this.getPosting(selected[i].postingID),
+        await this.getUser(selected[i].userID),
+        await this.getPosting(selected[i].postingID),
         selected[i].status,
         selected[i].id
       ]);
