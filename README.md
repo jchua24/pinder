@@ -3,17 +3,7 @@
 https://pinderpetadoption.herokuapp.com/
 
 #### Credentials note:
-We use an email/password login system. As a result, the username requires an \@ symbol. As a result, here are the following test credentials: 
-
-Regular User: 
-
-    email - user@user.com
-    password - user
-
-Admin user: 
-
-    email - admin@admin.com
-    password - admin
+We use an email/password login system.
 
 
 ### Backend Documentation: 
